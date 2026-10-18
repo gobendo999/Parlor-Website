@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Salon Staff & Management Dashboard | {{ salon.name }}{% endblock %}
+
+{% block content %}
+<section class="section-padding bg-ivory">
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <span class="section-tag">Internal Management</span>
+        <h2 style="font-size: 2.4rem; color: var(--deep-brown);">Salon <span>Operations Portal</span></h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Review, approve, and manage customer appointment requests in real-time.</p>
+      </div>
+      <div style="display: flex; gap: 0.8rem;">
+        <a href="/admin/" target="_blank" class="btn btn-gold btn-sm">
+          ⚙️ Django Full Admin Panel
+        </a>
+        <a href="{% url 'parlor:home' %}" class="btn btn-outline-gold btn-sm">
+          View Live Site
+        </a>
+      </div>
+    </div>
+
+    <!-- KPI Metric Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.4rem; margin-bottom: 2.5rem;">
+      <div style="background: var(--white); border-radius: 16px; padding: 1.6rem; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: var(--card-shadow);">
+        <div style="font-size: 0.82rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600;">Total Bookings</div>
+        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 700; color: var(--deep-brown); margin: 0.3rem 0;">{{ total_count }}</div>
+        <div style="font-size: 0.78rem; color: var(--dark-gold);">All recorded appointments</div>
+      </div>
+
+      <div style="background: #FFFBEB; border-radius: 16px; padding: 1.6rem; border: 1px solid #FCD34D;">
+        <div style="font-size: 0.82rem; text-transform: uppercase; color: #92400E; font-weight: 600;">Pending Requests</div>
+        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 700; color: #B45309; margin: 0.3rem 0;">{{ pending_count }}</div>
+        <div style="font-size: 0.78rem; color: #92400E;">Awaiting staff verification</div>
+      </div>
+
+      <div style="background: #ECFDF5; border-radius: 16px; padding: 1.6rem; border: 1px solid #6EE7B7;">
+        <div style="font-size: 0.82rem; text-transform: uppercase; color: #065F46; font-weight: 600;">Confirmed Slots</div>
+        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 700; color: #047857; margin: 0.3rem 0;">{{ confirmed_count }}</div>
+        <div style="font-size: 0.78rem; color: #065F46;">Calendar locked & ready</div>
+      </div>
+
+      <div style="background: #EFF6FF; border-radius: 16px; padding: 1.6rem; border: 1px solid #93C5FD;">
+        <div style="font-size: 0.82rem; text-transform: uppercase; color: #1E40AF; font-weight: 600;">Completed</div>
+        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 700; color: #1D4ED8; margin: 0.3rem 0;">{{ completed_count }}</div>
+        <div style="font-size: 0.78rem; color: #1E40AF;">Successfully glammed brides</div>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div style="display: flex; gap: 0.6rem; margin-bottom: 1.8rem; flex-wrap: wrap;">
+      <a href="?status=all" class="btn {% if status_filter == 'all' %}btn-gold{% else %}btn-white{% endif %} btn-sm">All ({{ total_count }})</a>
+      <a href="?status=pending" class="btn {% if status_filter == 'pending' %}btn-gold{% else %}btn-white{% endif %} btn-sm">Pending ({{ pending_count }})</a>
+      <a href="?status=confirmed" class="btn {% if status_filter == 'confirmed' %}btn-gold{% else %}btn-white{% endif %} btn-sm">Confirmed ({{ confirmed_count }})</a>
+      <a href="?status=completed" class="btn {% if status_filter == 'completed' %}btn-gold{% else %}btn-white{% endif %} btn-sm">Completed ({{ completed_count }})</a>
+      <a href="?status=cancelled" class="btn {% if status_filter == 'cancelled' %}btn-gold{% else %}btn-white{% endif %} btn-sm">Cancelled ({{ cancelled_count }})</a>
+    </div>
+
+    <!-- Appointment Requests Table -->
+    <div style="background: var(--white); border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: var(--card-shadow); overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem;">
+        <thead>
+          <tr style="background: var(--soft-cream); border-bottom: 2px solid rgba(212, 175, 55, 0.3); color: var(--deep-brown);">
+            <th style="padding: 1.1rem 1.4rem;">Reference</th>
+            <th style="padding: 1.1rem 1.4rem;">Customer</th>
+            <th style="padding: 1.1rem 1.4rem;">Event & Date</th>
+            <th style="padding: 1.1rem 1.4rem;">Package / Service</th>
+            <th style="padding: 1.1rem 1.4rem;">Artist</th>
+            <th style="padding: 1.1rem 1.4rem;">Amount</th>
+            <th style="padding: 1.1rem 1.4rem;">Status</th>
+            <th style="padding: 1.1rem 1.4rem;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appt in appointments %}
+            <tr style="border-bottom: 1px solid rgba(212, 175, 55, 0.15); transition: background 0.2s;" onmouseover="this.style.background='var(--warm-ivory)'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 1.1rem 1.4rem; font-family: monospace; font-weight: 700; color: var(--dark-gold);">
+                {{ appt.booking_reference }}
+              </td>
+              <td style="padding: 1.1rem 1.4rem;">
+                <strong>{{ appt.customer_name }}</strong><br>
+                <a href="tel:{{ appt.phone_number }}" style="color: var(--dark-gold);">{{ appt.phone_number }}</a><br>
+                <small style="color: var(--text-muted);">{{ appt.customer_address|truncatewords:4 }}</small>
+              </td>
+              <td style="padding: 1.1rem 1.4rem;">
+                <strong>{{ appt.appointment_date }}</strong><br>
+                <span style="color: var(--text-muted);">{{ appt.preferred_time }}</span><br>
+                <span style="font-size: 0.75rem; background: var(--soft-cream); padding: 2px 6px; border-radius: 4px;">{{ appt.get_event_type_display }}</span>
+              </td>
+              <td style="padding: 1.1rem 1.4rem;">
+                <strong>{% if appt.package %}{{ appt.package.name }}{% elif appt.service %}{{ appt.service.name }}{% else %}General Inquiry{% endif %}</strong>
+              </td>
+              <td style="padding: 1.1rem 1.4rem;">
+                {% if appt.preferred_artist %}{{ appt.preferred_artist.name }}{% else %}Any Senior Stylist{% endif %}
+              </td>
+              <td style="padding: 1.1rem 1.4rem; font-weight: 700; color: var(--deep-brown);">
+                ৳{{ appt.estimated_amount|floatformat:0 }}
+              </td>
+              <td style="padding: 1.1rem 1.4rem;">
+                {% if appt.status == 'confirmed' %}
+                  <span style="background: #ECFDF5; color: #065F46; padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 0.78rem;">Confirmed</span>
+                {% elif appt.status == 'completed' %}
+                  <span style="background: #EFF6FF; color: #1E40AF; padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 0.78rem;">Completed</span>
+                {% elif appt.status == 'cancelled' %}
+                  <span style="background: #FEF2F2; color: #991B1B; padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 0.78rem;">Cancelled</span>
+                {% else %}
+                  <span style="background: #FFFBEB; color: #B45309; padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 0.78rem;">Pending</span>
+                {% endif %}
+              </td>
+              <td style="padding: 1.1rem 1.4rem;">
+                <!-- 1-Click Status Update Actions -->
+                <form method="post" action="{% url 'parlor:update_status' pk=appt.id %}" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                  {% csrf_token %}
+                  {% if appt.status != 'confirmed' %}
+                    <button type="submit" name="status" value="confirmed" class="btn btn-gold btn-sm" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" title="Approve & Confirm">
+                      ✓ Confirm
+                    </button>
+                  {% endif %}
+                  {% if appt.status != 'completed' %}
+                    <button type="submit" name="status" value="completed" class="btn btn-outline-gold btn-sm" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" title="Mark as Completed">
+                      ★ Done
+                    </button>
+                  {% endif %}
+                  {% if appt.status != 'cancelled' %}
+                    <button type="submit" name="status" value="cancelled" class="btn btn-white btn-sm" style="padding: 0.3rem 0.6rem; font-size: 0.75rem; color: #991B1B;" title="Cancel Request">
+                      ✕ Cancel
+                    </button>
+                  {% endif %}
+                </form>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="8" style="padding: 3rem; text-align: center; color: var(--text-muted);">
+                No appointments found for the selected status.
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}

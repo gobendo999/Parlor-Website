@@ -1,0 +1,714 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- 1. HERO SECTION -->
+<section class="hero-section" id="hero-section">
+  <div class="hero-bg-glow"></div>
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <div class="hero-badge-pill">
+        <span>👑</span>
+        <span>Premier Bridal Artistry & Luxury Parlour</span>
+      </div>
+      <h1>
+        Your Beauty, Our Art, <br>
+        <span class="gold-highlight">Your Special Moment</span>
+      </h1>
+      <p class="hero-subtitle">
+        Discover professional makeup artistry, luxurious beauty services, and personalized makeup packages for every special occasion. From royal bridal glam to rejuvenating parlour rituals, let our passion enhance your innate radiance.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#packages-section" class="btn btn-gold btn-lg">
+          <span>✨ Explore Our Packages</span>
+        </a>
+        <a href="#booking-section" class="btn btn-outline-gold btn-lg">
+          <span>📅 Book Your Appointment Now</span>
+        </a>
+      </div>
+
+      <div class="hero-trust-bar">
+        <div class="trust-statement">
+          Professional Makeup <span class="trust-dots">•</span> Personalized Looks <span class="trust-dots">•</span> Special Occasion Beauty
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Visual Frame with Bridal Image and Floating Cards -->
+    <div class="hero-visual">
+      <div class="hero-frame-wrapper">
+        <!-- Display uploaded bridal poster or high quality fallback -->
+        <img 
+          src="{% static 'images/nishi_bridal_poster.jpg' %}" 
+          onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80';"
+          alt="Royal Bridal Makeup Artistry" 
+          class="hero-main-img"
+        >
+
+        <!-- Floating Trust Card 1 -->
+        <div class="hero-floating-card floating-card-1">
+          <div class="floating-icon">👰</div>
+          <div class="floating-text">
+            <h4>500+ Happy Brides</h4>
+            <p>16-Hour Sweat & Tear Proof Glow</p>
+          </div>
+        </div>
+
+        <!-- Floating Trust Card 2 -->
+        <div class="hero-floating-card floating-card-2">
+          <div class="floating-icon">⭐</div>
+          <div class="floating-text">
+            <h4>5.0 Star Rated</h4>
+            <p>100% Certified Senior Stylists</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. METRICS & STATS COUNTER STRIP -->
+<section class="stats-strip">
+  <div class="container stats-grid">
+    <div class="stat-item">
+      <div class="stat-number">500+</div>
+      <div class="stat-label">Royal Brides Glambassador</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">8+</div>
+      <div class="stat-label">Years of Luxury Artistry</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Original International Cosmetics</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">16hr</div>
+      <div class="stat-label">Flawless Long-Lasting Stay</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. ABOUT OUR BEAUTY STUDIO SECTION -->
+<section class="section-padding bg-ivory" id="about-section">
+  <div class="container about-grid">
+    <div class="about-images-composition">
+      <img 
+        src="{% static 'images/nishi_banner.png' %}" 
+        onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80';"
+        alt="Nishi Makeup Artist & Beauty Parlour" 
+        class="about-img-main"
+      >
+      <img 
+        src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80" 
+        alt="Hairstyling and Parlour Care" 
+        class="about-img-overlap"
+      >
+    </div>
+
+    <div class="about-content">
+      <span class="section-tag">About Our Beauty Studio</span>
+      <h2 class="section-title">
+        Where Artistry Meets <br>
+        <span>Elegance & Confidence</span>
+      </h2>
+      <div class="gold-divider" style="margin-left: 0;"></div>
+
+      <p style="font-size: 1.05rem; line-height: 1.7; color: var(--deep-brown); margin-bottom: 1.2rem;">
+        {{ salon.about_story|default:"Welcome to Nishi Makeup Artist & Beauty Parlour. Founded by visionary makeup artist Nishi, our studio is dedicated to celebrating the authentic radiance of every woman." }}
+      </p>
+
+      <blockquote style="font-family: var(--font-serif); font-size: 1.15rem; font-style: italic; color: var(--dark-gold); border-left: 3px solid var(--lux-gold); padding-left: 1.2rem; margin: 1.4rem 0;">
+        "Makeup is not just a look, it's a feeling ♡. Because every bride deserves to feel beautiful."
+      </blockquote>
+
+      <div class="about-features-list">
+        <div class="about-feature-item">
+          <div class="about-feature-icon">✨</div>
+          <div>
+            <h4>Personalized Beauty Consult</h4>
+            <p>Custom face-mapping & skin tone color matching.</p>
+          </div>
+        </div>
+        <div class="about-feature-item">
+          <div class="about-feature-icon">🌿</div>
+          <div>
+            <h4>Clinical Hygiene Guarantee</h4>
+            <p>100% sanitized luxury brushes, sponges & tools.</p>
+          </div>
+        </div>
+        <div class="about-feature-item">
+          <div class="about-feature-icon">💄</div>
+          <div>
+            <h4>Pre-Bridal & Parlour Care</h4>
+            <p>24K gold facials, hair spa & diamond polishing.</p>
+          </div>
+        </div>
+        <div class="about-feature-item">
+          <div class="about-feature-icon">👑</div>
+          <div>
+            <h4>Royal Saree & Dupatta Setting</h4>
+            <p>Flawless Jamdani, Katan & lehenga pleat pinning.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Luxury Cosmetics Vanity Strip -->
+      <div class="products-showcase">
+        <div class="products-title">Premium International Products Used:</div>
+        <div class="products-tags">
+          <span class="product-tag">M•A•C Cosmetics</span>
+          <span class="product-tag">Huda Beauty</span>
+          <span class="product-tag">Dior Backstage</span>
+          <span class="product-tag">NARS Cosmetics</span>
+          <span class="product-tag">Anastasia Beverly Hills</span>
+          <span class="product-tag">Charlotte Tilbury</span>
+          <span class="product-tag">Kryolan Professional</span>
+          <span class="product-tag">Estée Lauder Double Wear</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. MAKEUP & DEEP PARLOUR SERVICES SECTION -->
+<section class="section-padding bg-soft-cream" id="services-section">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-tag">Our Complete Catalogue</span>
+      <h2 class="section-title">Makeup & <span>Parlour Services</span></h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        From signature bridal transformations and 4K airbrush glam to restorative hair keratin and 24K gold facials, explore our luxurious services.
+      </p>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="service-tabs-nav">
+      <button class="service-tab-btn active" data-category="all">All Services</button>
+      {% for cat in categories %}
+        <button class="service-tab-btn" data-category="{{ cat.slug }}">{{ cat.name }}</button>
+      {% endfor %}
+    </div>
+
+    <div class="services-grid">
+      {% for service in services %}
+        <div class="service-card" data-category="{{ service.category.slug }}">
+          <div class="service-card-img">
+            <img src="{{ service.image }}" alt="{{ service.name }}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';">
+            <div class="service-duration-badge">⏱ {{ service.duration }}</div>
+          </div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">{{ service.name }}</h3>
+            <p class="service-card-desc">{{ service.short_description }}</p>
+
+            <div class="service-card-footer">
+              <div class="service-price-block">
+                <span class="price-label">Starts From</span>
+                <span class="price-value">৳{{ service.starting_price|floatformat:0 }}</span>
+              </div>
+              <a 
+                href="#booking-section" 
+                class="btn btn-gold btn-sm btn-book-service"
+                data-service-id="{{ service.id }}"
+              >
+                Book This Service
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- 6. LUXURY MAKEUP PACKAGES SECTION -->
+<section class="section-padding bg-ivory" id="packages-section">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-tag">Value & Luxury Combined</span>
+      <h2 class="section-title">Luxury <span>Makeup Packages</span></h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Tailored beauty packages curated for every budget and occasion. Select your package to automatically prefill and view its benefits in the booking form.
+      </p>
+    </div>
+
+    <div class="packages-grid">
+      {% for pkg in packages %}
+        <div class="package-card {% if pkg.is_popular %}popular{% endif %}">
+          {% if pkg.image %}
+            <div class="package-img-wrap">
+              <img src="{{ pkg.image }}" alt="{{ pkg.name }}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';">
+              <div class="package-duration-pill">
+                ⏱ {{ pkg.duration }}
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="package-card-content">
+            <div class="package-header">
+              <div class="package-tag">Package Option</div>
+              <h3 class="package-name">{{ pkg.name }}</h3>
+              <p class="package-short-desc">{{ pkg.short_description }}</p>
+            </div>
+
+            <div class="package-pricing">
+              <div class="current-price" style="font-size: 1.85rem;">
+                <span>৳</span>{{ pkg.price|floatformat:0 }}{% if pkg.original_price %} <span style="font-size: 1.15rem; color: #8C7B72; font-weight: 400;">– ৳{{ pkg.original_price|floatformat:0 }}</span>{% endif %}
+              </div>
+              {% if not pkg.image %}
+                <div class="package-duration">Estimated Duration: {{ pkg.duration }}</div>
+              {% endif %}
+            </div>
+
+            <ul class="package-features">
+              {% for feature in pkg.feature_list %}
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>{{ feature }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+
+            {% if pkg.bonus_perks %}
+              <div class="package-bonus-box">
+                <strong>Special Perk:</strong> {{ pkg.bonus_perks }}
+              </div>
+            {% endif %}
+
+            <div style="margin-top: auto; padding-top: 1.2rem;">
+              <a 
+                href="#booking-section"
+                class="btn btn-gold btn-block"
+                style="width: 100%;"
+                data-package-id="{{ pkg.id }}"
+              >
+                Book This Package
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- 7. APPOINTMENT BOOKING SYSTEM SECTION -->
+<section class="section-padding booking-section" id="booking-section">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-tag">Easy & Seamless Reservation</span>
+      <h2 class="section-title">Book Your <span>Appointment Now</span></h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Make your special day more beautiful. Select your makeup artist, choose your preferred package, and reserve your appointment with ease.
+      </p>
+    </div>
+
+    <div class="booking-card-wrapper">
+      <div class="booking-layout-grid">
+        <!-- Left: Booking Form -->
+        <div class="booking-form-pane">
+          <div class="booking-form-header">
+            <h3>Appointment Details</h3>
+            <p>Please enter your information to schedule your session with our master stylists.</p>
+          </div>
+
+          <form method="post" action="{% url 'parlor:home' %}#booking-section" id="appointmentForm">
+            {% csrf_token %}
+            <input type="hidden" name="submit_booking" value="1">
+
+            <div class="booking-form-grid">
+              <!-- Full Name -->
+              <div class="form-group">
+                <label class="form-label" for="{{ booking_form.customer_name.id_for_label }}">
+                  Full Name <span class="required">*</span>
+                </label>
+                {{ booking_form.customer_name }}
+                {% if booking_form.customer_name.errors %}
+                  <div style="color: #D9534F; font-size: 0.8rem; margin-top: 0.3rem;">
+                    {{ booking_form.customer_name.errors|striptags }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Phone Number -->
+              <div class="form-group">
+                <label class="form-label" for="{{ booking_form.phone_number.id_for_label }}">
+                  Phone Number <span class="required">*</span>
+                </label>
+                {{ booking_form.phone_number }}
+                {% if booking_form.phone_number.errors %}
+                  <div style="color: #D9534F; font-size: 0.8rem; margin-top: 0.3rem;">
+                    {{ booking_form.phone_number.errors|striptags }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Full Address -->
+              <div class="form-group full-width">
+                <label class="form-label" for="{{ booking_form.customer_address.id_for_label }}">
+                  Full Address / Location <span class="required">*</span>
+                </label>
+                {{ booking_form.customer_address }}
+                {% if booking_form.customer_address.errors %}
+                  <div style="color: #D9534F; font-size: 0.8rem; margin-top: 0.3rem;">
+                    {{ booking_form.customer_address.errors|striptags }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Event Type -->
+              <div class="form-group">
+                <label class="form-label" for="{{ booking_form.event_type.id_for_label }}">
+                  Event Type <span class="required">*</span>
+                </label>
+                {{ booking_form.event_type }}
+              </div>
+
+              <!-- Makeup Package -->
+              <div class="form-group">
+                <label class="form-label" for="{{ booking_form.package.id_for_label }}">
+                  Makeup Package (Recommended)
+                </label>
+                {{ booking_form.package }}
+              </div>
+
+              <!-- Specific Service -->
+              <div class="form-group">
+                <label class="form-label" for="{{ booking_form.service.id_for_label }}">
+                  Specific Service (Optional)
+                </label>
+                {{ booking_form.service }}
+              </div>
+
+              <!-- Appointment Date -->
+              <div class="form-group">
+                <label class="form-label" for="{{ booking_form.appointment_date.id_for_label }}">
+                  Appointment Date <span class="required">*</span>
+                </label>
+                {{ booking_form.appointment_date }}
+                {% if booking_form.appointment_date.errors %}
+                  <div style="color: #D9534F; font-size: 0.8rem; margin-top: 0.3rem;">
+                    {{ booking_form.appointment_date.errors|striptags }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Preferred Time -->
+              <div class="form-group">
+                <label class="form-label" for="{{ booking_form.preferred_time.id_for_label }}">
+                  Preferred Time Slot <span class="required">*</span>
+                </label>
+                {{ booking_form.preferred_time }}
+              </div>
+
+              <!-- Special Requests -->
+              <div class="form-group full-width">
+                <label class="form-label" for="{{ booking_form.special_requests.id_for_label }}">
+                  Additional Notes or Special Requests
+                </label>
+                {{ booking_form.special_requests }}
+              </div>
+            </div>
+
+            <!-- Confirmation Checkbox -->
+            <div class="checkbox-wrap">
+              {{ booking_form.agree_terms }}
+              <label class="checkbox-label" for="agree_terms">
+                I understand that this is an appointment reservation request. The studio team will contact me to confirm slot availability and details.
+              </label>
+            </div>
+            {% if booking_form.agree_terms.errors %}
+              <div style="color: #D9534F; font-size: 0.8rem; margin-bottom: 1rem;">
+                {{ booking_form.agree_terms.errors|striptags }}
+              </div>
+            {% endif %}
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-gold btn-lg" style="width: 100%;">
+              <span>✨ Confirm Booking Request</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Right: Live Booking Summary -->
+        <div class="booking-summary-pane">
+          <div class="summary-header">
+            <h4>Booking Summary</h4>
+            <p>Live calculated estimate</p>
+          </div>
+
+          <div class="summary-details-list">
+            <div class="summary-detail-item">
+              <span class="summary-detail-label">Artist:</span>
+              <span class="summary-detail-val" id="summary-artist">Any Senior Stylist</span>
+            </div>
+
+            <div class="summary-detail-item">
+              <span class="summary-detail-label">Selected Package:</span>
+              <span class="summary-detail-val text-gold" id="summary-package">None Selected</span>
+            </div>
+
+            <div class="summary-detail-item">
+              <span class="summary-detail-label">Service Choice:</span>
+              <span class="summary-detail-val" id="summary-service">Standard Appointment</span>
+            </div>
+          </div>
+
+          <!-- Included Package Features Preview (updates via JS) -->
+          <div class="summary-features-preview" id="summary-features-box" style="display: none;">
+            <h5>Included in This Package:</h5>
+            <ul id="summary-features-list"></ul>
+          </div>
+
+          <div class="summary-total-box">
+            <span class="total-title">Estimated Total:</span>
+            <span class="total-amount" id="summary-total">৳0</span>
+          </div>
+
+          <div class="booking-guarantee-note">
+            🛡️ <strong>Trust Guarantee:</strong> No immediate online advance payment required to submit a booking inquiry. Our salon coordinator will verify and confirm your date.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. PORTFOLIO & MAKEUP GALLERY SECTION -->
+<section class="section-padding bg-white" id="gallery-section">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-tag">Our Masterpieces</span>
+      <h2 class="section-title">Portfolio & <span>Transformation Gallery</span></h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Click on any transformation to view full-resolution photography and styling details.
+      </p>
+    </div>
+
+    <!-- Category Filter Buttons -->
+    <div class="gallery-filters">
+      <button class="gallery-filter-btn active" data-filter="all">All Looks</button>
+      <button class="gallery-filter-btn" data-filter="bridal">Bridal</button>
+      <button class="gallery-filter-btn" data-filter="reception">Reception</button>
+      <button class="gallery-filter-btn" data-filter="engagement">Engagement</button>
+      <button class="gallery-filter-btn" data-filter="party">Party Glam</button>
+      <button class="gallery-filter-btn" data-filter="haldi">Haldi & Mehendi</button>
+      <button class="gallery-filter-btn" data-filter="natural">Natural Glass Skin</button>
+      <button class="gallery-filter-btn" data-filter="hair">Hair & Draping</button>
+    </div>
+
+    <div class="gallery-grid">
+      {% for item in gallery_items %}
+        <div class="gallery-card" data-category="{{ item.category }}">
+          <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';">
+          <div class="gallery-overlay">
+            <span class="gallery-cat-tag">{{ item.get_category_display }}</span>
+            <h4 class="gallery-item-title">{{ item.title }}</h4>
+            <div class="gallery-item-artist">Artistry by: {{ item.artist_tag }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- 9. CUSTOMER TESTIMONIALS SECTION -->
+<section class="section-padding bg-ivory" id="reviews-section">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-tag">Words from Our Brides</span>
+      <h2 class="section-title">Customer <span>Testimonials</span></h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Real feedback from clients who trusted Nishi Makeup Artist & Beauty Parlour for their milestone events.
+      </p>
+    </div>
+
+    <div class="testimonials-grid">
+      {% for review in testimonials %}
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            {% for s in review.stars %}★{% endfor %}
+          </div>
+          <p class="testimonial-feedback">"{{ review.feedback }}"</p>
+          <div class="testimonial-client">
+            {% if review.customer_photo %}
+              <img src="{{ review.customer_photo }}" alt="{{ review.customer_name }}" class="client-avatar">
+            {% else %}
+              <div class="brand-crest" style="width: 44px; height: 44px; font-size: 1rem;">NM</div>
+            {% endif %}
+            <div class="client-info">
+              <h4>{{ review.customer_name }}</h4>
+              <p>{{ review.service_received }} • <small style="color: #6B5B52;">{{ review.event_date }}</small></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- 10. CONTACT US SECTION -->
+<section class="section-padding contact-section" id="contact-section">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-tag">Get in Touch</span>
+      <h2 class="section-title">Contact <span>Nishi Beauty Studio</span></h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Have questions regarding bridal dates, parlour packages, or venue bookings? Reach out directly via Phone, Facebook, or WhatsApp.
+      </p>
+    </div>
+
+    <!-- Prominent Contact Highlights as requested -->
+    <div class="contact-cards-grid">
+      <!-- Phone Card with Call Now -->
+      <div class="contact-highlight-card">
+        <div class="contact-icon-large">📞</div>
+        <div class="contact-highlight-info">
+          <h3>Direct Studio Hotline</h3>
+          <span class="contact-val-text">{{ salon_phone }}</span>
+          <a href="{{ salon_phone_tel }}" class="btn btn-gold btn-sm">
+            <span>📞 Call Now</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Facebook Card with Visit Our Facebook Page -->
+      <div class="contact-highlight-card">
+        <div class="contact-icon-large" style="background: #1877F2; color: #fff;">f</div>
+        <div class="contact-highlight-info">
+          <h3>Official Facebook Page</h3>
+          <span class="contact-val-text" style="font-size: 1.05rem;">Nishi Makeup Artist</span>
+          <a href="{{ salon_facebook_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
+            <span>🌐 Visit Our Facebook Page</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Form & Studio Coordinates -->
+    <div class="contact-details-grid">
+      <div>
+        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Send an Inquiry</h3>
+        <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem;">
+          Our beauty coordinator will get back to you promptly with full schedule availability and quotes.
+        </p>
+
+        <form method="post" action="{% url 'parlor:contact_submit' %}">
+          {% csrf_token %}
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div>
+              <label class="form-label">Your Name *</label>
+              <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
+            </div>
+            <div>
+              <label class="form-label">Phone Number *</label>
+              <input type="text" name="phone" class="form-control" placeholder="e.g. +880 1904-423317" required>
+            </div>
+            <div>
+              <label class="form-label">Message / Query *</label>
+              <textarea name="message" class="form-control" rows="4" placeholder="Ask about date availability, custom package pricing, or parlour treatments..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-gold" style="align-self: flex-start;">
+              Send Message
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Studio Coordinates & Map -->
+      <div>
+        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Studio Visit & Hours</h3>
+        <p style="color: var(--text-muted); font-size: 0.92rem;">
+          We welcome clients for bridal consultations, trial swatches, and relaxing parlour therapy.
+        </p>
+
+        <div class="studio-info-list">
+          <div class="studio-info-row">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <div>
+              <h4>Location & Venue Bookings</h4>
+              <p>{{ salon.address|default:"Dhanmondi & Mirpur Studio / Home & Venue Booking Available, Dhaka, Bangladesh" }}</p>
+            </div>
+          </div>
+
+          <div class="studio-info-row">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div>
+              <h4>Opening Hours</h4>
+              <p>{{ salon.business_hours|default:"Every day: 10:00 AM - 08:30 PM (Appointment Based)" }}</p>
+            </div>
+          </div>
+
+          <div class="studio-info-row">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            <div>
+              <h4>WhatsApp Fast Inquiries</h4>
+              <p><a href="{{ salon_whatsapp_url }}" target="_blank" style="color: var(--dark-gold); font-weight: 600;">+880 1904-423317 (Click to Chat)</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+
+{% load l10n %}
+
+<script id="packages-data-json" type="application/json">
+{
+  {% for p in packages %}
+  "{{ p.id }}": {
+    "name": "{{ p.name|escapejs }}",
+    "price": {{ p.price|default:0|floatformat:0|unlocalize }},
+    "duration": "{{ p.duration|default:''|escapejs }}",
+    "badge": "{{ p.badge_text|default:''|escapejs }}",
+    "features": [
+      {% for f in p.feature_list %}
+        "{{ f|escapejs }}"{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }{% if not forloop.last %},{% endif %}
+  {% endfor %}
+}
+</script>
+
+<script id="services-data-json" type="application/json">
+{
+  {% for s in services %}
+  "{{ s.id }}": {
+    "name": "{{ s.name|escapejs }}",
+    "price": {{ s.starting_price|default:0|floatformat:0|unlocalize }},
+    "duration": "{{ s.duration|default:''|escapejs }}"
+  }{% if not forloop.last %},{% endif %}
+  {% endfor %}
+}
+</script>
+
+<script>
+  try {
+    const pkgEl = document.getElementById('packages-data-json');
+    window.PACKAGES_DATA = pkgEl ? JSON.parse(pkgEl.textContent) : {};
+  } catch (e) {
+    window.PACKAGES_DATA = {};
+  }
+
+  try {
+    const srvEl = document.getElementById('services-data-json');
+    window.SERVICES_DATA = srvEl ? JSON.parse(srvEl.textContent) : {};
+  } catch (e) {
+    window.SERVICES_DATA = {};
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Portfolio & Transformations | {{ salon.name }}{% endblock %}
+
+{% block content %}
+<section class="section-padding bg-ivory">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-tag">Transformation Showcase</span>
+      <h2 class="section-title">Bridal & Beauty <span>Portfolio</span></h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Explore our authentic bridal and evening transformations. Click any image to open the full lightbox viewer.
+      </p>
+    </div>
+
+    <!-- Category Filter Buttons -->
+    <div class="gallery-filters">
+      {% for code, label in categories %}
+        <button class="gallery-filter-btn {% if forloop.first %}active{% endif %}" data-filter="{{ code }}">{{ label }}</button>
+      {% endfor %}
+    </div>
+
+    <div class="gallery-grid">
+      {% for item in gallery_items %}
+        <div class="gallery-card" data-category="{{ item.category }}">
+          <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';">
+          <div class="gallery-overlay">
+            <span class="gallery-cat-tag">{{ item.get_category_display }}</span>
+            <h4 class="gallery-item-title">{{ item.title }}</h4>
+            <div class="gallery-item-artist">Artistry by: {{ item.artist_tag }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

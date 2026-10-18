@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us | {{ salon.name }}{% endblock %}
+
+{% block content %}
+<section class="section-padding bg-ivory">
+  <div class="container">
+    <div class="text-center" style="max-width: 750px; margin: 0 auto 3.5rem auto;">
+      <span class="section-tag">Our Story & Heritage</span>
+      <h2 class="section-title">The Art of <span>Bridal & Parlour Beauty</span></h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Discover how passion, clinical hygiene, and international cosmetic mastery come together to create your unforgettable bridal and beauty moments.
+      </p>
+    </div>
+
+    <!-- About Grid -->
+    <div class="about-grid" style="margin-bottom: 5rem;">
+      <div class="about-images-composition">
+        <img 
+          src="{% static 'images/nishi_banner.png' %}" 
+          onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80';"
+          alt="Nishi Makeup Artist & Beauty Parlour" 
+          class="about-img-main"
+        >
+        <img 
+          src="{% static 'images/nishi_bridal_poster.jpg' %}" 
+          onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80';"
+          alt="Bridal Makeup Philosophy" 
+          class="about-img-overlap"
+        >
+      </div>
+
+      <div class="about-content">
+        <h3 style="font-size: 2rem; margin-bottom: 1rem;">Nishi Makeup Artist & Beauty Parlour</h3>
+        <p style="font-size: 1rem; line-height: 1.7; color: var(--deep-brown); margin-bottom: 1.2rem;">
+          {{ salon.about_story }}
+        </p>
+
+        <p style="font-size: 1rem; line-height: 1.7; color: var(--deep-brown); margin-bottom: 1.5rem;">
+          {{ salon.philosophy }}
+        </p>
+
+        <div style="background: var(--soft-cream); border-left: 4px solid var(--lux-gold); padding: 1.2rem 1.6rem; border-radius: 8px; margin-bottom: 2rem;">
+          <h4 style="font-size: 1.1rem; color: var(--deep-brown); margin-bottom: 0.3rem;">Our Core Beauty Pillars</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+            1. <strong>Authentic Radiance:</strong> Enhancing your inherent bone structure and complexion rather than masking it. <br>
+            2. <strong>Long-Wear Formulation:</strong> 16-hour sweat, tear, and flash-proof base for high-humidity Bangladeshi weddings. <br>
+            3. <strong>Clinical Hygiene:</strong> Disinfected luxury brushes and single-use applicators for every single client.
+          </p>
+        </div>
+
+        <a href="{% url 'parlor:book' %}" class="btn btn-gold btn-lg">
+          Book a Consultation Session
+        </a>
+      </div>
+    </div>
+
+    <!-- International Products Strip -->
+    <div style="background: var(--white); border-radius: 20px; padding: 3rem; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: var(--card-shadow); text-align: center;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Our International Vanity Kit</h3>
+      <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin: 0 auto 2rem auto;">
+        We never compromise on product quality. Only original, cruelty-free, dermatologist-tested international cosmetics grace your skin.
+      </p>
+
+      <div class="products-tags" style="justify-content: center;">
+        <span class="product-tag" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">M•A•C Cosmetics Studio Fix & Prep</span>
+        <span class="product-tag" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">Huda Beauty Faux Filter & Rose Gold</span>
+        <span class="product-tag" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">Dior Backstage Glow Face Palette</span>
+        <span class="product-tag" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">NARS Radiant Longwear Foundation</span>
+        <span class="product-tag" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">Anastasia Beverly Hills Brow Wiz</span>
+        <span class="product-tag" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">Charlotte Tilbury Flawless Filter</span>
+        <span class="product-tag" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">Kryolan Professional HD Derma Color</span>
+        <span class="product-tag" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">Estée Lauder Double Wear 24H</span>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

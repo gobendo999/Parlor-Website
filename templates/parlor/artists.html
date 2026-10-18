@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Professional Makeup Artists | {{ salon.name }}{% endblock %}
+
+{% block content %}
+<section class="section-padding bg-ivory">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-tag">Our Artists</span>
+      <h2 class="section-title">Master <span>Makeup Artists</span></h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Meet the talented artists behind 500+ royal bridal looks, high-definition party makeovers, and specialized hairstyles.
+      </p>
+    </div>
+
+    <div class="artists-grid">
+      {% for artist in artists %}
+        <div class="artist-card">
+          <div class="artist-img-wrapper">
+            <img src="{{ artist.photo }}" alt="{{ artist.name }}" loading="lazy">
+            <div class="artist-exp-badge">{{ artist.experience_years }}+ Yrs Exp</div>
+            <div class="artist-rating-badge">
+              <span style="color: var(--bright-gold);">★</span>
+              <span>{{ artist.rating }}</span>
+            </div>
+          </div>
+          <div class="artist-content">
+            <h3 class="artist-name">{{ artist.name }}</h3>
+            <div class="artist-title">{{ artist.title }}</div>
+
+            <div class="artist-specialties">
+              {% for spec in artist.specialty_list %}
+                <span class="spec-pill">{{ spec }}</span>
+              {% endfor %}
+            </div>
+
+            <p class="artist-bio">{{ artist.bio }}</p>
+
+            <div class="artist-card-actions">
+              <button 
+                type="button"
+                class="btn btn-outline-gold btn-sm btn-view-artist"
+                data-name="{{ artist.name }}"
+                data-title="{{ artist.title }}"
+                data-bio="{{ artist.bio }}"
+                data-photo="{{ artist.photo }}"
+                data-exp="{{ artist.experience_years }}"
+                data-rating="{{ artist.rating }}"
+                data-brides="{{ artist.completed_brides }}"
+                data-specs="{{ artist.specialties }}"
+                data-artist-id="{{ artist.id }}"
+              >
+                View Profile
+              </button>
+
+              <a 
+                href="{% url 'parlor:book' %}?artist={{ artist.id }}"
+                class="btn btn-gold btn-sm"
+              >
+                Book This Artist
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

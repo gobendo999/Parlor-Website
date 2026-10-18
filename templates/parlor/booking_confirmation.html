@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Confirmation #{{ appointment.booking_reference }} | {{ salon.name }}{% endblock %}
+
+{% block content %}
+<section class="section-padding bg-ivory">
+  <div class="container">
+    <div class="confirmation-slip">
+      <div class="confirmation-header">
+        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎉</div>
+        <span class="section-tag">Booking Request Received</span>
+        <h2 style="font-size: 2.2rem; margin-top: 0.5rem; margin-bottom: 0.5rem;">
+          Thank You, <span>{{ appointment.customer_name }}</span>!
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 550px; margin: 0 auto;">
+          Your appointment request has been securely registered in our system. A studio coordinator will contact you shortly to confirm schedule availability.
+        </p>
+        <div class="confirmation-ref-badge">
+          REF: {{ appointment.booking_reference }}
+        </div>
+      </div>
+
+      <!-- Booking Summary Details Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+        <div style="background: var(--warm-ivory); border: 1px solid rgba(212, 175, 55, 0.3); padding: 1.2rem; border-radius: 12px;">
+          <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--dark-gold); margin-bottom: 0.6rem;">Client Information</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 0.3rem;"><strong>Name:</strong> {{ appointment.customer_name }}</p>
+          <p style="font-size: 0.9rem; margin-bottom: 0.3rem;"><strong>Phone:</strong> {{ appointment.phone_number }}</p>
+          <p style="font-size: 0.9rem;"><strong>Location:</strong> {{ appointment.customer_address }}</p>
+        </div>
+
+        <div style="background: var(--warm-ivory); border: 1px solid rgba(212, 175, 55, 0.3); padding: 1.2rem; border-radius: 12px;">
+          <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--dark-gold); margin-bottom: 0.6rem;">Session Details</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 0.3rem;"><strong>Date:</strong> {{ appointment.appointment_date }}</p>
+          <p style="font-size: 0.9rem; margin-bottom: 0.3rem;"><strong>Time Slot:</strong> {{ appointment.preferred_time }}</p>
+          <p style="font-size: 0.9rem;"><strong>Event Type:</strong> {{ appointment.get_event_type_display }}</p>
+        </div>
+      </div>
+
+      <!-- Artist & Package Row -->
+      <div style="background: var(--soft-cream); border: 1px dashed rgba(212, 175, 55, 0.5); padding: 1.4rem; border-radius: 14px; margin-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">
+              {% if appointment.package %}
+                {{ appointment.package.name }}
+              {% elif appointment.service %}
+                {{ appointment.service.name }}
+              {% else %}
+                Bespoke Bridal Styling
+              {% endif %}
+            </h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              Preferred Stylist: <strong>{{ appointment.preferred_artist.name|default:"Assigned Senior Stylist" }}</strong>
+            </p>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600;">Estimated Cost</span>
+            <div style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; color: var(--dark-gold);">
+              ৳{{ appointment.estimated_amount|floatformat:0 }}
+            </div>
+          </div>
+        </div>
+
+        {% if appointment.special_requests %}
+          <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid rgba(212, 175, 55, 0.25); font-size: 0.85rem;">
+            <strong>Special Notes:</strong> {{ appointment.special_requests }}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Current Status Banner -->
+      <div style="text-align: center; margin-bottom: 2.2rem; padding: 1rem; border-radius: 10px; background: {% if appointment.status == 'confirmed' %}#ECFDF5; border: 1px solid #10B981; color: #065F46;{% else %}#FFFBEB; border: 1px solid #F59E0B; color: #92400E;{% endif %}">
+        <strong>Booking Status:</strong> 
+        <span style="text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">{{ appointment.get_status_display }}</span>
+        <p style="font-size: 0.82rem; margin-top: 0.3rem;">
+          {% if appointment.status == 'confirmed' %}
+            Your slot has been officially confirmed on our studio calendar!
+          {% else %}
+            This is currently a booking request. Our team will verify artist availability and call you within 2 hours.
+          {% endif %}
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <button onclick="window.print()" class="btn btn-outline-gold">
+          🖨️ Print Confirmation Slip
+        </button>
+        <a href="https://wa.me/{{ salon.whatsapp_number }}?text=Hello%20Nishi%20Makeup%20Artist,%20I%20have%20submitted%20booking%20reference%20{{ appointment.booking_reference }}%20for%20{{ appointment.customer_name }}." target="_blank" class="btn btn-gold">
+          💬 Send on WhatsApp
+        </a>
+        <a href="{% url 'parlor:home' %}" class="btn btn-white">
+          Back to Homepage
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

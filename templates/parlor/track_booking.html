@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Track Your Booking | {{ salon.name }}{% endblock %}
+
+{% block content %}
+<section class="section-padding bg-ivory">
+  <div class="container">
+    <div class="text-center" style="max-width: 650px; margin: 0 auto 3rem auto;">
+      <span class="section-tag">Self-Service Lookup</span>
+      <h2 class="section-title">Track Your <span>Appointment Status</span></h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Enter your unique booking reference number or the phone number used during reservation to view real-time appointment status.
+      </p>
+
+      <form method="get" action="{% url 'parlor:track_booking' %}" style="display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap;">
+        <input 
+          type="text" 
+          name="q" 
+          value="{{ query }}" 
+          placeholder="e.g. NB-2026-XXXX or 01904423317" 
+          class="form-control"
+          style="padding: 0.9rem 1.2rem; font-size: 1rem; flex: 1 1 240px;"
+          required
+        >
+        <button type="submit" class="btn btn-gold" style="white-space: nowrap; flex: 1 1 auto; justify-content: center;">
+          Check Status
+        </button>
+      </form>
+    </div>
+
+    <!-- Search Results -->
+    {% if searched %}
+      <div style="max-width: 800px; margin: 0 auto;">
+        {% if results %}
+          <h3 style="font-size: 1.4rem; margin-bottom: 1.2rem; color: var(--deep-brown);">
+            Found {{ results.count }} Appointment Record{{ results.count|pluralize }}:
+          </h3>
+
+          {% for appt in results %}
+            <div style="background: var(--white); border-radius: 18px; border: 1px solid rgba(212, 175, 55, 0.35); box-shadow: var(--card-shadow); padding: 1.8rem; margin-bottom: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
+                <div>
+                  <span style="font-family: monospace; font-size: 1.15rem; font-weight: 700; color: var(--dark-gold);">{{ appt.booking_reference }}</span>
+                  <div style="font-size: 0.82rem; color: var(--text-muted);">Booked on: {{ appt.created_at|date:"M d, Y" }}</div>
+                </div>
+
+                <div>
+                  {% if appt.status == 'confirmed' %}
+                    <span style="background: #ECFDF5; color: #065F46; border: 1px solid #10B981; padding: 0.35rem 1rem; border-radius: 30px; font-weight: 700; font-size: 0.82rem;">
+                      ✓ Confirmed Appointment
+                    </span>
+                  {% elif appt.status == 'completed' %}
+                    <span style="background: #EFF6FF; color: #1E40AF; border: 1px solid #3B82F6; padding: 0.35rem 1rem; border-radius: 30px; font-weight: 700; font-size: 0.82rem;">
+                      ★ Completed
+                    </span>
+                  {% elif appt.status == 'cancelled' %}
+                    <span style="background: #FEF2F2; color: #991B1B; border: 1px solid #EF4444; padding: 0.35rem 1rem; border-radius: 30px; font-weight: 700; font-size: 0.82rem;">
+                      ✕ Cancelled
+                    </span>
+                  {% else %}
+                    <span style="background: #FFFBEB; color: #92400E; border: 1px solid #F59E0B; padding: 0.35rem 1rem; border-radius: 30px; font-weight: 700; font-size: 0.82rem;">
+                      ⏳ Pending Studio Verification
+                    </span>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 0.9rem; margin-bottom: 1.2rem;">
+                <div><strong>Client:</strong> {{ appt.customer_name }}</div>
+                <div><strong>Date:</strong> {{ appt.appointment_date }}</div>
+                <div><strong>Time:</strong> {{ appt.preferred_time }}</div>
+                <div><strong>Event:</strong> {{ appt.get_event_type_display }}</div>
+                <div>
+                  <strong>Package/Service:</strong> 
+                  {% if appt.package %}{{ appt.package.name }}{% elif appt.service %}{{ appt.service.name }}{% else %}Bridal Styling{% endif %}
+                </div>
+                <div>
+                  <strong>Artist:</strong> 
+                  {% if appt.preferred_artist %}{{ appt.preferred_artist.name }}{% else %}Senior Stylist{% endif %}
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 0.8rem; border-top: 1px dashed rgba(212, 175, 55, 0.25); padding-top: 1rem;">
+                <a href="{% url 'parlor:booking_confirmation' reference=appt.booking_reference %}" class="btn btn-outline-gold btn-sm">
+                  View Full Slip
+                </a>
+                <a href="{{ salon_phone_tel }}" class="btn btn-gold btn-sm">
+                  Call Studio
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+
+        {% else %}
+          <div style="background: var(--white); border-radius: 16px; padding: 3rem; text-align: center; border: 1px solid rgba(212, 175, 55, 0.3);">
+            <div style="font-size: 2.5rem; margin-bottom: 0.8rem;">🔍</div>
+            <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">No Appointments Found</h3>
+            <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem;">
+              We couldn't locate any reservations matching "<strong>{{ query }}</strong>". Please double check your booking reference code or phone number.
+            </p>
+            <a href="{% url 'parlor:book' %}" class="btn btn-gold">
+              Make a New Booking
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

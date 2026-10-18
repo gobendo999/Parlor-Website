@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book Your Appointment | {{ salon.name }}{% endblock %}
+
+{% block content %}
+<section class="section-padding bg-ivory">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-tag">Online Reservation</span>
+      <h2 class="section-title">Book Your <span>Appointment Now</span></h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        Make your special day more beautiful. Select your makeup artist, choose your preferred package, and reserve your appointment with ease.
+      </p>
+    </div>
+
+    <div class="booking-card-wrapper">
+      <div class="booking-layout-grid">
+        <!-- Form Pane -->
+        <div class="booking-form-pane">
+          <div class="booking-form-header">
+            <h3>Schedule Your Session</h3>
+            <p>Fill out the fields below. We will confirm your slot within 2 hours.</p>
+          </div>
+
+          <form method="post" action="{% url 'parlor:book' %}" id="standaloneBookingForm">
+            {% csrf_token %}
+
+            <div class="booking-form-grid">
+              <div class="form-group">
+                <label class="form-label">Full Name <span class="required">*</span></label>
+                {{ form.customer_name }}
+                {% if form.customer_name.errors %}
+                  <div style="color: #D9534F; font-size: 0.8rem; margin-top: 0.3rem;">{{ form.customer_name.errors|striptags }}</div>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Phone Number <span class="required">*</span></label>
+                {{ form.phone_number }}
+                {% if form.phone_number.errors %}
+                  <div style="color: #D9534F; font-size: 0.8rem; margin-top: 0.3rem;">{{ form.phone_number.errors|striptags }}</div>
+                {% endif %}
+              </div>
+
+              <div class="form-group full-width">
+                <label class="form-label">Full Address / Location <span class="required">*</span></label>
+                {{ form.customer_address }}
+                {% if form.customer_address.errors %}
+                  <div style="color: #D9534F; font-size: 0.8rem; margin-top: 0.3rem;">{{ form.customer_address.errors|striptags }}</div>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Event Type <span class="required">*</span></label>
+                {{ form.event_type }}
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Makeup Package (Recommended)</label>
+                {{ form.package }}
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Specific Service (Optional)</label>
+                {{ form.service }}
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Appointment Date <span class="required">*</span></label>
+                {{ form.appointment_date }}
+                {% if form.appointment_date.errors %}
+                  <div style="color: #D9534F; font-size: 0.8rem; margin-top: 0.3rem;">{{ form.appointment_date.errors|striptags }}</div>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Preferred Time Slot <span class="required">*</span></label>
+                {{ form.preferred_time }}
+              </div>
+
+              <div class="form-group full-width">
+                <label class="form-label">Additional Notes or Special Requests</label>
+                {{ form.special_requests }}
+              </div>
+            </div>
+
+            <div class="checkbox-wrap">
+              {{ form.agree_terms }}
+              <label class="checkbox-label" for="agree_terms">
+                I agree to the studio appointment guidelines. I understand this reservation will be officially verified by the studio team.
+              </label>
+            </div>
+            {% if form.agree_terms.errors %}
+              <div style="color: #D9534F; font-size: 0.8rem; margin-bottom: 1rem;">{{ form.agree_terms.errors|striptags }}</div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-gold btn-lg" style="width: 100%;">
+              <span>✨ Confirm Booking Request</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Summary Pane -->
+        <div class="booking-summary-pane">
+          <div class="summary-header">
+            <h4>Live Summary</h4>
+            <p>Calculated reservation breakdown</p>
+          </div>
+
+          <div class="summary-details-list">
+            <div class="summary-detail-item">
+              <span class="summary-detail-label">Artist:</span>
+              <span class="summary-detail-val" id="summary-artist">Any Senior Stylist</span>
+            </div>
+
+            <div class="summary-detail-item">
+              <span class="summary-detail-label">Package:</span>
+              <span class="summary-detail-val text-gold" id="summary-package">None Selected</span>
+            </div>
+
+            <div class="summary-detail-item">
+              <span class="summary-detail-label">Service:</span>
+              <span class="summary-detail-val" id="summary-service">Standard Appointment</span>
+            </div>
+          </div>
+
+          <div class="summary-features-preview" id="summary-features-box" style="display: none;">
+            <h5>Included Features:</h5>
+            <ul id="summary-features-list"></ul>
+          </div>
+
+          <div class="summary-total-box">
+            <span class="total-title">Total Estimate:</span>
+            <span class="total-amount" id="summary-total">৳0</span>
+          </div>
+
+          <div class="booking-guarantee-note">
+            📞 Need immediate assistance or urgent bridal booking? <br>
+            Call us directly at <a href="{{ salon_phone_tel }}" style="color: var(--dark-gold); font-weight: 700;">{{ salon_phone }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  window.PACKAGES_DATA = JSON.parse('{{ packages_json|escapejs }}');
+  window.SERVICES_DATA = JSON.parse('{{ services_json|escapejs }}');
+</script>
+{% endblock %}
