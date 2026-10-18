@@ -45,7 +45,9 @@
   <header class="main-header">
     <div class="container navbar">
       <a href="{% url 'parlor:home' %}" class="brand-logo-wrap">
-        <div class="brand-crest">NM</div>
+        <div class="brand-crest">
+          <img src="{% static 'images/parlor_logo.jpg' %}" alt="Nishi Makeup Artist Logo">
+        </div>
         <div class="brand-text">
           <h1>Nishi <span>Makeup Artist</span></h1>
           <p>Makeup • Hair • Beauty Parlour</p>
@@ -125,7 +127,9 @@
         <!-- Col 1: Brand Info -->
         <div class="footer-brand">
           <div class="brand-logo-wrap" style="margin-bottom: 1rem;">
-            <div class="brand-crest" style="background: var(--bright-gold); color: #1a0e06;">NM</div>
+            <div class="brand-crest" style="border-color: var(--bright-gold);">
+              <img src="{% static 'images/parlor_logo.jpg' %}" alt="Nishi Makeup Artist Logo">
+            </div>
             <div class="brand-text">
               <h2 style="color: #fff; font-size: 1.35rem;">Nishi <span style="color: var(--bright-gold);">Makeup Artist</span></h2>
               <p style="color: var(--champagne); font-size: 0.72rem;">MAKEUP + HAIR + BEAUTY</p>

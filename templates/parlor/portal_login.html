@@ -92,14 +92,23 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 82px;
-      height: 82px;
+      width: 84px;
+      height: 84px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #FFE4E9 0%, #FFF5F7 50%, #F5D3B3 100%);
-      border: 2px solid var(--champagne-gold);
-      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.25);
+      border: 2.5px solid var(--champagne-gold);
+      box-shadow: 0 8px 22px rgba(212, 175, 55, 0.35);
       margin-bottom: 1.2rem;
       position: relative;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .crest-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 50%;
     }
 
     .crest-wrap span {
@@ -313,8 +322,7 @@
 
   <div class="login-container">
     <div class="crest-wrap">
-      <span>NM</span>
-      <div class="crest-sparkle">✨</div>
+      <img src="/static/images/parlor_logo.jpg" alt="Nishi Makeup Studio Logo">
     </div>
 
     <h1>নিশি মেকআপ স্টুডিও</h1>
