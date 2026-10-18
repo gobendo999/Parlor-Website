@@ -2,8 +2,10 @@
 # Exit immediately if a command exits with a non-zero status
 set -o errexit
 
-# 1. Install all dependencies from requirements.txt
+# 1. Upgrade pip and install all dependencies from requirements.txt
+python -m pip install --upgrade pip
 pip install -r requirements.txt
+
 
 # 2. Collect static files into staticfiles/ directory for WhiteNoise
 python manage.py collectstatic --noinput
