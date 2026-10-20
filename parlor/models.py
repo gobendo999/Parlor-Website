@@ -1,4 +1,5 @@
 import uuid
+import re
 from django.db import models
 from django.utils import timezone
 
@@ -97,6 +98,10 @@ class Service(models.Model):
     def __str__(self):
         return f"{self.name} (৳{self.starting_price})"
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('parlor:service_detail', kwargs={'slug': self.slug})
+
 
 class Package(models.Model):
     name = models.CharField(max_length=150)
@@ -128,6 +133,10 @@ class Package(models.Model):
         if not self.bonus_perks:
             return []
         return [b.strip() for b in self.bonus_perks.split('\n') if b.strip()]
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('parlor:package_detail', kwargs={'slug': self.slug})
 
 
 class Appointment(models.Model):
@@ -194,6 +203,59 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"{self.booking_reference} - {self.customer_name} ({self.get_status_display()})"
+
+    @property
+    def clean_whatsapp_number(self):
+        """Standardize phone number for WhatsApp international routing (880XXXXXXXXXX)."""
+        raw = re.sub(r'\D', '', self.phone_number or '')
+        if raw.startswith('880'):
+            return raw
+        elif raw.startswith('0'):
+            return '88' + raw
+        elif len(raw) == 10 and raw.startswith('1'):
+            return '880' + raw
+        return raw
+
+    def get_whatsapp_confirmation_text(self, request=None):
+        """Format the exact WhatsApp confirmation text with booking reference and status tracking URL."""
+        if request:
+            base_url = request.build_absolute_uri('/')[:-1]
+        else:
+            base_url = "http://127.0.0.1:8000"
+        track_url = f"{base_url}/track-booking/?q={self.booking_reference}"
+
+        if self.package:
+            item_name = f"প্যাকেজ: {self.package.name}"
+        elif self.service:
+            item_name = f"সার্ভিস: {self.service.name}"
+        else:
+            item_name = "কাস্টম পার্লার / মেকআপ সার্ভিস"
+
+        msg = (
+            f"🌸 *Nishi Makeup Artist & Beauty Parlour* 🌸\n\n"
+            f"প্রিয় {self.customer_name},\n"
+            f"আপনার পার্লার বুকিং রিকোয়েস্টটি সফলভাবে গ্রহণ করা হয়েছে! ✨\n\n"
+            f"📋 *বুকিং বিবরণী:*\n"
+            f"• বুকিং রেফারেন্স নম্বর: *{self.booking_reference}*\n"
+            f"• সিলেক্টেড সার্ভিস/প্যাকেজ: {item_name}\n"
+            f"• তারিখ: {self.appointment_date}\n"
+            f"• সময় স্লট: {self.preferred_time}\n"
+            f"• আনুমানিক বিল: ৳{int(self.estimated_amount)}\n"
+            f"• বর্তমান স্ট্যাটাস: অপেক্ষমাণ ({self.get_status_display()})\n\n"
+            f"🔍 *বুকিং স্ট্যাটাস চেক করতে:*\n"
+            f"আপনার বুকিং সংক্রান্ত যেকোনো আপডেট বা স্ট্যাটাস চেক করার জন্য এই রেফারেন্স নম্বরটি (*{self.booking_reference}*) দিয়ে নিচের লিংকে ট্র্যাক করতে পারবেন:\n"
+            f"👉 {track_url}\n\n"
+            f"আমাদের স্টুডিও প্রতিনিধি খুব দ্রুত আপনার সাথে যোগাযোগ করে শিডিউল কনফার্ম করবেন।\n"
+            f"📞 হটলাইন: +880 1904-423317\n"
+            f"ধন্যবাদ! 💖"
+        )
+        return msg
+
+    def get_whatsapp_url(self, request=None):
+        from urllib.parse import quote
+        phone = self.clean_whatsapp_number
+        text = self.get_whatsapp_confirmation_text(request)
+        return f"https://api.whatsapp.com/send?phone={phone}&text={quote(text)}"
 
 
 class GalleryItem(models.Model):

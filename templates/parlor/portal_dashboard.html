@@ -1244,7 +1244,7 @@
                   </td>
                   <td>
                     <div class="customer-actions">
-                      <a href="https://wa.me/{{ appt.phone_number|cut:' '|cut:'-'|cut:'+' }}?text=Hello%20{{ appt.customer_name }}!%20Greeting%20from%20Nishi%20Makeup%20Artist%20%26%20Beauty%20Parlour.%20Your%20Booking%20Ref:%20{{ appt.booking_reference }}" target="_blank" class="action-btn-sm btn-wa" title="WhatsApp-এ মেসেজ পাঠান">
+                      <a href="{{ appt.get_whatsapp_url }}" target="_blank" class="action-btn-sm btn-wa" title="কাস্টমারকে WhatsApp কনফার্মেশন ও ট্র্যাকিং মেসেজ পাঠান">
                         💬 WhatsApp
                       </a>
                       <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call" title="সরাসরি কল দিন">
@@ -1319,7 +1319,7 @@
                   <td>
                     <strong>{{ appt.customer_name }}</strong><br>
                     <div class="customer-actions" style="margin-top: 0.3rem;">
-                      <a href="https://wa.me/{{ appt.phone_number|cut:' '|cut:'-'|cut:'+' }}?text=Hello%20{{ appt.customer_name }}!%20Greeting%20from%20Nishi%20Makeup%20Artist%20%26%20Beauty%20Parlour.%20Your%20Booking%20Ref:%20{{ appt.booking_reference }}" target="_blank" class="action-btn-sm btn-wa">
+                      <a href="{{ appt.get_whatsapp_url }}" target="_blank" class="action-btn-sm btn-wa" title="WhatsApp-এ কনফার্মেশন ও রেফারেন্স পাঠান">
                         💬 {{ appt.phone_number }}
                       </a>
                       <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call">

@@ -71,7 +71,7 @@
       </div>
 
       <!-- Current Status Banner -->
-      <div style="text-align: center; margin-bottom: 2.2rem; padding: 1rem; border-radius: 10px; background: {% if appointment.status == 'confirmed' %}#ECFDF5; border: 1px solid #10B981; color: #065F46;{% else %}#FFFBEB; border: 1px solid #F59E0B; color: #92400E;{% endif %}">
+      <div style="text-align: center; margin-bottom: 2rem; padding: 1rem; border-radius: 10px; background: {% if appointment.status == 'confirmed' %}#ECFDF5; border: 1px solid #10B981; color: #065F46;{% else %}#FFFBEB; border: 1px solid #F59E0B; color: #92400E;{% endif %}">
         <strong>Booking Status:</strong> 
         <span style="text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">{{ appointment.get_status_display }}</span>
         <p style="font-size: 0.82rem; margin-top: 0.3rem;">
@@ -83,13 +83,73 @@
         </p>
       </div>
 
+      <!-- WHATSAPP NOTIFICATION & TRACKING BOX (As Requested) -->
+      <div style="background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border: 2px solid #22C55E; border-radius: 16px; padding: 1.8rem; margin-bottom: 2.2rem; box-shadow: 0 10px 25px rgba(34, 197, 94, 0.12);">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.8rem;">
+            <div style="background: #25D366; color: #FFF; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);">
+              💬
+            </div>
+            <div>
+              <h4 style="margin: 0; font-size: 1.15rem; color: #14532D; font-weight: 700;">
+                WhatsApp বুকিং কনফার্মেশন ও ট্র্যাকিং স্লিপ
+              </h4>
+              <span style="font-size: 0.85rem; color: #166534;">
+                আপনার প্রদত্ত নম্বর: <strong>{{ appointment.phone_number }}</strong>
+              </span>
+            </div>
+          </div>
+          <span style="background: #BBF7D0; color: #14532D; font-size: 0.78rem; font-weight: 700; padding: 0.35rem 0.8rem; border-radius: 50px; border: 1px solid #86EFAC;">
+            ✓ SMS প্রস্তুত আছে
+          </span>
+        </div>
+
+        <p style="font-size: 0.9rem; color: #166534; line-height: 1.6; margin-bottom: 1.2rem;">
+          আপনার বুকিং রিকোয়েস্ট সফল হয়েছে। আপনার বুকিং রেফারেন্স নম্বর <strong>{{ appointment.booking_reference }}</strong> দিয়ে যেকোনো সময় বুকিং স্ট্যাটাস চেক করতে পারবেন। নিচের বাটনে ক্লিক করে সরাসরি আপনার WhatsApp-এ পূর্ণাঙ্গ স্লিপ ও ট্র্যাকিং লিংক সংরক্ষণ করুন:
+        </p>
+
+        <!-- Message Preview Box -->
+        <div style="background: #FFF; border: 1px dashed #86EFAC; border-radius: 10px; padding: 1rem 1.2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.86rem; color: #1E293B; line-height: 1.6; margin-bottom: 1.2rem; white-space: pre-line; max-height: 180px; overflow-y: auto;">
+{{ whatsapp_text }}
+        </div>
+
+        <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+          <a 
+            href="{{ whatsapp_url }}" 
+            target="_blank" 
+            class="btn btn-gold"
+            id="whatsappDirectBtn"
+            style="background: #25D366; border-color: #25D366; color: #FFF; font-weight: 700; flex: 1; min-width: 240px; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none;"
+          >
+            <span>📲</span> আপনার WhatsApp-এ কনফার্মেশন ও রেফারেন্স পাঠান / ওপেন করুন
+          </a>
+
+          <a 
+            href="{{ track_url }}" 
+            class="btn btn-outline-gold"
+            style="border-color: #166534; color: #166534; background: #FFF;"
+          >
+            🔍 স্ট্যাটাস ট্র্যাক করুন
+          </a>
+
+          <button 
+            type="button" 
+            onclick="navigator.clipboard.writeText('{{ appointment.booking_reference }}'); alert('রেফারেন্স কোড কপি হয়েছে: {{ appointment.booking_reference }}');" 
+            class="btn btn-white"
+            title="রেফারেন্স নম্বর কপি করুন"
+          >
+            📋 কোড কপি করুন
+          </button>
+        </div>
+      </div>
+
       <!-- Action Buttons -->
       <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
         <button onclick="window.print()" class="btn btn-outline-gold">
           🖨️ Print Confirmation Slip
         </button>
         <a href="https://wa.me/{{ salon.whatsapp_number }}?text=Hello%20Nishi%20Makeup%20Artist,%20I%20have%20submitted%20booking%20reference%20{{ appointment.booking_reference }}%20for%20{{ appointment.customer_name }}." target="_blank" class="btn btn-gold">
-          💬 Send on WhatsApp
+          💬 পার্লারকে WhatsApp করুন
         </a>
         <a href="{% url 'parlor:home' %}" class="btn btn-white">
           Back to Homepage

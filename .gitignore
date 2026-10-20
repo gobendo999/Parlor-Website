@@ -18,3 +18,8 @@ staticfiles/
 # কোড এডিটর ফাইল
 .vscode/
 .idea/
+
+# পার্সোনাল সিভি ফাইল
+*.docx
+create_cv_docx.py
+generate_all_interview_materials.py

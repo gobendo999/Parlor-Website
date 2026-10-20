@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ package.name }} - Luxury Makeup Package | {{ salon.name }}{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb Header -->
+<div style="background: linear-gradient(135deg, #2D1A10 0%, #3B2618 100%); padding: 2.8rem 0; color: #FFFDF5; border-bottom: 2px solid var(--primary-gold);">
+  <div class="container">
+    <div style="font-size: 0.85rem; color: var(--champagne-gold); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+      <a href="{% url 'parlor:home' %}" style="color: var(--champagne-gold); text-decoration: none;">হোম (Home)</a>
+      <span>/</span>
+      <a href="{% url 'parlor:packages' %}" style="color: var(--champagne-gold); text-decoration: none;">প্যাকেজ সমূহ (Packages)</a>
+      <span>/</span>
+      <span style="color: var(--white); opacity: 0.85;">{{ package.name }}</span>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.2rem;">
+      <div>
+        {% if package.badge_text %}
+          <span class="section-tag" style="background: linear-gradient(135deg, #D4AF37, #AA7C11); color: #FFF; border: none; font-weight: 700; padding: 0.35rem 1rem;">
+            ⭐ {{ package.badge_text }}
+          </span>
+        {% else %}
+          <span class="section-tag" style="background: rgba(212,175,55,0.2); color: var(--champagne-gold); border-color: rgba(212,175,55,0.4);">
+            Luxury Glamour Package
+          </span>
+        {% endif %}
+        <h1 style="font-family: var(--font-serif); font-size: clamp(2rem, 4.5vw, 3rem); margin-top: 0.5rem; margin-bottom: 0.3rem; color: #FFFDF5;">
+          {{ package.name }}
+        </h1>
+        <p style="color: rgba(255,253,245,0.85); font-size: 1.05rem; max-width: 650px;">
+          {{ package.short_description }}
+        </p>
+      </div>
+
+      <div style="background: rgba(212,175,55,0.18); padding: 1.2rem 1.8rem; border-radius: 14px; border: 1px solid rgba(212,175,55,0.4); text-align: right;">
+        <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--champagne-gold);">প্যাকেজ অফার মূল্য</span>
+        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 700; color: var(--bright-gold);">
+          ৳{{ package.price|floatformat:0 }}
+        </div>
+        {% if package.original_price %}
+          <div style="font-size: 0.9rem; color: rgba(255,253,245,0.65); text-decoration: line-through;">
+            পূর্বমূল্য: ৳{{ package.original_price|floatformat:0 }}
+          </div>
+        {% endif %}
+        <span style="font-size: 0.82rem; color: var(--champagne-gold);">⏱ আনুমানিক সময়: {{ package.duration }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Section -->
+<section class="section-padding bg-ivory">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 3rem; align-items: start;">
+      
+      <!-- Left Column: Image, Cosmetics Brands & Highlights -->
+      <div>
+        <div style="position: relative; border-radius: 18px; overflow: hidden; box-shadow: 0 16px 36px rgba(59,38,24,0.14); border: 2px solid rgba(212,175,55,0.35);">
+          {% if package.image %}
+            <img 
+              src="{{ package.image }}" 
+              alt="{{ package.name }}" 
+              style="width: 100%; height: 440px; object-fit: cover; display: block;"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=800&auto=format&fit=crop&q=80';"
+            >
+          {% else %}
+            <div style="width: 100%; height: 380px; background: linear-gradient(135deg, #3B2618, #603D24); display: flex; align-items: center; justify-content: center; color: var(--champagne-gold); font-size: 5rem;">
+              👑
+            </div>
+          {% endif %}
+
+          <div style="position: absolute; top: 1.2rem; left: 1.2rem; background: rgba(59,38,24,0.88); color: var(--champagne-gold); backdrop-filter: blur(8px); padding: 0.45rem 1.1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(212,175,55,0.4);">
+            ⏱ {{ package.duration }}
+          </div>
+          {% if package.badge_text %}
+            <div style="position: absolute; top: 1.2rem; right: 1.2rem; background: linear-gradient(135deg, #FFD700, #D4AF37); color: #3B2618; padding: 0.45rem 1rem; border-radius: 50px; font-size: 0.82rem; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+              {{ package.badge_text }}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Cosmetics Vanity Showcase -->
+        <div style="background: var(--white); border: 1px solid rgba(212,175,55,0.28); border-radius: 14px; padding: 1.4rem; margin-top: 1.6rem;">
+          <h4 style="font-size: 0.95rem; text-transform: uppercase; color: var(--dark-gold); margin-bottom: 0.8rem; letter-spacing: 0.5px;">
+            💄 এই প্যাকেজে ব্যবহৃত আন্তর্জাতিক কসমেটিক্স:
+          </h4>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <span class="product-tag">M•A•C Cosmetics</span>
+            <span class="product-tag">Huda Beauty</span>
+            <span class="product-tag">Dior Backstage</span>
+            <span class="product-tag">NARS Cosmetics</span>
+            <span class="product-tag">Charlotte Tilbury</span>
+            <span class="product-tag">Anastasia Beverly Hills</span>
+            <span class="product-tag">Estée Lauder Double Wear</span>
+            <span class="product-tag">Kryolan HD Professional</span>
+          </div>
+        </div>
+
+        <!-- Hygiene & Care Promise -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+          <div style="background: var(--soft-cream); border: 1px solid rgba(212,175,55,0.25); padding: 1rem; border-radius: 12px; text-align: center;">
+            <div style="font-size: 1.5rem; margin-bottom: 0.2rem;">💎</div>
+            <strong style="font-size: 0.85rem; color: var(--text-dark); display: block;">100% আসল প্রডাক্ট</strong>
+            <small style="font-size: 0.75rem; color: var(--text-muted);">স্কিনের কোনো ক্ষতি হয় না</small>
+          </div>
+          <div style="background: var(--soft-cream); border: 1px solid rgba(212,175,55,0.25); padding: 1rem; border-radius: 12px; text-align: center;">
+            <div style="font-size: 1.5rem; margin-bottom: 0.2rem;">🌿</div>
+            <strong style="font-size: 0.85rem; color: var(--text-dark); display: block;">ক্লিনিক্যাল স্টেরিলাইজড</strong>
+            <small style="font-size: 0.75rem; color: var(--text-muted);">জীবাণুমুক্ত ব্রাশ ও স্পঞ্জ</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Features & Direct Booking -->
+      <div>
+        <div style="background: var(--white); border: 1px solid rgba(212,175,55,0.3); border-radius: 18px; padding: 2.2rem; box-shadow: 0 10px 30px rgba(59,38,24,0.06);">
+          
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 1.2rem;">
+            <div>
+              <span style="font-size: 0.8rem; text-transform: uppercase; color: var(--dark-gold); font-weight: 700;">প্যাকেজের বিশদ বিবরণ</span>
+              <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin: 0.2rem 0; color: var(--text-dark);">
+                {{ package.name }}
+              </h3>
+              <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">
+                {{ package.short_description }}
+              </p>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">নির্ধারিত ফি</span>
+              <span style="font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: var(--dark-gold);">
+                ৳{{ package.price|floatformat:0 }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Included Features List -->
+          <div style="margin-bottom: 2rem;">
+            <h4 style="font-size: 1.1rem; color: var(--text-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span>👑</span> এই প্যাকেজের সাথে যা যা অন্তর্ভুক্ত রয়েছে:
+            </h4>
+
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem;">
+              {% for feature in package.feature_list %}
+                <li style="display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.95rem; color: var(--text-dark); background: var(--warm-ivory); padding: 0.7rem 1rem; border-radius: 8px; border: 1px solid rgba(212,175,55,0.2);">
+                  <span style="color: var(--dark-gold); font-weight: 700; font-size: 1.1rem; line-height: 1;">✓</span>
+                  <span>{{ feature }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- Bonus Perks -->
+          {% if package.bonus_perks %}
+            <div style="background: linear-gradient(135deg, #FFF9EC, #FFF4D6); border: 1px solid var(--primary-gold); padding: 1.2rem; border-radius: 12px; margin-bottom: 2rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--deep-gold); font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem;">
+                <span>🎁</span> বিশেষ বোনাস উপহার (Complimentary Perk):
+              </div>
+              <p style="font-size: 0.92rem; color: #4A3B32; margin: 0; line-height: 1.6;">
+                {{ package.bonus_perks }}
+              </p>
+            </div>
+          {% endif %}
+
+          <!-- Booking Call To Action -->
+          <div style="background: linear-gradient(135deg, var(--warm-ivory), #FFFDF5); border: 2px dashed rgba(212,175,55,0.5); border-radius: 14px; padding: 1.8rem; text-align: center;">
+            <h4 style="font-size: 1.2rem; color: var(--text-dark); margin-bottom: 0.4rem;">
+              এই প্যাকেজটি নিশ্চিত করতে চান?
+            </h4>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.2rem;">
+              নিচের বাটনে ক্লিক করলে বুকিং ফর্মে এই প্যাকেজটি স্বয়ংক্রিয়ভাবে সিলেক্ট হয়ে যাবে এবং তাৎক্ষণিক লাইভ ক্যালকুলেশন দেখতে পাবেন।
+            </p>
+
+            <a 
+              href="{% url 'parlor:book' %}?package={{ package.id }}" 
+              class="btn btn-gold btn-lg btn-block"
+              style="width: 100%; font-size: 1.1rem; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.8rem;"
+            >
+              <span>👑</span> এই প্যাকেজটি বুক করুন (Book This Package)
+            </a>
+
+            <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
+              <a href="tel:{{ salon.phone_clean }}" class="btn btn-outline-gold btn-sm" style="display: flex; align-items: center; gap: 0.4rem;">
+                📞 কল করুন
+              </a>
+              <a href="https://wa.me/{{ salon.whatsapp_number }}?text=Hello%20Nishi%20Makeup%20Artist,%20I%20am%20interested%20in%20your%20{{ package.name|urlencode }}%20package." target="_blank" class="btn btn-white btn-sm" style="display: flex; align-items: center; gap: 0.4rem;">
+                💬 WhatsApp ইনকোয়ারি
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Other Luxury Packages Grid -->
+    {% if other_packages %}
+      <div style="margin-top: 4.5rem;">
+        <div class="text-center" style="margin-bottom: 2rem;">
+          <span class="section-tag">অন্যান্য প্যাকেজ সমূহ</span>
+          <h3 class="section-title">আমাদের আরও <span>জনপ্রিয় প্যাকেজ</span></h3>
+          <div class="gold-divider"></div>
+        </div>
+
+        <div class="packages-grid">
+          {% for opkg in other_packages %}
+            <div class="package-card {% if opkg.is_popular %}popular{% endif %}">
+              {% if opkg.image %}
+                <div class="package-img-wrap">
+                  <a href="{% url 'parlor:package_detail' opkg.slug %}">
+                    <img src="{{ opkg.image }}" alt="{{ opkg.name }}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';">
+                  </a>
+                  <div class="package-duration-pill">⏱ {{ opkg.duration }}</div>
+                </div>
+              {% endif %}
+
+              <div class="package-card-content">
+                <div class="package-header">
+                  <div class="package-tag">Package Option</div>
+                  <h3 class="package-name">
+                    <a href="{% url 'parlor:package_detail' opkg.slug %}" style="color: inherit; text-decoration: none;">
+                      {{ opkg.name }}
+                    </a>
+                  </h3>
+                  <p class="package-short-desc">{{ opkg.short_description }}</p>
+                </div>
+
+                <div class="package-pricing">
+                  <div class="current-price" style="font-size: 1.85rem;">
+                    <span>৳</span>{{ opkg.price|floatformat:0 }}
+                  </div>
+                </div>
+
+                <div style="margin-top: auto; padding-top: 1.2rem; display: flex; gap: 0.5rem;">
+                  <a href="{% url 'parlor:package_detail' opkg.slug %}" class="btn btn-outline-gold" style="flex: 1; text-align: center;">
+                    বিস্তারিত দেখুন
+                  </a>
+                  <a href="{% url 'parlor:book' %}?package={{ opkg.id }}" class="btn btn-gold" style="flex: 1; text-align: center;">
+                    বুক করুন
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}

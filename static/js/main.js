@@ -100,12 +100,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const summaryFeaturesBox = document.getElementById('summary-features-box');
   const summaryFeaturesList = document.getElementById('summary-features-list');
 
-  // Parse embedded package and service data if available in window
-  const packagesData = window.PACKAGES_DATA || {};
-  const servicesData = window.SERVICES_DATA || {};
-
+  // Parse embedded package and service data dynamically inside updateBookingSummary
   function updateBookingSummary() {
     let totalBDT = 0;
+    const packagesData = window.PACKAGES_DATA || {};
+    const servicesData = window.SERVICES_DATA || {};
 
     // Artist
     if (artistSelect && summaryArtist) {
@@ -156,6 +155,8 @@ document.addEventListener('DOMContentLoaded', function () {
       summaryTotal.textContent = totalBDT > 0 ? `৳${totalBDT.toLocaleString()}` : '৳0';
     }
   }
+
+  window.updateBookingSummary = updateBookingSummary;
 
   if (artistSelect) artistSelect.addEventListener('change', updateBookingSummary);
   if (serviceSelect) serviceSelect.addEventListener('change', updateBookingSummary);

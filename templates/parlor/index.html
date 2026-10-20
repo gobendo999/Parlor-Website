@@ -197,11 +197,17 @@
       {% for service in services %}
         <div class="service-card" data-category="{{ service.category.slug }}">
           <div class="service-card-img">
-            <img src="{{ service.image }}" alt="{{ service.name }}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';">
+            <a href="{% url 'parlor:service_detail' service.slug %}">
+              <img src="{{ service.image }}" alt="{{ service.name }}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';">
+            </a>
             <div class="service-duration-badge">⏱ {{ service.duration }}</div>
           </div>
           <div class="service-card-body">
-            <h3 class="service-card-title">{{ service.name }}</h3>
+            <h3 class="service-card-title">
+              <a href="{% url 'parlor:service_detail' service.slug %}" style="color: inherit; text-decoration: none;">
+                {{ service.name }}
+              </a>
+            </h3>
             <p class="service-card-desc">{{ service.short_description }}</p>
 
             <div class="service-card-footer">
@@ -209,13 +215,21 @@
                 <span class="price-label">Starts From</span>
                 <span class="price-value">৳{{ service.starting_price|floatformat:0 }}</span>
               </div>
-              <a 
-                href="#booking-section" 
-                class="btn btn-gold btn-sm btn-book-service"
-                data-service-id="{{ service.id }}"
-              >
-                Book This Service
-              </a>
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <a 
+                  href="{% url 'parlor:service_detail' service.slug %}" 
+                  class="btn btn-outline-gold btn-sm"
+                >
+                  বিস্তারিত
+                </a>
+                <a 
+                  href="#booking-section" 
+                  class="btn btn-gold btn-sm btn-book-service"
+                  data-service-id="{{ service.id }}"
+                >
+                  বুক করুন
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -241,7 +255,9 @@
         <div class="package-card {% if pkg.is_popular %}popular{% endif %}">
           {% if pkg.image %}
             <div class="package-img-wrap">
-              <img src="{{ pkg.image }}" alt="{{ pkg.name }}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';">
+              <a href="{% url 'parlor:package_detail' pkg.slug %}">
+                <img src="{{ pkg.image }}" alt="{{ pkg.name }}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';">
+              </a>
               <div class="package-duration-pill">
                 ⏱ {{ pkg.duration }}
               </div>
@@ -251,7 +267,11 @@
           <div class="package-card-content">
             <div class="package-header">
               <div class="package-tag">Package Option</div>
-              <h3 class="package-name">{{ pkg.name }}</h3>
+              <h3 class="package-name">
+                <a href="{% url 'parlor:package_detail' pkg.slug %}" style="color: inherit; text-decoration: none;">
+                  {{ pkg.name }}
+                </a>
+              </h3>
               <p class="package-short-desc">{{ pkg.short_description }}</p>
             </div>
 
@@ -279,14 +299,21 @@
               </div>
             {% endif %}
 
-            <div style="margin-top: auto; padding-top: 1.2rem;">
+            <div style="margin-top: auto; padding-top: 1.2rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <a 
+                href="{% url 'parlor:package_detail' pkg.slug %}" 
+                class="btn btn-outline-gold"
+                style="flex: 1; text-align: center; min-width: 120px;"
+              >
+                বিস্তারিত
+              </a>
               <a 
                 href="#booking-section"
-                class="btn btn-gold btn-block"
-                style="width: 100%;"
+                class="btn btn-gold btn-book-package"
+                style="flex: 1; text-align: center; min-width: 120px;"
                 data-package-id="{{ pkg.id }}"
               >
-                Book This Package
+                বুক করুন
               </a>
             </div>
           </div>

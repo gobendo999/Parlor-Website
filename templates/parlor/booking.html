@@ -24,6 +24,26 @@
             <p>Fill out the fields below. We will confirm your slot within 2 hours.</p>
           </div>
 
+          {% if preselected_item %}
+            <div style="background: linear-gradient(135deg, #FFFDF5, #FFF4D6); border: 2px solid var(--primary-gold); border-radius: 12px; padding: 1rem 1.4rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: 0 4px 15px rgba(212,175,55,0.15);">
+              <div style="display: flex; align-items: center; gap: 0.8rem;">
+                <span style="font-size: 1.8rem;">{% if item_type == 'package' %}👑{% else %}💅{% endif %}</span>
+                <div>
+                  <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--dark-gold); letter-spacing: 0.5px;">
+                    নির্বাচিত {% if item_type == 'package' %}প্যাকেজ (Selected Package){% else %}সার্ভিস (Selected Service){% endif %}
+                  </span>
+                  <h4 style="margin: 0; font-size: 1.15rem; color: var(--text-dark);">{{ preselected_item.name }}</h4>
+                  <small style="color: var(--text-muted);">এই আইটেমটি বুকিং ফর্মে স্বয়ংক্রিয়ভাবে সিলেক্ট করা হয়েছে।</small>
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <span style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--dark-gold);">
+                  ৳{% if item_type == 'package' %}{{ preselected_item.price|floatformat:0 }}{% else %}{{ preselected_item.starting_price|floatformat:0 }}{% endif %}
+                </span>
+              </div>
+            </div>
+          {% endif %}
+
           <form method="post" action="{% url 'parlor:book' %}" id="standaloneBookingForm">
             {% csrf_token %}
 
@@ -151,5 +171,8 @@
 <script>
   window.PACKAGES_DATA = JSON.parse('{{ packages_json|escapejs }}');
   window.SERVICES_DATA = JSON.parse('{{ services_json|escapejs }}');
+  if (typeof window.updateBookingSummary === 'function') {
+    window.updateBookingSummary();
+  }
 </script>
 {% endblock %}

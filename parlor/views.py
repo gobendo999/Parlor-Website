@@ -25,6 +25,7 @@ from .models import (
     Testimonial,
     ContactInquiry,
 )
+from .notifications import send_whatsapp_notification
 from .forms import (
     AppointmentBookingForm,
     ContactInquiryForm,
@@ -61,6 +62,10 @@ def index(request):
         booking_form = AppointmentBookingForm(request.POST)
         if booking_form.is_valid():
             appointment = booking_form.save()
+            try:
+                send_whatsapp_notification(appointment, request)
+            except Exception:
+                pass
             messages.success(
                 request,
                 f"Your appointment request has been submitted successfully! Your booking reference is {appointment.booking_reference}."
@@ -111,11 +116,42 @@ def services_view(request):
     })
 
 
+def service_detail(request, slug):
+    """Dedicated luxury showcase page for an individual parlour service."""
+    service = get_object_or_404(Service, slug=slug, is_active=True)
+    related_services = Service.objects.filter(
+        category=service.category,
+        is_active=True
+    ).exclude(id=service.id)[:4]
+
+    if related_services.count() < 3:
+        extra = Service.objects.filter(is_active=True).exclude(id=service.id).exclude(id__in=[s.id for s in related_services])[:4 - related_services.count()]
+        related_services = list(related_services) + list(extra)
+
+    return render(request, 'parlor/service_detail.html', {
+        'service': service,
+        'related_services': related_services,
+        'active_page': 'services',
+    })
+
+
 def packages_view(request):
     """Dedicated Packages & Pricing page."""
     packages = Package.objects.filter(is_active=True)
     return render(request, 'parlor/packages.html', {
         'packages': packages,
+        'active_page': 'packages',
+    })
+
+
+def package_detail(request, slug):
+    """Dedicated luxury showcase page for a makeup package."""
+    package = get_object_or_404(Package, slug=slug, is_active=True)
+    other_packages = Package.objects.filter(is_active=True).exclude(id=package.id)[:3]
+
+    return render(request, 'parlor/package_detail.html', {
+        'package': package,
+        'other_packages': other_packages,
         'active_page': 'packages',
     })
 
@@ -143,15 +179,35 @@ def gallery_view(request):
 def book_appointment(request):
     """Dedicated Booking page with interactive calculations."""
     initial_data = {}
+    preselected_item = None
+    item_type = None
+
     if request.GET.get('service'):
-        initial_data['service'] = request.GET.get('service')
+        srv_id = request.GET.get('service')
+        initial_data['service'] = srv_id
+        try:
+            preselected_item = Service.objects.get(id=srv_id, is_active=True)
+            item_type = 'service'
+        except (Service.DoesNotExist, ValueError):
+            pass
+
     if request.GET.get('package'):
-        initial_data['package'] = request.GET.get('package')
+        pkg_id = request.GET.get('package')
+        initial_data['package'] = pkg_id
+        try:
+            preselected_item = Package.objects.get(id=pkg_id, is_active=True)
+            item_type = 'package'
+        except (Package.DoesNotExist, ValueError):
+            pass
 
     if request.method == 'POST':
         form = AppointmentBookingForm(request.POST)
         if form.is_valid():
             appointment = form.save()
+            try:
+                send_whatsapp_notification(appointment, request)
+            except Exception:
+                pass
             messages.success(
                 request,
                 f"Booking submitted successfully! Reference: {appointment.booking_reference}"
@@ -192,6 +248,8 @@ def book_appointment(request):
         'artists': artists,
         'packages': packages,
         'services': services,
+        'preselected_item': preselected_item,
+        'item_type': item_type,
         'packages_json': json.dumps(packages_json),
         'services_json': json.dumps(services_json),
         'active_page': 'booking',
@@ -201,8 +259,15 @@ def book_appointment(request):
 def booking_confirmation(request, reference):
     """Confirmation page with complete booking breakdown, reference code, and status."""
     appointment = get_object_or_404(Appointment, booking_reference=reference)
+    track_url = request.build_absolute_uri(f"/track-booking/?q={appointment.booking_reference}")
+    whatsapp_url = appointment.get_whatsapp_url(request)
+    whatsapp_text = appointment.get_whatsapp_confirmation_text(request)
+
     return render(request, 'parlor/booking_confirmation.html', {
         'appointment': appointment,
+        'track_url': track_url,
+        'whatsapp_url': whatsapp_url,
+        'whatsapp_text': whatsapp_text,
         'active_page': 'booking',
     })
 
