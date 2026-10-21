@@ -221,7 +221,7 @@ class Appointment(models.Model):
         if request:
             base_url = request.build_absolute_uri('/')[:-1]
         else:
-            base_url = "http://127.0.0.1:8000"
+            base_url = "https://parlor-website.onrender.com"
         track_url = f"{base_url}/track-booking/?q={self.booking_reference}"
 
         if self.package:

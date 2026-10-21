@@ -48,32 +48,43 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 't')
 
-# ALLOWED_HOSTS parsing (strips extra spaces and ignores empty entries)
-ALLOWED_HOSTS = ['*'] if DEBUG else [
-    host.strip() 
-    for host in os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',') 
-    if host.strip()
+# ALLOWED_HOSTS configuration (Explicit Render Host + Localhost)
+ALLOWED_HOSTS = [
+    'parlor-website.onrender.com',
+    '.onrender.com',
+    '127.0.0.1',
+    'localhost',
+    '0.0.0.0',
 ]
 
-# Automatically support Render deployment hostname
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    if RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS and '*' not in ALLOWED_HOSTS:
-        ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+# When DEBUG is True, allow all hosts for local development flexibility
+if DEBUG and '*' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('*')
 
-# Ensure .onrender.com is supported when deploying on Render
-if not DEBUG and '*' not in ALLOWED_HOSTS:
-    if '.onrender.com' not in ALLOWED_HOSTS:
-        ALLOWED_HOSTS.append('.onrender.com')
+# Include any extra hosts from environment variable
+extra_hosts = os.environ.get('ALLOWED_HOSTS', '')
+if extra_hosts:
+    for h in extra_hosts.split(','):
+        h = h.strip()
+        if h and h not in ALLOWED_HOSTS:
+            ALLOWED_HOSTS.append(h)
+
+# Automatically support Render deployment hostname variable
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # CSRF Trusted Origins for Render and custom domains over HTTPS
 CSRF_TRUSTED_ORIGINS = [
-    f"https://{host.lstrip('.')}"
-    for host in ALLOWED_HOSTS
-    if host not in ('*', '127.0.0.1', 'localhost')
+    'https://parlor-website.onrender.com',
+    'https://*.onrender.com',
 ]
-if 'https://*.onrender.com' not in CSRF_TRUSTED_ORIGINS:
-    CSRF_TRUSTED_ORIGINS.append('https://*.onrender.com')
+
+for host in ALLOWED_HOSTS:
+    if host not in ('*', '127.0.0.1', 'localhost', '0.0.0.0') and not host.startswith('.'):
+        origin = f"https://{host}"
+        if origin not in CSRF_TRUSTED_ORIGINS:
+            CSRF_TRUSTED_ORIGINS.append(origin)
 
 # Add extra CSRF origins from environment if provided
 extra_csrf = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
