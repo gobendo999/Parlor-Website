@@ -194,6 +194,22 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email Configuration (Gmail SMTP for Password Reset & Notifications)
+EMAIL_BACKEND = os.environ.get(
+    'EMAIL_BACKEND', 
+    'django.core.mail.backends.smtp.EmailBackend'
+)
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('true', '1', 't')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'gobendo378@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'tjuimthbhkmvaqgl')
+DEFAULT_FROM_EMAIL = os.environ.get(
+    'DEFAULT_FROM_EMAIL', 
+    'Nishi Makeup Artist & Beauty Parlour <gobendo378@gmail.com>'
+)
+
+
 LOGIN_URL = '/nishi-portal/login/'
 LOGIN_REDIRECT_URL = '/nishi-portal/'
 LOGOUT_REDIRECT_URL = '/nishi-portal/login/'

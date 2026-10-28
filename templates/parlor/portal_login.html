@@ -352,6 +352,11 @@
           {{ form.password }}
           <button type="button" class="pw-toggle" onclick="togglePasswordVisibility()" title="পাসওয়ার্ড দেখুন">👁️</button>
         </div>
+        <div style="display: flex; justify-content: flex-end; margin-top: 0.5rem;">
+          <a href="{% url 'parlor:password_reset' %}" style="color: var(--rose-gold-dark); font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--deep-berry)'" onmouseout="this.style.color='var(--rose-gold-dark)'">
+            🔑 পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)
+          </a>
+        </div>
       </div>
 
       <button type="submit" class="btn-login">

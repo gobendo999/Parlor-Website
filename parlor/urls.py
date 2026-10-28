@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, reverse_lazy
+from django.contrib.auth import views as auth_views
 from . import views
 
 app_name = 'parlor'
@@ -31,4 +32,40 @@ urlpatterns = [
     path('nishi-portal/gallery/<int:pk>/delete/', views.portal_gallery_delete, name='portal_gallery_delete'),
     path('nishi-portal/profile/save/', views.portal_profile_save, name='portal_profile_save'),
     path('nishi-portal/password/change/', views.portal_password_change, name='portal_password_change'),
+
+    # Forgot Password Workflow
+    path(
+        'nishi-portal/password-reset/',
+        auth_views.PasswordResetView.as_view(
+            template_name='parlor/password_reset_form.html',
+            email_template_name='parlor/password_reset_email.txt',
+            html_email_template_name='parlor/password_reset_email.html',
+            subject_template_name='parlor/password_reset_subject.txt',
+            success_url=reverse_lazy('parlor:password_reset_done'),
+            extra_email_context={'salon_name': 'Nishi Makeup Artist & Beauty Parlour'}
+        ),
+        name='password_reset'
+    ),
+    path(
+        'nishi-portal/password-reset/done/',
+        auth_views.PasswordResetDoneView.as_view(
+            template_name='parlor/password_reset_done.html'
+        ),
+        name='password_reset_done'
+    ),
+    path(
+        'nishi-portal/password-reset-confirm/<uidb64>/<token>/',
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name='parlor/password_reset_confirm.html',
+            success_url=reverse_lazy('parlor:password_reset_complete')
+        ),
+        name='password_reset_confirm'
+    ),
+    path(
+        'nishi-portal/password-reset/complete/',
+        auth_views.PasswordResetCompleteView.as_view(
+            template_name='parlor/password_reset_complete.html'
+        ),
+        name='password_reset_complete'
+    ),
 ]
