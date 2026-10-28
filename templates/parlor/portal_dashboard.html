@@ -622,6 +622,35 @@
       box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.15);
     }
 
+    .pw-toggle-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .pw-toggle-wrap .portal-input {
+      padding-right: 2.8rem;
+    }
+    .pw-toggle-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.15rem;
+      color: #7A656E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      user-select: none;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .pw-toggle-btn:hover {
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+
     .portal-checkbox {
       width: 18px;
       height: 18px;
@@ -1634,19 +1663,28 @@
 
             <div class="portal-form-group">
               <label class="portal-form-label">বর্তমান পাসওয়ার্ড (Current Password) *</label>
-              <input type="password" name="current_password" class="portal-input" placeholder="আপনার বর্তমান পাসওয়ার্ড লিখুন" required autocomplete="current-password">
+              <div class="pw-toggle-wrap">
+                <input type="password" id="cur_pw" name="current_password" class="portal-input" placeholder="আপনার বর্তমান পাসওয়ার্ড লিখুন" required autocomplete="current-password">
+                <button type="button" class="pw-toggle-btn" onclick="togglePw('cur_pw', this)" title="পাসওয়ার্ড দেখুন">👁️</button>
+              </div>
               <small style="color: var(--rose-gold-dark);">ভেরিফিকেশনের জন্য বর্তমান পাসওয়ার্ড দেওয়া আবশ্যক</small>
             </div>
 
             <div class="portal-form-group">
               <label class="portal-form-label">নতুন পাসওয়ার্ড (New Password)</label>
-              <input type="password" name="new_password" class="portal-input" placeholder="পরিবর্তন না করতে চাইলে খালি রাখুন" autocomplete="new-password">
+              <div class="pw-toggle-wrap">
+                <input type="password" id="new_pw" name="new_password" class="portal-input" placeholder="পরিবর্তন না করতে চাইলে খালি রাখুন" autocomplete="new-password">
+                <button type="button" class="pw-toggle-btn" onclick="togglePw('new_pw', this)" title="পাসওয়ার্ড দেখুন">👁️</button>
+              </div>
               <small style="color: var(--text-muted);">কমপক্ষে ৬ অক্ষরের একটি নতুন পাসওয়ার্ড দিন</small>
             </div>
 
             <div class="portal-form-group">
               <label class="portal-form-label">নতুন পাসওয়ার্ড নিশ্চিত করুন (Confirm Password)</label>
-              <input type="password" name="confirm_password" class="portal-input" placeholder="নতুন পাসওয়ার্ডটি আবার লিখুন" autocomplete="new-password">
+              <div class="pw-toggle-wrap">
+                <input type="password" id="conf_pw" name="confirm_password" class="portal-input" placeholder="নতুন পাসওয়ার্ডটি আবার লিখুন" autocomplete="new-password">
+                <button type="button" class="pw-toggle-btn" onclick="togglePw('conf_pw', this)" title="পাসওয়ার্ড দেখুন">👁️</button>
+              </div>
             </div>
           </div>
 
@@ -1927,6 +1965,20 @@
 
   <!-- INTERACTIVE JAVASCRIPT WITH LIVE IMAGE PREVIEW -->
   <script>
+    function togglePw(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerText = '🙈';
+        btn.title = 'পাসওয়ার্ড লুকান';
+      } else {
+        input.type = 'password';
+        btn.innerText = '👁️';
+        btn.title = 'পাসওয়ার্ড দেখুন';
+      }
+    }
+
     function closeModal(modalId) {
       document.getElementById(modalId).classList.remove('active');
     }
