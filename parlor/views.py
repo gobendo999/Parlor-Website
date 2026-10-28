@@ -633,6 +633,7 @@ def portal_password_change(request):
     """Change username and/or password for the currently logged in owner."""
     user = request.user
     new_username = request.POST.get('username', '').strip()
+    new_email = request.POST.get('email', '').strip()
     current_password = request.POST.get('current_password', '').strip()
     new_password = request.POST.get('new_password', '').strip()
     confirm_password = request.POST.get('confirm_password', '').strip()
@@ -654,6 +655,11 @@ def portal_password_change(request):
         user.username = new_username
         username_changed = True
 
+    email_changed = False
+    if new_email and new_email != user.email:
+        user.email = new_email
+        email_changed = True
+
     password_changed = False
     if new_password:
         if len(new_password) < 6:
@@ -672,6 +678,8 @@ def portal_password_change(request):
     msg_parts = []
     if username_changed:
         msg_parts.append(f"ইউজারনেম '{user.username}'")
+    if email_changed:
+        msg_parts.append(f"রিকভারি ইমেইল '{user.email}'")
     if password_changed:
         msg_parts.append("নতুন পাসওয়ার্ড")
     

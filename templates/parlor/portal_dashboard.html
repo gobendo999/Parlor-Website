@@ -1627,6 +1627,12 @@
             </div>
 
             <div class="portal-form-group">
+              <label class="portal-form-label">রিকভারি ইমেইল (Recovery Gmail / Email)</label>
+              <input type="email" name="email" value="{{ request.user.email }}" class="portal-input" placeholder="e.g. owner@gmail.com" required>
+              <small style="color: var(--text-muted);">পাসওয়ার্ড ভুলে গেলে এই জিমেইলে রিসেট লিংক যাবে</small>
+            </div>
+
+            <div class="portal-form-group">
               <label class="portal-form-label">বর্তমান পাসওয়ার্ড (Current Password) *</label>
               <input type="password" name="current_password" class="portal-input" placeholder="আপনার বর্তমান পাসওয়ার্ড লিখুন" required autocomplete="current-password">
               <small style="color: var(--rose-gold-dark);">ভেরিফিকেশনের জন্য বর্তমান পাসওয়ার্ড দেওয়া আবশ্যক</small>
