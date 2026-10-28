@@ -4,6 +4,11 @@ Django settings for Nishi Makeup Artist & Beauty Parlour project.
 
 from pathlib import Path
 import os
+import mimetypes
+
+# Fix Windows MIME type issue for CSS and JS
+mimetypes.add_type("text/css", ".css", True)
+mimetypes.add_type("application/javascript", ".js", True)
 
 try:
    
@@ -55,6 +60,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     '0.0.0.0',
+    
 ]
 
 # When DEBUG is True, allow all hosts for local development flexibility
