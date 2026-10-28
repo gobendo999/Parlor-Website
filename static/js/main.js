@@ -112,43 +112,60 @@ document.addEventListener('DOMContentLoaded', function () {
       summaryArtist.textContent = artistSelect.value ? selectedArtistName : 'Any Senior Stylist';
     }
 
-    // Package
-    let pkgSelected = false;
+    // Helper to extract numeric price from dropdown label text (e.g. "Basic Facial (৳800)" or "Gaye Holud Package - ৳2500")
+    function extractPrice(text) {
+      if (!text) return 0;
+      const m = text.match(/(?:৳|tk|bdt|\$)\s*([\d,]+)/i);
+      if (m && m[1]) {
+        return parseInt(m[1].replace(/,/g, ''), 10) || 0;
+      }
+      return 0;
+    }
+
+    // Package (adds to total)
+    let pkgPrice = 0;
     if (packageSelect && summaryPackage) {
       const pkgId = packageSelect.value;
       if (pkgId && packagesData[pkgId]) {
-        pkgSelected = true;
         const pkg = packagesData[pkgId];
-        summaryPackage.textContent = pkg.name;
-        totalBDT += pkg.price;
+        pkgPrice = Number(pkg.price) || 0;
+        summaryPackage.textContent = `${pkg.name} (৳${pkgPrice.toLocaleString()})`;
 
         if (summaryFeaturesBox && summaryFeaturesList) {
           summaryFeaturesBox.style.display = 'block';
-          summaryFeaturesList.innerHTML = pkg.features
+          summaryFeaturesList.innerHTML = (pkg.features || [])
             .map(f => `<li>✓ ${f}</li>`)
             .join('');
         }
+      } else if (packageSelect.value) {
+        const fallbackText = packageSelect.options[packageSelect.selectedIndex]?.text || '';
+        pkgPrice = extractPrice(fallbackText);
+        summaryPackage.textContent = fallbackText;
+        if (summaryFeaturesBox) summaryFeaturesBox.style.display = 'none';
       } else {
-        const fallbackText = packageSelect.options[packageSelect.selectedIndex]?.text;
-        summaryPackage.textContent = packageSelect.value ? fallbackText : 'None Selected';
+        summaryPackage.textContent = 'None Selected';
         if (summaryFeaturesBox) summaryFeaturesBox.style.display = 'none';
       }
     }
+    totalBDT += pkgPrice;
 
-    // Service
+    // Specific Service (ALWAYS adds to total as well)
+    let srvPrice = 0;
     if (serviceSelect && summaryService) {
       const srvId = serviceSelect.value;
       if (srvId && servicesData[srvId]) {
         const srv = servicesData[srvId];
-        summaryService.textContent = srv.name;
-        if (!pkgSelected) {
-          totalBDT += srv.price;
-        }
+        srvPrice = Number(srv.price) || 0;
+        summaryService.textContent = `${srv.name} (৳${srvPrice.toLocaleString()})`;
+      } else if (serviceSelect.value) {
+        const fallbackSrvText = serviceSelect.options[serviceSelect.selectedIndex]?.text || '';
+        srvPrice = extractPrice(fallbackSrvText);
+        summaryService.textContent = fallbackSrvText;
       } else {
-        const fallbackSrvText = serviceSelect.options[serviceSelect.selectedIndex]?.text;
-        summaryService.textContent = serviceSelect.value ? fallbackSrvText : 'Standard Appointment';
+        summaryService.textContent = 'None Selected';
       }
     }
+    totalBDT += srvPrice;
 
     // Update total amount display
     if (summaryTotal) {

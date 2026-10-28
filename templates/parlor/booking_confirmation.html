@@ -43,10 +43,12 @@
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
           <div>
             <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">
-              {% if appointment.package %}
-                {{ appointment.package.name }}
+              {% if appointment.package and appointment.service %}
+                👑 {{ appointment.package.name }} + ✨ {{ appointment.service.name }}
+              {% elif appointment.package %}
+                👑 {{ appointment.package.name }}
               {% elif appointment.service %}
-                {{ appointment.service.name }}
+                ✨ {{ appointment.service.name }}
               {% else %}
                 Bespoke Bridal Styling
               {% endif %}

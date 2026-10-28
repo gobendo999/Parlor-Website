@@ -74,7 +74,7 @@
                 <div><strong>Event:</strong> {{ appt.get_event_type_display }}</div>
                 <div>
                   <strong>Package/Service:</strong> 
-                  {% if appt.package %}{{ appt.package.name }}{% elif appt.service %}{{ appt.service.name }}{% else %}Bridal Styling{% endif %}
+                  {% if appt.package and appt.service %}{{ appt.package.name }} + {{ appt.service.name }}{% elif appt.package %}{{ appt.package.name }}{% elif appt.service %}{{ appt.service.name }}{% else %}Bridal Styling{% endif %}
                 </div>
                 <div>
                   <strong>Artist:</strong> 

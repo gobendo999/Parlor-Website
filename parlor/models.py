@@ -195,10 +195,13 @@ class Appointment(models.Model):
             year = timezone.now().year
             self.booking_reference = f"NB-{year}-{unique_part}"
         if not self.estimated_amount:
+            amount = 0
             if self.package:
-                self.estimated_amount = self.package.price
-            elif self.service:
-                self.estimated_amount = self.service.starting_price
+                amount += self.package.price
+            if self.service:
+                amount += self.service.starting_price
+            if amount > 0:
+                self.estimated_amount = amount
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -224,7 +227,9 @@ class Appointment(models.Model):
             base_url = "https://parlor-website.onrender.com"
         track_url = f"{base_url}/track-booking/?q={self.booking_reference}"
 
-        if self.package:
+        if self.package and self.service:
+            item_name = f"প্যাকেজ: {self.package.name} + সার্ভিস: {self.service.name}"
+        elif self.package:
             item_name = f"প্যাকেজ: {self.package.name}"
         elif self.service:
             item_name = f"সার্ভিস: {self.service.name}"

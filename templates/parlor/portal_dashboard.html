@@ -1257,7 +1257,10 @@
                     <span style="font-size: 0.8rem; color: var(--rose-gold);">{{ appt.preferred_time }}</span>
                   </td>
                   <td>
-                    {% if appt.package %}
+                    {% if appt.package and appt.service %}
+                      <span style="color: var(--deep-berry); font-weight: 600;">🎁 {{ appt.package.name }}</span><br>
+                      <small style="color: var(--text-muted); font-weight: 500;">💅 {{ appt.service.name }}</small>
+                    {% elif appt.package %}
                       <span style="color: var(--deep-berry); font-weight: 600;">🎁 {{ appt.package.name }}</span>
                     {% elif appt.service %}
                       <span style="color: var(--deep-berry); font-weight: 600;">💅 {{ appt.service.name }}</span>
@@ -1368,7 +1371,10 @@
                   </td>
                   <td>
                     <span style="font-size: 0.76rem; background: var(--blush-accent); padding: 2px 7px; border-radius: 4px; font-weight: 600;">{{ appt.get_event_type_display }}</span><br>
-                    {% if appt.package %}
+                    {% if appt.package and appt.service %}
+                      <strong>🎁 {{ appt.package.name }}</strong><br>
+                      <small style="color: var(--text-muted);">💅 {{ appt.service.name }}</small>
+                    {% elif appt.package %}
                       <strong>🎁 {{ appt.package.name }}</strong>
                     {% elif appt.service %}
                       <strong>💅 {{ appt.service.name }}</strong>
