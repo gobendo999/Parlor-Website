@@ -3,8 +3,8 @@ from datetime import date
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import (
-    Appointment, ContactInquiry, Artist, Service, Package,
-    SalonProfile, GalleryItem, ServiceCategory
+    Appointment, ContactInquiry, Service, Package,
+    SalonProfile, GalleryItem
 )
 
 
@@ -31,20 +31,26 @@ class AppointmentBookingForm(forms.ModelForm):
         widgets = {
             'customer_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter your full name (e.g. Nusrat Jahan)',
+                'placeholder': '',
                 'required': True,
                 'autocomplete': 'name',
             }),
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'e.g. 01904423317 or +880 1904-423317',
+                'type': 'tel',
+                'placeholder': '',
                 'required': True,
                 'autocomplete': 'tel',
+                'maxlength': '11',
+                'minlength': '11',
+                'pattern': '01[0-9]{9}',
+                'inputmode': 'numeric',
+                'title': 'ফোন নম্বরটি অবশ্যই ১১ ডিজিটের হতে হবে (যেমন: 01XXXXXXXXX)',
             }),
             'customer_address': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 2,
-                'placeholder': 'Enter your address or write "Studio Visit" (Dhanmondi, Dhaka)',
+                'placeholder': '',
                 'required': True,
             }),
             'service': forms.Select(attrs={
@@ -86,16 +92,17 @@ class AppointmentBookingForm(forms.ModelForm):
 
     def clean_phone_number(self):
         raw_phone = self.cleaned_data.get('phone_number', '').strip()
-        # Remove common separators like spaces, hyphens, brackets
-        cleaned_digits = re.sub(r'[\s\-\(\)\.]', '', raw_phone)
+        digits = re.sub(r'\D', '', raw_phone)
         
-        # Check standard BD formats: 01XXXXXXXXX (11 digits) or +8801XXXXXXXXX (14 digits) or 8801XXXXXXXXX (13 digits)
-        bd_match = re.search(r'^(?:\+?880|0)?1[3-9]\d{8}$', cleaned_digits)
-        if not bd_match and len(re.sub(r'\D', '', cleaned_digits)) < 10:
+        # If user included 880 at start (e.g. 88019...), normalize to 11 digits
+        if digits.startswith('880') and len(digits) == 13:
+            digits = '0' + digits[3:]
+            
+        if len(digits) != 11 or not digits.startswith('01'):
             raise ValidationError(
-                'Please enter a valid phone number (e.g., 01904-423317 or +8801904423317).'
+                'ফোন নম্বরটি অবশ্যই ১১ ডিজিটের হতে হবে (যেমন: 01XXXXXXXXX)।'
             )
-        return raw_phone
+        return digits
 
     def clean_appointment_date(self):
         appt_date = self.cleaned_data.get('appointment_date')

@@ -8,8 +8,6 @@ from parlor.models import (
     Service,
     Package,
     Appointment,
-    GalleryItem,
-    Testimonial,
 )
 from parlor.forms import AppointmentBookingForm
 

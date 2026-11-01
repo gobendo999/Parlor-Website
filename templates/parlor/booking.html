@@ -25,15 +25,14 @@
           </div>
 
           {% if preselected_item %}
-            <div style="background: linear-gradient(135deg, #FFFDF5, #FFF4D6); border: 2px solid var(--primary-gold); border-radius: 12px; padding: 1rem 1.4rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: 0 4px 15px rgba(212,175,55,0.15);">
-              <div style="display: flex; align-items: center; gap: 0.8rem;">
+            <div style="background: linear-gradient(135deg, #FFFDF5, #FFF4D6); border: 2px solid var(--primary-gold); border-radius: 12px; padding: 1rem 1.4rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: 0 4px 15px rgba(212,175,55,0.15); flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
                 <span style="font-size: 1.8rem;">{% if item_type == 'package' %}👑{% else %}💅{% endif %}</span>
                 <div>
                   <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--dark-gold); letter-spacing: 0.5px;">
                     নির্বাচিত {% if item_type == 'package' %}প্যাকেজ (Selected Package){% else %}সার্ভিস (Selected Service){% endif %}
                   </span>
                   <h4 style="margin: 0; font-size: 1.15rem; color: var(--text-dark);">{{ preselected_item.name }}</h4>
-                  <small style="color: var(--text-muted);">এই আইটেমটি বুকিং ফর্মে স্বয়ংক্রিয়ভাবে সিলেক্ট করা হয়েছে।</small>
                 </div>
               </div>
               <div style="text-align: right;">
@@ -173,6 +172,14 @@
   window.SERVICES_DATA = JSON.parse('{{ services_json|escapejs }}');
   if (typeof window.updateBookingSummary === 'function') {
     window.updateBookingSummary();
+  }
+
+  // Phone number strictly 11 digits validation
+  const phoneInput = document.querySelector('input[name="phone_number"]');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function() {
+      this.value = this.value.replace(/\D/g, '').slice(0, 11);
+    });
   }
 </script>
 {% endblock %}

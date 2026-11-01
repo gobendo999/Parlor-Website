@@ -10,13 +10,6 @@ import mimetypes
 mimetypes.add_type("text/css", ".css", True)
 mimetypes.add_type("application/javascript", ".js", True)
 
-try:
-   
-    from dotenv import load_dotenv
-except ImportError:
-    def load_dotenv(*args, **kwargs):
-        return False
-
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
