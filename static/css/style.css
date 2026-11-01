@@ -177,7 +177,10 @@ button, input, select, textarea {
   border: none;
   transition: var(--transition-smooth);
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.35;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .btn-block {

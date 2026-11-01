@@ -115,21 +115,21 @@
 {{ whatsapp_text }}
         </div>
 
-        <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+        <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: stretch;">
           <a 
             href="{{ whatsapp_url }}" 
             target="_blank" 
             class="btn btn-gold"
             id="whatsappDirectBtn"
-            style="background: #25D366; border-color: #25D366; color: #FFF; font-weight: 700; flex: 1; min-width: 240px; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none;"
+            style="background: #25D366; border-color: #25D366; color: #FFF; font-weight: 700; flex: 2 1 280px; min-width: 0; max-width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; white-space: normal; text-align: center; line-height: 1.35; padding: 0.85rem 1.2rem; box-sizing: border-box; border-radius: 50px;"
           >
-            <span>📲</span> আপনার WhatsApp-এ কনফার্মেশন ও রেফারেন্স পাঠান / ওপেন করুন
+            <span>💬</span> WhatsApp-এ কনফার্মেশন ও স্লিপ পাঠান
           </a>
 
           <a 
             href="{{ track_url }}" 
             class="btn btn-outline-gold"
-            style="border-color: #166534; color: #166534; background: #FFF;"
+            style="border-color: #166534; color: #166534; background: #FFF; flex: 1 1 180px; white-space: normal; text-align: center; line-height: 1.35; padding: 0.85rem 1rem; box-sizing: border-box; border-radius: 50px;"
           >
             🔍 স্ট্যাটাস ট্র্যাক করুন
           </a>
@@ -139,6 +139,7 @@
             onclick="navigator.clipboard.writeText('{{ appointment.booking_reference }}'); alert('রেফারেন্স কোড কপি হয়েছে: {{ appointment.booking_reference }}');" 
             class="btn btn-white"
             title="রেফারেন্স নম্বর কপি করুন"
+            style="flex: 1 1 140px; white-space: normal; text-align: center; line-height: 1.35; padding: 0.85rem 1rem; box-sizing: border-box; border-radius: 50px;"
           >
             📋 কোড কপি করুন
           </button>
