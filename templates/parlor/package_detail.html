@@ -66,8 +66,8 @@
               onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=800&auto=format&fit=crop&q=80';"
             >
           {% else %}
-            <div style="width: 100%; height: 380px; background: linear-gradient(135deg, #3B2618, #603D24); display: flex; align-items: center; justify-content: center; color: var(--champagne-gold); font-size: 5rem;">
-              👑
+            <div style="width: 100%; height: 380px; background: linear-gradient(135deg, #3B2618, #603D24); display: flex; align-items: center; justify-content: center; color: var(--champagne-gold); font-size: 2rem; font-weight: 700; font-family: var(--font-serif);">
+              {{ package.name }}
             </div>
           {% endif %}
 
@@ -84,7 +84,7 @@
         <!-- Cosmetics Vanity Showcase -->
         <div style="background: var(--white); border: 1px solid rgba(212,175,55,0.28); border-radius: 14px; padding: 1.4rem; margin-top: 1.6rem;">
           <h4 style="font-size: 0.95rem; text-transform: uppercase; color: var(--dark-gold); margin-bottom: 0.8rem; letter-spacing: 0.5px;">
-            💄 এই প্যাকেজে ব্যবহৃত আন্তর্জাতিক কসমেটিক্স:
+            এই প্যাকেজে ব্যবহৃত আন্তর্জাতিক কসমেটিক্স:
           </h4>
           <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
             <span class="product-tag">M•A•C Cosmetics</span>
@@ -138,7 +138,7 @@
           <!-- Included Features List -->
           <div style="margin-bottom: 2rem;">
             <h4 style="font-size: 1.1rem; color: var(--text-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-              <span>👑</span> এই প্যাকেজের সাথে যা যা অন্তর্ভুক্ত রয়েছে:
+              এই প্যাকেজের সাথে যা যা অন্তর্ভুক্ত রয়েছে:
             </h4>
 
             <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem;">
@@ -155,7 +155,7 @@
           {% if package.bonus_perks %}
             <div style="background: linear-gradient(135deg, #FFF9EC, #FFF4D6); border: 1px solid var(--primary-gold); padding: 1.2rem; border-radius: 12px; margin-bottom: 2rem;">
               <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--deep-gold); font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem;">
-                <span>🎁</span> বিশেষ বোনাস উপহার (Complimentary Perk):
+                বিশেষ বোনাস উপহার (Complimentary Perk):
               </div>
               <p style="font-size: 0.92rem; color: #4A3B32; margin: 0; line-height: 1.6;">
                 {{ package.bonus_perks }}
@@ -164,7 +164,7 @@
           {% endif %}
 
           <!-- Booking Call To Action -->
-          <div style="background: linear-gradient(135deg, var(--warm-ivory), #FFFDF5); border: 2px dashed rgba(212,175,55,0.5); border-radius: 14px; padding: 1.8rem; text-align: center;">
+          <div style="background: linear-gradient(135deg, var(--warm-ivory), #FFFDF5); border: 2px dashed rgba(212,175,55,0.5); border-radius: 14px; padding: 1.5rem 1rem; text-align: center; box-sizing: border-box; width: 100%; max-width: 100%;">
             <h4 style="font-size: 1.2rem; color: var(--text-dark); margin-bottom: 0.4rem;">
               এই প্যাকেজটি নিশ্চিত করতে চান?
             </h4>
@@ -175,9 +175,9 @@
             <a 
               href="{% url 'parlor:book' %}?package={{ package.id }}" 
               class="btn btn-gold btn-lg btn-block"
-              style="width: 100%; font-size: 1.1rem; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.8rem;"
+              style="width: 100%; max-width: 100%; font-size: clamp(0.92rem, 3.2vw, 1.05rem); padding: 0.85rem 1.1rem; display: flex; align-items: center; justify-content: center; margin-bottom: 0.8rem; white-space: normal; text-align: center; line-height: 1.35; box-sizing: border-box; border-radius: 50px;"
             >
-              <span>👑</span> এই প্যাকেজটি বুক করুন (Book This Package)
+              এই প্যাকেজটি বুক করুন (Book This Package)
             </a>
 
             <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">

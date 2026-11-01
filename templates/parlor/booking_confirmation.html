@@ -44,11 +44,11 @@
           <div>
             <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem;">
               {% if appointment.package and appointment.service %}
-                👑 {{ appointment.package.name }} + ✨ {{ appointment.service.name }}
+                {{ appointment.package.name }} + {{ appointment.service.name }}
               {% elif appointment.package %}
-                👑 {{ appointment.package.name }}
+                {{ appointment.package.name }}
               {% elif appointment.service %}
-                ✨ {{ appointment.service.name }}
+                {{ appointment.service.name }}
               {% else %}
                 Bespoke Bridal Styling
               {% endif %}

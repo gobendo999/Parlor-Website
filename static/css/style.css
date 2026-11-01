@@ -180,6 +180,17 @@ button, input, select, textarea {
   white-space: nowrap;
 }
 
+.btn-block {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  white-space: normal !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  line-height: 1.35 !important;
+  word-break: normal !important;
+}
+
 .btn-gold {
   background: var(--gold-gradient);
   color: #24140A;
@@ -2035,6 +2046,18 @@ textarea.form-control {
   }
   .top-bar {
     display: none; /* Simplifies header clutter on mobile */
+  }
+
+  /* Responsive Buttons on Mobile */
+  .btn {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.35;
+    max-width: 100%;
+  }
+  .btn-lg {
+    padding: 0.85rem 1.15rem;
+    font-size: 0.95rem;
   }
 
   /* Header Brand & Navigation */

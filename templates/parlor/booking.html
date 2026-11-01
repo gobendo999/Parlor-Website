@@ -27,7 +27,6 @@
           {% if preselected_item %}
             <div style="background: linear-gradient(135deg, #FFFDF5, #FFF4D6); border: 2px solid var(--primary-gold); border-radius: 12px; padding: 1rem 1.4rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: 0 4px 15px rgba(212,175,55,0.15); flex-wrap: wrap;">
               <div style="display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
-                <span style="font-size: 1.8rem;">{% if item_type == 'package' %}👑{% else %}💅{% endif %}</span>
                 <div>
                   <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--dark-gold); letter-spacing: 0.5px;">
                     নির্বাচিত {% if item_type == 'package' %}প্যাকেজ (Selected Package){% else %}সার্ভিস (Selected Service){% endif %}
@@ -116,7 +115,7 @@
             {% endif %}
 
             <button type="submit" class="btn btn-gold btn-lg" style="width: 100%;">
-              <span>✨ Confirm Booking Request</span>
+              <span>Confirm Booking Request</span>
             </button>
           </form>
         </div>

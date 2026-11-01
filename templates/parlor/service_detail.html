@@ -62,17 +62,17 @@
         <!-- Trust Badges -->
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem;">
           <div style="background: var(--white); border: 1px solid rgba(212,175,55,0.25); padding: 1rem; border-radius: 12px; text-align: center;">
-            <div style="font-size: 1.6rem; margin-bottom: 0.3rem;">✨</div>
+            <div style="font-size: 1.4rem; margin-bottom: 0.3rem; color: var(--dark-gold);">★</div>
             <strong style="font-size: 0.85rem; color: var(--text-dark); display: block;">১০০% অরিজিনাল</strong>
             <small style="font-size: 0.75rem; color: var(--text-muted);">ইন্টারন্যাশনাল ব্র্যান্ড</small>
           </div>
           <div style="background: var(--white); border: 1px solid rgba(212,175,55,0.25); padding: 1rem; border-radius: 12px; text-align: center;">
-            <div style="font-size: 1.6rem; margin-bottom: 0.3rem;">🌿</div>
+            <div style="font-size: 1.4rem; margin-bottom: 0.3rem; color: #10B981;">✓</div>
             <strong style="font-size: 0.85rem; color: var(--text-dark); display: block;">ক্লিনিক্যাল হাইজিন</strong>
             <small style="font-size: 0.75rem; color: var(--text-muted);">জীবাণুমুক্ত কিট</small>
           </div>
           <div style="background: var(--white); border: 1px solid rgba(212,175,55,0.25); padding: 1rem; border-radius: 12px; text-align: center;">
-            <div style="font-size: 1.6rem; margin-bottom: 0.3rem;">👑</div>
+            <div style="font-size: 1.4rem; margin-bottom: 0.3rem; color: var(--dark-gold);">✦</div>
             <strong style="font-size: 0.85rem; color: var(--text-dark); display: block;">মাস্টার আর্টিস্ট</strong>
             <small style="font-size: 0.75rem; color: var(--text-muted);">৮+ বছরের অভিজ্ঞতা</small>
           </div>
@@ -94,7 +94,7 @@
           </div>
 
           <h4 style="font-size: 1.05rem; color: var(--text-dark); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-            <span>🌸</span> সার্ভিস বিবরণ ও উপকারিতা (Overview)
+            সার্ভিস বিবরণ ও উপকারিতা (Overview)
           </h4>
           <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-dark); margin-bottom: 1.5rem;">
             {{ service.short_description }}
@@ -110,7 +110,7 @@
           {% endif %}
 
           <!-- Booking Call to Action Box -->
-          <div style="background: linear-gradient(135deg, var(--warm-ivory), #FFF9EC); border: 2px dashed rgba(212,175,55,0.5); border-radius: 14px; padding: 1.6rem; text-align: center; margin-top: 1.5rem;">
+          <div style="background: linear-gradient(135deg, var(--warm-ivory), #FFF9EC); border: 2px dashed rgba(212,175,55,0.5); border-radius: 14px; padding: 1.5rem 1rem; text-align: center; margin-top: 1.5rem; box-sizing: border-box; width: 100%; max-width: 100%;">
             <h4 style="font-size: 1.15rem; color: var(--text-dark); margin-bottom: 0.4rem;">
               এই সার্ভিসটি নিতে আগ্রহী?
             </h4>
@@ -121,9 +121,9 @@
             <a 
               href="{% url 'parlor:book' %}?service={{ service.id }}" 
               class="btn btn-gold btn-lg btn-block"
-              style="width: 100%; font-size: 1.05rem; padding: 0.95rem 1.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.8rem;"
+              style="width: 100%; max-width: 100%; font-size: clamp(0.92rem, 3.2vw, 1.05rem); padding: 0.85rem 1.1rem; display: flex; align-items: center; justify-content: center; margin-bottom: 0.8rem; white-space: normal; text-align: center; line-height: 1.35; box-sizing: border-box; border-radius: 50px;"
             >
-              <span>✨</span> এই সার্ভিসটি বুক করুন (Book This Service)
+              এই সার্ভিসটি বুক করুন (Book This Service)
             </a>
 
             <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
