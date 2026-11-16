@@ -1,11 +1,11 @@
-# Nishi Makeup Artist & Beauty Parlour 👑✨
+# Nishi Makeup Artist & Beauty Parlour 
 ### Luxury Bridal, Occasion Artistry & Complete Parlour Management Web Platform
 
 A website and booking management system built for **Nishi Makeup Artist & Beauty Parlour**, featuring a luxury golden aesthetic (`#D4AF37`, `#FFD700`, `#F7E7CE`, `#FFFDF5`, `#FFF4D6`, `#E8B4B8`, `#3B2618`).
 
 ---
 
-## 🌟 Key Features & Architecture
+ Key Features & Architecture
 
 ### 1. Brand Identity & Visual Design
 - **Color Theme:** Luxury Gold, Bright Gold, Warm Ivory, Champagne, Soft Cream, Rose Gold, and Deep Velvet Brown.
