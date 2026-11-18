@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Admin Dashboard | Nishi Makeup Studio Portal</title>
   
   <!-- Favicon -->
@@ -42,8 +42,17 @@
       --radius-sm: 8px;
     }
 
-    * {
+    /* GLOBAL RESET & ZERO-OVERFLOW SAFEGUARDS */
+    html {
       box-sizing: border-box;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    *, *:before, *:after {
+      box-sizing: inherit;
       margin: 0;
       padding: 0;
     }
@@ -55,45 +64,55 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    /* Top Banner / Navbar */
+    /* Top Sticky Navbar */
     .portal-nav {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(15px);
       border-bottom: 1px solid var(--border-soft);
       position: sticky;
       top: 0;
       z-index: 100;
+      width: 100%;
       box-shadow: 0 4px 20px rgba(183, 110, 121, 0.06);
     }
 
     .nav-container {
       max-width: 1360px;
       margin: 0 auto;
-      padding: 0.9rem 1.5rem;
+      padding: 0.85rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 0.8rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .brand-wrap {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.85rem;
       text-decoration: none;
+      min-width: 0;
+      flex-shrink: 1;
     }
 
     .brand-crest {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--rose-gold), var(--deep-berry));
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--white);
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       box-shadow: 0 4px 15px rgba(183, 110, 121, 0.35);
       overflow: hidden;
       border: 2px solid var(--champagne-gold);
@@ -106,41 +125,51 @@
       object-fit: cover;
     }
 
+    .brand-title {
+      min-width: 0;
+    }
+
     .brand-title h2 {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 1.35rem;
       font-weight: 700;
       color: var(--deep-berry);
-      letter-spacing: 0.5px;
-      line-height: 1.2;
+      letter-spacing: 0.3px;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .brand-title p {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
-      letter-spacing: 0.8px;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
       font-weight: 600;
+      white-space: nowrap;
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 0.6rem;
+      flex-shrink: 0;
     }
 
     .btn-pill {
-      padding: 0.55rem 1.1rem;
+      padding: 0.5rem 1rem;
       border-radius: 50px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 600;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.4rem;
       transition: all 0.25s ease;
       cursor: pointer;
       border: none;
+      white-space: nowrap;
     }
 
     .btn-site-preview {
@@ -165,16 +194,23 @@
       transform: translateY(-1px);
     }
 
+    .desktop-only-inline {
+      display: inline;
+    }
+
     /* Main Container */
     .portal-main {
       max-width: 1360px;
       margin: 1.8rem auto;
       padding: 0 1.5rem;
       width: 100%;
+      max-width: 100%;
+      min-width: 0;
       flex: 1;
+      box-sizing: border-box;
     }
 
-    /* Welcome Greeting */
+    /* Welcome Card */
     .welcome-card {
       background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F7 60%, #FDF0ED 100%);
       border-radius: var(--radius-lg);
@@ -187,6 +223,8 @@
       margin-bottom: 1.8rem;
       position: relative;
       overflow: hidden;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .welcome-card::after {
@@ -194,8 +232,8 @@
       position: absolute;
       right: -30px;
       bottom: -30px;
-      width: 160px;
-      height: 160px;
+      width: 150px;
+      height: 150px;
       background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
@@ -207,11 +245,13 @@
       font-weight: 700;
       color: var(--deep-berry);
       margin-bottom: 0.4rem;
+      line-height: 1.2;
     }
 
     .welcome-text p {
       color: var(--text-muted);
       font-size: 0.92rem;
+      line-height: 1.45;
     }
 
     .today-badge {
@@ -227,23 +267,26 @@
       align-items: center;
       gap: 0.5rem;
       flex-shrink: 0;
+      white-space: nowrap;
     }
 
     /* Messages / Alerts */
     .messages-container {
       margin-bottom: 1.5rem;
+      width: 100%;
     }
 
     .toast-msg {
-      padding: 1rem 1.4rem;
+      padding: 0.9rem 1.3rem;
       border-radius: var(--radius-md);
       margin-bottom: 0.8rem;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       display: flex;
       align-items: center;
       gap: 0.8rem;
       animation: fadeIn 0.3s ease;
       font-weight: 500;
+      word-break: break-word;
     }
 
     .toast-success {
@@ -269,22 +312,34 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Navigation Tabs Bar */
+    /* Tabs Bar Wrapper */
+    .portal-tabs-wrapper {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      margin-bottom: 1.8rem;
+    }
+
     .portal-tabs {
       display: flex;
-      gap: 0.6rem;
-      margin-bottom: 2rem;
+      gap: 0.55rem;
       overflow-x: auto;
       padding-bottom: 0.4rem;
-      scrollbar-width: thin;
-      scrollbar-color: var(--rose-gold-light) transparent;
       -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      width: 100%;
+    }
+
+    .portal-tabs::-webkit-scrollbar {
+      display: none;
     }
 
     .tab-btn {
-      padding: 0.75rem 1.4rem;
+      padding: 0.72rem 1.35rem;
       border-radius: 50px;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 600;
       text-decoration: none;
       color: var(--text-dark);
@@ -292,9 +347,10 @@
       border: 1px solid var(--border-soft);
       display: inline-flex;
       align-items: center;
-      gap: 0.55rem;
+      gap: 0.5rem;
       transition: all 0.25s ease;
       white-space: nowrap;
+      flex-shrink: 0;
       cursor: pointer;
     }
 
@@ -330,6 +386,9 @@
     .tab-content {
       display: none;
       animation: tabFadeIn 0.3s ease;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
     }
 
     .tab-content.active {
@@ -345,19 +404,24 @@
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1.3rem;
+      gap: 1.2rem;
       margin-bottom: 2rem;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
     .kpi-card {
       background: var(--white);
       border-radius: var(--radius-lg);
-      padding: 1.5rem;
+      padding: 1.4rem 1.3rem;
       border: 1px solid var(--border-soft);
       box-shadow: var(--card-shadow);
       position: relative;
       overflow: hidden;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .kpi-card:hover {
@@ -375,31 +439,20 @@
       background: var(--border-soft);
     }
 
-    .kpi-card.today::before {
-      background: linear-gradient(90deg, #F59E0B, #D4AF37);
-    }
-
-    .kpi-card.pending::before {
-      background: linear-gradient(90deg, #EF4444, #F87171);
-    }
-
-    .kpi-card.confirmed::before {
-      background: linear-gradient(90deg, #10B981, #34D399);
-    }
-
-    .kpi-card.revenue::before {
-      background: linear-gradient(90deg, var(--rose-gold), var(--champagne-gold));
-    }
+    .kpi-card.today::before { background: linear-gradient(90deg, #F59E0B, #D4AF37); }
+    .kpi-card.pending::before { background: linear-gradient(90deg, #EF4444, #F87171); }
+    .kpi-card.confirmed::before { background: linear-gradient(90deg, #10B981, #34D399); }
+    .kpi-card.revenue::before { background: linear-gradient(90deg, var(--rose-gold), var(--champagne-gold)); }
 
     .kpi-icon-pill {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
-      margin-bottom: 0.9rem;
+      font-size: 1.25rem;
+      margin-bottom: 0.8rem;
     }
 
     .kpi-card.today .kpi-icon-pill { background: #FEF3C7; color: #B45309; }
@@ -408,8 +461,8 @@
     .kpi-card.revenue .kpi-icon-pill { background: var(--champagne-light); color: var(--champagne-dark); }
 
     .kpi-label {
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 700;
       color: var(--text-muted);
       margin-bottom: 0.35rem;
       text-transform: uppercase;
@@ -421,16 +474,17 @@
 
     .kpi-value {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2.3rem;
+      font-size: 2.2rem;
       font-weight: 700;
       color: var(--deep-berry);
-      line-height: 1;
+      line-height: 1.05;
       margin-bottom: 0.3rem;
     }
 
     .kpi-sub {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
+      line-height: 1.35;
     }
 
     .pulse-dot {
@@ -448,7 +502,7 @@
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
-    /* Panel Card (Generic Section Container) */
+    /* Panel Card (Section Container) */
     .panel-card {
       background: var(--white);
       border-radius: var(--radius-lg);
@@ -456,16 +510,22 @@
       border: 1px solid var(--border-soft);
       box-shadow: var(--card-shadow);
       margin-bottom: 2rem;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .panel-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.4rem;
       padding-bottom: 0.8rem;
       border-bottom: 1px solid rgba(183, 110, 121, 0.15);
       gap: 1rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .panel-header h3 {
@@ -473,12 +533,14 @@
       font-size: 1.6rem;
       font-weight: 700;
       color: var(--deep-berry);
+      line-height: 1.2;
     }
 
     .panel-header p {
       font-size: 0.86rem;
       color: var(--text-muted);
-      margin-top: 0.15rem;
+      margin-top: 0.2rem;
+      line-height: 1.4;
     }
 
     .btn-gold {
@@ -496,6 +558,8 @@
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
       transition: all 0.25s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .btn-gold:hover {
@@ -503,14 +567,31 @@
       transform: translateY(-1px);
     }
 
-    /* Filters bar */
+    /* Filters & Search Toolbar */
+    .filter-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+      width: 100%;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+    }
+
     .filter-pills {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.45rem;
       overflow-x: auto;
       flex-wrap: nowrap;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 0.3rem;
+      padding-bottom: 0.2rem;
+      scrollbar-width: none;
+      max-width: 100%;
+    }
+
+    .filter-pills::-webkit-scrollbar {
+      display: none;
     }
 
     .filter-pill {
@@ -532,30 +613,46 @@
       color: var(--white);
     }
 
+    .portal-search-form {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .portal-search-form input {
+      padding: 0.48rem 0.9rem;
+      font-size: 0.85rem;
+      width: 240px;
+    }
+
     /* Desktop Table Styles */
     .desktop-table-view {
       display: block;
+      width: 100%;
     }
 
     .table-responsive {
+      width: 100%;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       border-radius: var(--radius-md);
       border: 1px solid rgba(183, 110, 121, 0.15);
+      box-sizing: border-box;
     }
 
     .portal-table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     .portal-table th {
       background: #FFF5F7;
-      padding: 1rem 1.1rem;
+      padding: 0.95rem 1.1rem;
       color: var(--deep-berry);
       font-weight: 700;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.6px;
       border-bottom: 1px solid rgba(183, 110, 121, 0.2);
@@ -563,7 +660,7 @@
     }
 
     .portal-table td {
-      padding: 1rem 1.1rem;
+      padding: 0.95rem 1.1rem;
       border-bottom: 1px solid rgba(183, 110, 121, 0.08);
       vertical-align: middle;
       color: var(--text-dark);
@@ -581,37 +678,18 @@
     .status-badge {
       display: inline-flex;
       align-items: center;
-      padding: 0.35rem 0.85rem;
+      padding: 0.32rem 0.8rem;
       border-radius: 50px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       letter-spacing: 0.3px;
       white-space: nowrap;
     }
 
-    .status-pending {
-      background: #FEF3C7;
-      color: #92400E;
-      border: 1px solid #FDE68A;
-    }
-
-    .status-confirmed {
-      background: #D1FAE5;
-      color: #065F46;
-      border: 1px solid #A7F3D0;
-    }
-
-    .status-completed {
-      background: #E0E7FF;
-      color: #3730A3;
-      border: 1px solid #C7D2FE;
-    }
-
-    .status-cancelled {
-      background: #FEE2E2;
-      color: #991B1B;
-      border: 1px solid #FECACA;
-    }
+    .status-pending { background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A; }
+    .status-confirmed { background: #D1FAE5; color: #065F46; border: 1px solid #A7F3D0; }
+    .status-completed { background: #E0E7FF; color: #3730A3; border: 1px solid #C7D2FE; }
+    .status-cancelled { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
 
     /* Action Buttons inside tables */
     .customer-actions {
@@ -622,7 +700,7 @@
     }
 
     .action-btn-sm {
-      padding: 0.4rem 0.75rem;
+      padding: 0.42rem 0.75rem;
       border-radius: 50px;
       font-size: 0.78rem;
       font-weight: 600;
@@ -659,10 +737,13 @@
     }
 
     /* ==========================================================================
-       MOBILE CARD VIEW FOR APPOINTMENTS (Responsive Dual-Mode)
+       MOBILE CARD VIEW FOR APPOINTMENTS (Dual Mode)
        ========================================================================== */
     .mobile-card-view {
       display: none;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
     .mobile-booking-card {
@@ -671,14 +752,12 @@
       border-radius: 16px;
       padding: 1.15rem;
       box-shadow: 0 4px 15px rgba(43, 22, 34, 0.04);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       flex-direction: column;
       gap: 0.85rem;
-    }
-
-    .mobile-booking-card:hover {
-      box-shadow: 0 8px 24px rgba(183, 110, 121, 0.12);
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
     .mbc-header {
@@ -687,7 +766,8 @@
       align-items: center;
       padding-bottom: 0.75rem;
       border-bottom: 1px dashed rgba(183, 110, 121, 0.2);
-      gap: 0.5rem;
+      gap: 0.4rem;
+      flex-wrap: wrap;
     }
 
     .mbc-ref {
@@ -714,25 +794,26 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+      width: 100%;
     }
 
     .mbc-cust-name {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 700;
       color: var(--deep-berry);
+      word-break: break-word;
     }
 
     .mbc-cust-actions {
       display: flex;
       gap: 0.5rem;
-      flex-wrap: wrap;
+      width: 100%;
     }
 
     .mbc-cust-actions .action-btn-sm {
       flex: 1;
-      min-width: 125px;
       justify-content: center;
-      padding: 0.55rem 0.8rem;
+      padding: 0.55rem 0.6rem;
       font-size: 0.82rem;
     }
 
@@ -743,14 +824,17 @@
       background: #FFF9FA;
       border: 1px solid rgba(183, 110, 121, 0.15);
       border-radius: 12px;
-      padding: 0.9rem;
+      padding: 0.85rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .mbc-detail-item {
       display: flex;
       flex-direction: column;
-      gap: 0.2rem;
-      font-size: 0.85rem;
+      gap: 0.15rem;
+      font-size: 0.84rem;
+      word-break: break-word;
     }
 
     .mbc-detail-label {
@@ -787,18 +871,21 @@
     .mbc-notes {
       background: #FFFBF0;
       border-left: 3px solid var(--champagne-gold);
-      padding: 0.6rem 0.85rem;
+      padding: 0.65rem 0.85rem;
       border-radius: 6px;
       font-size: 0.82rem;
       color: #78350F;
       line-height: 1.4;
+      word-break: break-word;
     }
 
     .mbc-status-control {
       background: #FAFAFA;
       border: 1px solid #ECECEC;
       border-radius: 12px;
-      padding: 0.8rem 0.9rem;
+      padding: 0.8rem 0.85rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .mbc-status-label {
@@ -823,22 +910,13 @@
       cursor: pointer;
     }
 
-    .portal-search-form {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .portal-search-form input {
-      padding: 0.48rem 0.9rem;
-      font-size: 0.85rem;
-      width: 240px;
-    }
-
     /* Grids for Services & Packages */
     .service-grid, .package-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1.5rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .item-card {
@@ -850,6 +928,8 @@
       display: flex;
       flex-direction: column;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .item-card:hover {
@@ -862,6 +942,7 @@
       height: 180px;
       object-fit: cover;
       background: var(--blush-accent);
+      display: block;
     }
 
     .item-card-body {
@@ -945,6 +1026,8 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 1.3rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .gallery-thumb-card {
@@ -955,6 +1038,8 @@
       box-shadow: var(--card-shadow);
       position: relative;
       transition: transform 0.25s ease;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .gallery-thumb-card:hover {
@@ -1019,12 +1104,15 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.4rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .portal-form-group {
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
+      width: 100%;
     }
 
     .portal-form-label {
@@ -1044,6 +1132,7 @@
       transition: border-color 0.2s, box-shadow 0.2s;
       outline: none;
       width: 100%;
+      box-sizing: border-box;
     }
 
     .portal-input:focus {
@@ -1060,6 +1149,7 @@
       position: relative;
       display: flex;
       align-items: center;
+      width: 100%;
     }
 
     .pw-toggle-wrap input {
@@ -1083,14 +1173,15 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(43, 22, 34, 0.6);
+      background: rgba(43, 22, 34, 0.65);
       backdrop-filter: blur(6px);
       z-index: 999;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 1rem;
       overflow-y: auto;
+      box-sizing: border-box;
     }
 
     .portal-modal.active {
@@ -1109,6 +1200,7 @@
       animation: modalSlide 0.3s ease;
       max-height: 90vh;
       overflow-y: auto;
+      box-sizing: border-box;
     }
 
     @keyframes modalSlide {
@@ -1153,6 +1245,8 @@
       font-size: 0.85rem;
       color: var(--text-muted);
       margin-top: auto;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .portal-footer span {
@@ -1161,7 +1255,7 @@
     }
 
     /* ==========================================================================
-       RESPONSIVE DESIGN (Tablets & Mobile View)
+       MEDIA QUERIES (COMPREHENSIVE RESPONSIVENESS)
        ========================================================================== */
 
     /* Tablets (max-width: 1024px) */
@@ -1180,88 +1274,114 @@
 
     /* Mobile Screens (max-width: 768px) */
     @media (max-width: 768px) {
-      .nav-container {
-        padding: 0.75rem 1rem;
-      }
-      .brand-crest {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-      }
-      .brand-title h2 {
-        font-size: 1.15rem;
-      }
-      .brand-title p {
-        font-size: 0.7rem;
-      }
-      .btn-pill {
-        padding: 0.45rem 0.85rem;
-        font-size: 0.78rem;
+      .portal-main {
+        padding: 0 0.85rem;
+        margin: 1rem auto;
       }
 
+      /* Navbar on mobile */
+      .nav-container {
+        padding: 0.65rem 0.85rem;
+        gap: 0.5rem;
+      }
+      .brand-wrap {
+        gap: 0.55rem;
+      }
+      .brand-crest {
+        width: 38px;
+        height: 38px;
+      }
+      .brand-title h2 {
+        font-size: 1.08rem;
+      }
+      .brand-title p {
+        display: none !important;
+      }
+      .nav-actions {
+        gap: 0.4rem;
+      }
+      .btn-pill {
+        padding: 0.42rem 0.65rem;
+        font-size: 0.76rem;
+        gap: 0.25rem;
+      }
+      .desktop-only-inline {
+        display: none !important;
+      }
+
+      /* Welcome Card */
       .welcome-card {
-        padding: 1.4rem 1.2rem;
+        padding: 1.25rem 1rem;
         flex-direction: column;
         align-items: flex-start;
         gap: 0.8rem;
+        border-radius: 16px;
+        margin-bottom: 1.2rem;
       }
       .welcome-text h1 {
-        font-size: 1.55rem;
+        font-size: 1.45rem;
       }
       .welcome-text p {
-        font-size: 0.86rem;
+        font-size: 0.84rem;
       }
       .today-badge {
-        font-size: 0.8rem;
-        padding: 0.45rem 0.95rem;
+        font-size: 0.78rem;
+        padding: 0.45rem 0.85rem;
+        align-self: flex-start;
       }
 
-      /* Swipeable Tab Bar */
-      .portal-tabs {
-        display: flex;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        flex-wrap: nowrap;
-        gap: 0.5rem;
-        padding-bottom: 0.6rem;
-        margin-bottom: 1.5rem;
-        scrollbar-width: thin;
+      /* Navigation Tabs */
+      .portal-tabs-wrapper {
+        margin-bottom: 1.3rem;
       }
       .tab-btn {
-        flex-shrink: 0;
-        white-space: nowrap;
-        padding: 0.65rem 1.1rem;
-        font-size: 0.88rem;
+        padding: 0.6rem 1.05rem;
+        font-size: 0.85rem;
       }
 
+      /* KPI Grid */
       .kpi-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 0.85rem;
+        gap: 0.75rem;
+        margin-bottom: 1.3rem;
       }
       .kpi-card {
-        padding: 1.2rem 1.1rem;
+        padding: 1.1rem 0.95rem;
+        border-radius: 14px;
       }
       .kpi-value {
-        font-size: 2rem;
+        font-size: 1.85rem;
       }
       .kpi-icon-pill {
-        width: 38px;
-        height: 38px;
+        width: 36px;
+        height: 36px;
         font-size: 1.1rem;
-        margin-bottom: 0.6rem;
+        margin-bottom: 0.55rem;
+      }
+      .kpi-label {
+        font-size: 0.75rem;
+      }
+      .kpi-sub {
+        font-size: 0.72rem;
       }
 
+      /* Panels */
       .panel-card {
-        padding: 1.3rem 1.1rem;
+        padding: 1.2rem 0.95rem;
         border-radius: 16px;
+        margin-bottom: 1.4rem;
       }
       .panel-header {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0.8rem;
+        align-items: stretch;
+        gap: 0.75rem;
       }
       .panel-header h3 {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
+      }
+      .panel-header .btn-gold {
+        width: 100%;
+        justify-content: center;
       }
 
       /* Dual Mode Switch: Hide Table, Show Mobile Cards */
@@ -1271,19 +1391,19 @@
       .mobile-card-view {
         display: flex !important;
         flex-direction: column;
-        gap: 1rem;
-        margin-top: 0.6rem;
+        gap: 0.95rem;
+        margin-top: 0.5rem;
       }
 
-      /* Search & Filters on mobile */
-      .filter-pills-wrap {
+      /* Filters & Search Toolbar */
+      .filter-toolbar {
         flex-direction: column;
         align-items: stretch !important;
-        gap: 0.8rem !important;
+        gap: 0.75rem !important;
       }
       .filter-pills {
         width: 100%;
-        gap: 0.4rem;
+        gap: 0.35rem;
       }
       .portal-search-form {
         width: 100%;
@@ -1295,68 +1415,77 @@
 
       /* Forms & Grids on Mobile */
       .form-grid-2 {
-        grid-template-columns: 1fr;
-        gap: 0.8rem;
+        grid-template-columns: 1fr !important;
+        gap: 0.85rem;
       }
       .service-grid, .package-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+      }
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem;
+      }
+      .gallery-thumb-img {
+        height: 170px;
       }
 
       /* Modals on Mobile */
       .portal-modal {
-        padding: 0.8rem;
-        align-items: flex-start;
+        padding: 0.6rem;
+        align-items: flex-end;
       }
       .modal-box {
-        padding: 1.5rem 1.1rem;
-        max-height: 90vh;
-        border-radius: 18px;
-        margin-top: 1.5rem;
+        padding: 1.4rem 1.1rem;
+        max-height: 85vh;
+        border-radius: 20px 20px 0 0;
+        margin: 0;
       }
       .modal-header h3 {
-        font-size: 1.3rem;
+        font-size: 1.25rem;
       }
     }
 
-    /* Small Mobile Phones (max-width: 480px) */
-    @media (max-width: 480px) {
+    /* Small Mobile Phones (max-width: 420px) */
+    @media (max-width: 420px) {
       .portal-main {
-        padding: 0 0.8rem;
+        padding: 0 0.65rem;
+      }
+      .nav-container {
+        padding: 0.55rem 0.65rem;
+      }
+      .brand-crest {
+        width: 34px;
+        height: 34px;
       }
       .brand-title h2 {
-        font-size: 1.05rem;
+        font-size: 0.95rem;
       }
-      .brand-title p {
-        display: none;
-      }
-      .welcome-text h1 {
-        font-size: 1.35rem;
-      }
-
-      .kpi-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.65rem;
-      }
-      .kpi-card {
-        padding: 1rem 0.9rem;
-      }
-      .kpi-value {
-        font-size: 1.7rem;
-      }
-      .kpi-label {
-        font-size: 0.75rem;
-      }
-      .kpi-sub {
+      .btn-pill {
+        padding: 0.38rem 0.52rem;
         font-size: 0.72rem;
       }
 
-      .filter-pill {
-        padding: 0.35rem 0.75rem;
-        font-size: 0.78rem;
+      .welcome-text h1 {
+        font-size: 1.3rem;
       }
-      .action-btn-sm {
-        padding: 0.35rem 0.6rem;
-        font-size: 0.75rem;
+      .kpi-grid {
+        gap: 0.55rem;
+      }
+      .kpi-card {
+        padding: 0.95rem 0.8rem;
+      }
+      .kpi-value {
+        font-size: 1.6rem;
+      }
+      .kpi-label {
+        font-size: 0.7rem;
+      }
+      .gallery-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .gallery-thumb-img {
+        height: 220px;
       }
     }
   </style>
@@ -1377,11 +1506,11 @@
       </a>
 
       <div class="nav-actions">
-        <a href="{% url 'parlor:home' %}" target="_blank" class="btn-pill btn-site-preview">
+        <a href="{% url 'parlor:home' %}" target="_blank" class="btn-pill btn-site-preview" title="View Public Website">
           <span>🌐</span>
-          <span>View Website</span>
+          <span><span class="desktop-only-inline">View </span>Website</span>
         </a>
-        <a href="{% url 'parlor:portal_logout' %}" class="btn-pill btn-logout">
+        <a href="{% url 'parlor:portal_logout' %}" class="btn-pill btn-logout" title="Sign out of portal">
           <span>🚪</span>
           <span>Logout</span>
         </a>
@@ -1417,34 +1546,36 @@
     {% endif %}
 
     <!-- NAVIGATION TABS -->
-    <div class="portal-tabs">
-      <a href="?tab=overview" class="tab-btn {% if active_tab == 'overview' %}active{% endif %}">
-        <span>📊</span>
-        <span>Overview</span>
-      </a>
-      <a href="?tab=appointments" class="tab-btn {% if active_tab == 'appointments' %}active{% endif %}">
-        <span>📅</span>
-        <span>Appointments & Clients</span>
-        {% if pending_count > 0 %}
-          <span class="badge-count">{{ pending_count }} New</span>
-        {% endif %}
-      </a>
-      <a href="?tab=services" class="tab-btn {% if active_tab == 'services' %}active{% endif %}">
-        <span>💅</span>
-        <span>Services & Rates</span>
-      </a>
-      <a href="?tab=packages" class="tab-btn {% if active_tab == 'packages' %}active{% endif %}">
-        <span>🎁</span>
-        <span>Luxury Packages</span>
-      </a>
-      <a href="?tab=gallery" class="tab-btn {% if active_tab == 'gallery' %}active{% endif %}">
-        <span>📸</span>
-        <span>Photo Gallery</span>
-      </a>
-      <a href="?tab=profile" class="tab-btn {% if active_tab == 'profile' %}active{% endif %}">
-        <span>⚙️</span>
-        <span>Settings & Profile</span>
-      </a>
+    <div class="portal-tabs-wrapper">
+      <div class="portal-tabs">
+        <a href="?tab=overview" class="tab-btn {% if active_tab == 'overview' %}active{% endif %}">
+          <span>📊</span>
+          <span>Overview</span>
+        </a>
+        <a href="?tab=appointments" class="tab-btn {% if active_tab == 'appointments' %}active{% endif %}">
+          <span>📅</span>
+          <span>Appointments & Clients</span>
+          {% if pending_count > 0 %}
+            <span class="badge-count">{{ pending_count }} New</span>
+          {% endif %}
+        </a>
+        <a href="?tab=services" class="tab-btn {% if active_tab == 'services' %}active{% endif %}">
+          <span>💅</span>
+          <span>Services & Rates</span>
+        </a>
+        <a href="?tab=packages" class="tab-btn {% if active_tab == 'packages' %}active{% endif %}">
+          <span>🎁</span>
+          <span>Luxury Packages</span>
+        </a>
+        <a href="?tab=gallery" class="tab-btn {% if active_tab == 'gallery' %}active{% endif %}">
+          <span>📸</span>
+          <span>Photo Gallery</span>
+        </a>
+        <a href="?tab=profile" class="tab-btn {% if active_tab == 'profile' %}active{% endif %}">
+          <span>⚙️</span>
+          <span>Settings & Profile</span>
+        </a>
+      </div>
     </div>
 
     <!-- ==================== TAB 1: OVERVIEW ==================== -->
@@ -1455,7 +1586,7 @@
           <div class="kpi-icon-pill">📌</div>
           <div class="kpi-label">Today's Schedule</div>
           <div class="kpi-value">{{ today_count }}</div>
-          <div class="kpi-sub">Total appointments scheduled today</div>
+          <div class="kpi-sub">Appointments scheduled today</div>
         </div>
 
         <div class="kpi-card pending">
@@ -1465,21 +1596,21 @@
             Pending Requests
           </div>
           <div class="kpi-value">{{ pending_count }}</div>
-          <div class="kpi-sub">Awaiting your confirmation</div>
+          <div class="kpi-sub">Awaiting confirmation</div>
         </div>
 
         <div class="kpi-card confirmed">
           <div class="kpi-icon-pill">✅</div>
           <div class="kpi-label">Confirmed Bookings</div>
           <div class="kpi-value">{{ confirmed_count }}</div>
-          <div class="kpi-sub">Confirmed & scheduled in calendar</div>
+          <div class="kpi-sub">Confirmed & scheduled</div>
         </div>
 
         <div class="kpi-card revenue">
           <div class="kpi-icon-pill">💰</div>
           <div class="kpi-label">Estimated Revenue</div>
           <div class="kpi-value">৳{{ total_revenue|floatformat:0 }}</div>
-          <div class="kpi-sub">Total volume from confirmed bookings</div>
+          <div class="kpi-sub">From confirmed bookings</div>
         </div>
       </div>
 
@@ -1627,8 +1758,8 @@
           </div>
         </div>
 
-        <!-- SEARCH & STATUS FILTERS -->
-        <div class="filter-pills-wrap" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.3rem;">
+        <!-- SEARCH & STATUS FILTERS TOOLBAR -->
+        <div class="filter-toolbar">
           <div class="filter-pills">
             <a href="?tab=appointments&status=all" class="filter-pill {% if status_filter == 'all' %}active{% endif %}">All ({{ total_count }})</a>
             <a href="?tab=appointments&status=pending" class="filter-pill {% if status_filter == 'pending' %}active{% endif %}">Pending ({{ pending_count }})</a>
@@ -1751,7 +1882,7 @@
                 <div class="mbc-cust-name">{{ appt.customer_name }}</div>
                 <div class="mbc-cust-actions">
                   <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call" title="Call Customer">
-                    📞 {{ appt.phone_number }}
+                    📞 Call
                   </a>
                   <a href="{{ appt.get_whatsapp_url }}" target="_blank" class="action-btn-sm btn-wa" title="WhatsApp Message">
                     💬 WhatsApp
@@ -2145,7 +2276,7 @@
         </div>
 
         <!-- Image Options: File upload OR URL -->
-        <div style="background: #FFFDFE; border: 1.5px solid var(--border-soft); border-radius: 14px; padding: 1.1rem; margin-bottom: 1.2rem;">
+        <div style="background: #FFFDFE; border: 1.5px solid var(--border-soft); border-radius: 14px; padding: 1.1rem; margin-bottom: 1.2rem; width: 100%; box-sizing: border-box;">
           <label style="font-size: 0.9rem; font-weight: 700; color: var(--deep-berry); display: block; margin-bottom: 0.7rem;">
             📸 Choose Service Image:
           </label>
@@ -2175,7 +2306,7 @@
           <textarea name="short_description" id="service_desc_input" rows="2" class="portal-input" placeholder="A brief description of this service..."></textarea>
         </div>
 
-        <div class="portal-form-group" style="display: flex; gap: 1.5rem; margin-top: 1rem;">
+        <div class="portal-form-group" style="display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap;">
           <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
             <input type="checkbox" name="is_active" id="service_active_check" class="portal-checkbox" checked>
             <span>Active (Show on website)</span>
@@ -2231,7 +2362,7 @@
         </div>
 
         <!-- Image Options: File upload OR URL -->
-        <div style="background: #FFFDFE; border: 1.5px solid var(--border-soft); border-radius: 14px; padding: 1.1rem; margin-bottom: 1.2rem;">
+        <div style="background: #FFFDFE; border: 1.5px solid var(--border-soft); border-radius: 14px; padding: 1.1rem; margin-bottom: 1.2rem; width: 100%; box-sizing: border-box;">
           <label style="font-size: 0.9rem; font-weight: 700; color: var(--deep-berry); display: block; margin-bottom: 0.7rem;">
             📸 Package Cover Image:
           </label>
@@ -2265,7 +2396,7 @@
           <textarea name="included_features" id="pkg_features_input" rows="4" class="portal-input" placeholder="Bridal Makeup&#10;Bridal Hairstyle&#10;Saree Draping"></textarea>
         </div>
 
-        <div class="portal-form-group" style="display: flex; gap: 1.5rem;">
+        <div class="portal-form-group" style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
           <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
             <input type="checkbox" name="is_active" id="pkg_active_check" class="portal-checkbox" checked>
             <span>Active (Show on website)</span>
@@ -2315,7 +2446,7 @@
         </div>
 
         <!-- Image Options: File upload OR URL -->
-        <div style="background: #FFFDFE; border: 1.5px solid var(--border-soft); border-radius: 14px; padding: 1.1rem; margin-bottom: 1.2rem;">
+        <div style="background: #FFFDFE; border: 1.5px solid var(--border-soft); border-radius: 14px; padding: 1.1rem; margin-bottom: 1.2rem; width: 100%; box-sizing: border-box;">
           <label style="font-size: 0.9rem; font-weight: 700; color: var(--deep-berry); display: block; margin-bottom: 0.7rem;">
             📸 Select Photo:
           </label>
@@ -2410,7 +2541,6 @@
       const status = document.getElementById(statusId);
       url = (url || '').trim();
       if (url) {
-        // Resolve google image search redirect link if pasted
         if (url.includes('google.') && url.includes('imgurl=')) {
           try {
             const urlObj = new URL(url);
