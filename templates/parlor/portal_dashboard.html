@@ -1,15 +1,18 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Nishi Makeup Studio Portal</title>
+  <title>Admin Dashboard | Nishi Makeup Studio Portal</title>
   
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/jpeg" href="/static/images/parlor_logo.jpg">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Hind+Siliguri:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -46,7 +49,7 @@
     }
 
     body {
-      font-family: 'Hind Siliguri', 'Montserrat', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background: radial-gradient(circle at 10% 10%, #FFF5F7 0%, #FAF2ED 50%, #F5ECE8 100%);
       color: var(--text-dark);
       min-height: 100vh;
@@ -58,28 +61,26 @@
     .portal-nav {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(15px);
-      border-bottom: 1.5px solid var(--border-soft);
+      border-bottom: 1px solid var(--border-soft);
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 20px rgba(183, 110, 121, 0.08);
+      box-shadow: 0 4px 20px rgba(183, 110, 121, 0.06);
     }
 
     .nav-container {
-      max-width: 1380px;
+      max-width: 1360px;
       margin: 0 auto;
-      padding: 0.9rem 1.8rem;
+      padding: 0.9rem 1.5rem;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
+      align-items: center;
     }
 
     .brand-wrap {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
+      gap: 1rem;
       text-decoration: none;
     }
 
@@ -87,13 +88,15 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      border: 2px solid var(--champagne-gold);
+      background: linear-gradient(135deg, var(--rose-gold), var(--deep-berry));
       display: flex;
       align-items: center;
       justify-content: center;
+      color: var(--white);
+      font-size: 1.4rem;
+      box-shadow: 0 4px 15px rgba(183, 110, 121, 0.35);
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
-      background: var(--white);
+      border: 2px solid var(--champagne-gold);
       flex-shrink: 0;
     }
 
@@ -101,200 +104,146 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
-      border-radius: 50%;
     }
 
     .brand-title h2 {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.45rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: var(--deep-berry);
-      line-height: 1.1;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
     }
 
     .brand-title p {
-      font-size: 0.8rem;
-      color: var(--rose-gold);
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
       font-weight: 600;
-      letter-spacing: 0.3px;
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.8rem;
     }
 
     .btn-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
       padding: 0.55rem 1.1rem;
       border-radius: 50px;
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       font-weight: 600;
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
       transition: all 0.25s ease;
       cursor: pointer;
       border: none;
     }
 
     .btn-site-preview {
-      background: var(--champagne-light);
-      color: #6D5118;
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: var(--blush-accent);
+      color: var(--deep-berry);
+      border: 1px solid rgba(183, 110, 121, 0.3);
     }
 
     .btn-site-preview:hover {
-      background: #F4E8D0;
+      background: var(--rose-gold-light);
       transform: translateY(-1px);
     }
 
     .btn-logout {
       background: #FEE2E2;
       color: #991B1B;
-      border: 1px solid #FCA5A5;
+      border: 1px solid rgba(239, 68, 68, 0.2);
     }
 
     .btn-logout:hover {
       background: #FCA5A5;
-      color: #7F1D1D;
+      transform: translateY(-1px);
     }
 
-    /* Layout */
+    /* Main Container */
     .portal-main {
-      max-width: 1380px;
-      width: 100%;
-      margin: 1.8rem auto 3rem;
+      max-width: 1360px;
+      margin: 1.8rem auto;
       padding: 0 1.5rem;
+      width: 100%;
       flex: 1;
     }
 
-    /* Greetings Header */
+    /* Welcome Greeting */
     .welcome-card {
-      background: linear-gradient(135deg, #FFF0F5 0%, #FFFFFF 60%, #FFF8F0 100%);
+      background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F7 60%, #FDF0ED 100%);
       border-radius: var(--radius-lg);
-      border: 1px solid rgba(212, 175, 55, 0.35);
       padding: 1.8rem 2.2rem;
+      border: 1px solid var(--border-soft);
       box-shadow: var(--card-shadow);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.8rem;
       position: relative;
       overflow: hidden;
     }
 
     .welcome-card::after {
-      content: '🌸';
+      content: '';
       position: absolute;
-      right: 1.5rem;
-      bottom: -15px;
-      font-size: 7rem;
-      opacity: 0.12;
+      right: -30px;
+      bottom: -30px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
       pointer-events: none;
     }
 
     .welcome-text h1 {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2.1rem;
+      font-size: 2rem;
+      font-weight: 700;
       color: var(--deep-berry);
-      margin-bottom: 0.3rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .welcome-text p {
-      font-size: 0.96rem;
       color: var(--text-muted);
+      font-size: 0.92rem;
     }
 
     .today-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
       background: var(--white);
-      border: 1px solid rgba(183, 110, 121, 0.3);
       padding: 0.6rem 1.2rem;
       border-radius: 50px;
-      font-size: 0.88rem;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 4px 12px rgba(183, 110, 121, 0.08);
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--deep-plum);
-      box-shadow: 0 4px 12px rgba(183, 110, 121, 0.08);
-    }
-
-    /* Tabs Bar */
-    .portal-tabs {
-      display: flex;
-      gap: 0.6rem;
-      margin-bottom: 2rem;
-      overflow-x: auto;
-      padding-bottom: 0.4rem;
-      scrollbar-width: thin;
-    }
-
-    .tab-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.8rem 1.4rem;
-      background: var(--white);
-      border: 1.5px solid var(--border-soft);
-      border-radius: 16px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-dark);
-      cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      flex-shrink: 0;
     }
 
-    .tab-btn:hover {
-      border-color: var(--rose-gold);
-      color: var(--rose-gold-dark);
-      transform: translateY(-2px);
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg, var(--rose-gold) 0%, #D4AF37 100%);
-      color: var(--white);
-      border-color: transparent;
-      box-shadow: 0 8px 20px rgba(183, 110, 121, 0.3);
-    }
-
-    .tab-btn .badge-count {
-      background: rgba(255, 255, 255, 0.3);
-      padding: 0.15rem 0.55rem;
-      border-radius: 50px;
-      font-size: 0.78rem;
-    }
-
-    .tab-btn.active .badge-count {
-      background: rgba(255, 255, 255, 0.95);
-      color: var(--deep-berry);
-    }
-
-    /* Toast Messages */
+    /* Messages / Alerts */
     .messages-container {
-      margin-bottom: 1.8rem;
+      margin-bottom: 1.5rem;
     }
 
     .toast-msg {
-      padding: 0.95rem 1.4rem;
-      border-radius: 14px;
-      font-size: 0.92rem;
-      font-weight: 500;
+      padding: 1rem 1.4rem;
+      border-radius: var(--radius-md);
       margin-bottom: 0.8rem;
+      font-size: 0.92rem;
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.8rem;
       animation: fadeIn 0.3s ease;
+      font-weight: 500;
     }
 
     .toast-success {
@@ -304,9 +253,9 @@
     }
 
     .toast-error {
-      background: #FEE2E2;
+      background: #FEF2F2;
       color: #991B1B;
-      border: 1px solid #FCA5A5;
+      border: 1px solid #FECACA;
     }
 
     .toast-info {
@@ -315,28 +264,131 @@
       border: 1px solid #BFDBFE;
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Navigation Tabs Bar */
+    .portal-tabs {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.4rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--rose-gold-light) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.4rem;
+      border-radius: 50px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text-dark);
+      background: var(--white);
+      border: 1px solid var(--border-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--rose-gold);
+      color: var(--deep-berry);
+      transform: translateY(-1px);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--deep-berry), var(--rose-gold-dark));
+      color: var(--white);
+      border-color: transparent;
+      box-shadow: 0 6px 18px rgba(84, 25, 53, 0.25);
+    }
+
+    .tab-btn .badge-count {
+      background: #EF4444;
+      color: var(--white);
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 50px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .tab-btn.active .badge-count {
+      background: var(--white);
+      color: var(--deep-berry);
+    }
+
+    /* Tab Panes */
+    .tab-content {
+      display: none;
+      animation: tabFadeIn 0.3s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* KPI Grid */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.4rem;
-      margin-bottom: 2.2rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.3rem;
+      margin-bottom: 2rem;
     }
 
     .kpi-card {
       background: var(--white);
       border-radius: var(--radius-lg);
+      padding: 1.5rem;
       border: 1px solid var(--border-soft);
-      padding: 1.6rem 1.8rem;
       box-shadow: var(--card-shadow);
       position: relative;
-      transition: all 0.3s ease;
       overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .kpi-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: var(--card-shadow-hover);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--border-soft);
+    }
+
+    .kpi-card.today::before {
+      background: linear-gradient(90deg, #F59E0B, #D4AF37);
+    }
+
+    .kpi-card.pending::before {
+      background: linear-gradient(90deg, #EF4444, #F87171);
+    }
+
+    .kpi-card.confirmed::before {
+      background: linear-gradient(90deg, #10B981, #34D399);
+    }
+
+    .kpi-card.revenue::before {
+      background: linear-gradient(90deg, var(--rose-gold), var(--champagne-gold));
     }
 
     .kpi-icon-pill {
@@ -347,74 +399,62 @@
       align-items: center;
       justify-content: center;
       font-size: 1.3rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
     }
 
-    .kpi-card.today .kpi-icon-pill { background: #FEF3C7; color: #D97706; }
+    .kpi-card.today .kpi-icon-pill { background: #FEF3C7; color: #B45309; }
     .kpi-card.pending .kpi-icon-pill { background: #FEE2E2; color: #DC2626; }
-    .kpi-card.confirmed .kpi-icon-pill { background: #ECFDF5; color: #059669; }
-    .kpi-card.revenue .kpi-icon-pill { background: #FDF2F8; color: #DB2777; }
+    .kpi-card.confirmed .kpi-icon-pill { background: #D1FAE5; color: #059669; }
+    .kpi-card.revenue .kpi-icon-pill { background: var(--champagne-light); color: var(--champagne-dark); }
 
     .kpi-label {
       font-size: 0.85rem;
-      color: var(--text-muted);
       font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     .kpi-value {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2.6rem;
+      font-size: 2.3rem;
       font-weight: 700;
       color: var(--deep-berry);
-      line-height: 1.1;
-      margin: 0.2rem 0;
+      line-height: 1;
+      margin-bottom: 0.3rem;
     }
 
     .kpi-sub {
-      font-size: 0.82rem;
-      color: var(--rose-gold-dark);
+      font-size: 0.78rem;
+      color: var(--text-muted);
     }
 
     .pulse-dot {
       display: inline-block;
       width: 8px;
       height: 8px;
-      background: #EF4444;
       border-radius: 50%;
-      margin-right: 4px;
-      animation: pulse 1.5s infinite;
+      background: #EF4444;
+      animation: pulseAnim 1.5s infinite;
     }
 
-    @keyframes pulse {
+    @keyframes pulseAnim {
       0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+      70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(239, 68, 68, 0); }
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
-    /* Content Panels */
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Card Panels */
+    /* Panel Card (Generic Section Container) */
     .panel-card {
       background: var(--white);
       border-radius: var(--radius-lg);
+      padding: 1.8rem 2rem;
       border: 1px solid var(--border-soft);
       box-shadow: var(--card-shadow);
-      padding: 1.8rem 2.2rem;
       margin-bottom: 2rem;
     }
 
@@ -422,57 +462,85 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1.6rem;
-      padding-bottom: 1.1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
       border-bottom: 1px solid rgba(183, 110, 121, 0.15);
+      gap: 1rem;
     }
 
     .panel-header h3 {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.7rem;
+      font-size: 1.6rem;
+      font-weight: 700;
       color: var(--deep-berry);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
 
     .panel-header p {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--text-muted);
+      margin-top: 0.15rem;
     }
 
-    /* Action Buttons */
     .btn-gold {
-      background: linear-gradient(135deg, #B76E79 0%, #D4AF37 100%);
+      background: linear-gradient(135deg, var(--champagne-gold), #B8860B);
       color: var(--white);
+      padding: 0.65rem 1.4rem;
+      border-radius: 50px;
       font-weight: 600;
-      padding: 0.65rem 1.3rem;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.92rem;
-      font-family: inherit;
+      font-size: 0.88rem;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
       transition: all 0.25s ease;
-      text-decoration: none;
-      box-shadow: 0 4px 14px rgba(183, 110, 121, 0.25);
     }
 
     .btn-gold:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(183, 110, 121, 0.35);
-      background: linear-gradient(135deg, #C47984 0%, #E0BC48 100%);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+      transform: translateY(-1px);
     }
 
-    /* Table Styles */
+    /* Filters bar */
+    .filter-pills {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0.3rem;
+    }
+
+    .filter-pill {
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      background: var(--blush-accent);
+      color: var(--deep-berry);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .filter-pill:hover, .filter-pill.active {
+      background: var(--deep-berry);
+      color: var(--white);
+    }
+
+    /* Desktop Table Styles */
+    .desktop-table-view {
+      display: block;
+    }
+
     .table-responsive {
       overflow-x: auto;
-      border-radius: 14px;
-      border: 1px solid rgba(183, 110, 121, 0.18);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(183, 110, 121, 0.15);
     }
 
     .portal-table {
@@ -483,222 +551,324 @@
     }
 
     .portal-table th {
-      background: #FFF7F9;
+      background: #FFF5F7;
+      padding: 1rem 1.1rem;
       color: var(--deep-berry);
-      padding: 1rem 1.2rem;
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 0.3px;
-      border-bottom: 2px solid rgba(183, 110, 121, 0.2);
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      border-bottom: 1px solid rgba(183, 110, 121, 0.2);
       white-space: nowrap;
     }
 
     .portal-table td {
-      padding: 1rem 1.2rem;
-      border-bottom: 1px solid rgba(183, 110, 121, 0.12);
+      padding: 1rem 1.1rem;
+      border-bottom: 1px solid rgba(183, 110, 121, 0.08);
       vertical-align: middle;
+      color: var(--text-dark);
+    }
+
+    .portal-table tr:last-child td {
+      border-bottom: none;
     }
 
     .portal-table tr:hover {
-      background: #FFFDFE;
+      background: #FFFAF9;
     }
 
     /* Status Badges */
     .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      padding: 0.35rem 0.8rem;
+      padding: 0.35rem 0.85rem;
       border-radius: 50px;
       font-size: 0.78rem;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: 0.3px;
       white-space: nowrap;
     }
 
-    .status-pending { background: #FEF3C7; color: #B45309; border: 1px solid #FCD34D; }
-    .status-confirmed { background: #ECFDF5; color: #047857; border: 1px solid #6EE7B7; }
-    .status-completed { background: #EFF6FF; color: #1D4ED8; border: 1px solid #93C5FD; }
-    .status-cancelled { background: #F3F4F6; color: #4B5563; border: 1px solid #D1D5DB; }
+    .status-pending {
+      background: #FEF3C7;
+      color: #92400E;
+      border: 1px solid #FDE68A;
+    }
 
-    /* Customer Action Buttons */
+    .status-confirmed {
+      background: #D1FAE5;
+      color: #065F46;
+      border: 1px solid #A7F3D0;
+    }
+
+    .status-completed {
+      background: #E0E7FF;
+      color: #3730A3;
+      border: 1px solid #C7D2FE;
+    }
+
+    .status-cancelled {
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 1px solid #FECACA;
+    }
+
+    /* Action Buttons inside tables */
     .customer-actions {
       display: flex;
-      align-items: center;
       gap: 0.4rem;
+      align-items: center;
       flex-wrap: wrap;
     }
 
     .action-btn-sm {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.35rem 0.7rem;
-      border-radius: 8px;
+      padding: 0.4rem 0.75rem;
+      border-radius: 50px;
       font-size: 0.78rem;
       font-weight: 600;
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
       transition: all 0.2s;
       border: 1px solid transparent;
+      white-space: nowrap;
       cursor: pointer;
     }
 
     .btn-wa {
-      background: #DCFCE7;
-      color: #15803D;
-      border-color: #86EFAC;
+      background: #E8F8EE;
+      color: #128C7E;
+      border-color: #25D366;
     }
 
     .btn-wa:hover {
-      background: #22C55E;
-      color: #FFFFFF;
+      background: #25D366;
+      color: var(--white);
     }
 
     .btn-call {
-      background: #E0E7FF;
-      color: #4338CA;
-      border-color: #A5B4FC;
+      background: var(--blush-accent);
+      color: var(--deep-berry);
+      border-color: rgba(183, 110, 121, 0.4);
     }
 
     .btn-call:hover {
-      background: #4F46E5;
-      color: #FFFFFF;
+      background: var(--rose-gold-dark);
+      color: var(--white);
     }
 
-    /* Filter Pills */
-    .filter-pills {
+    /* ==========================================================================
+       MOBILE CARD VIEW FOR APPOINTMENTS (Responsive Dual-Mode)
+       ========================================================================== */
+    .mobile-card-view {
+      display: none;
+    }
+
+    .mobile-booking-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 1.15rem;
+      box-shadow: 0 4px 15px rgba(43, 22, 34, 0.04);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .mobile-booking-card:hover {
+      box-shadow: 0 8px 24px rgba(183, 110, 121, 0.12);
+    }
+
+    .mbc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px dashed rgba(183, 110, 121, 0.2);
+      gap: 0.5rem;
+    }
+
+    .mbc-ref {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .mbc-ref-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .mbc-ref strong {
+      color: var(--rose-gold-dark);
+      font-family: monospace;
+      font-size: 0.95rem;
+    }
+
+    .mbc-customer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .mbc-cust-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--deep-berry);
+    }
+
+    .mbc-cust-actions {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
-      margin-bottom: 1.3rem;
     }
 
-    .filter-pill {
-      padding: 0.45rem 1rem;
-      border-radius: 50px;
-      font-size: 0.84rem;
-      font-weight: 600;
-      text-decoration: none;
-      background: var(--white);
-      color: var(--text-dark);
-      border: 1px solid var(--border-soft);
-      transition: all 0.2s;
-    }
-
-    .filter-pill:hover, .filter-pill.active {
-      background: var(--rose-gold);
-      color: var(--white);
-      border-color: var(--rose-gold);
-    }
-
-    /* Forms & Inputs */
-    .portal-form-group {
-      margin-bottom: 1.2rem;
-    }
-
-    .portal-form-label {
-      display: block;
-      font-size: 0.86rem;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin-bottom: 0.4rem;
-    }
-
-    .portal-input, .portal-form-control {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border-radius: 12px;
-      border: 1.5px solid #EAD8DE;
-      font-size: 0.92rem;
-      font-family: inherit;
-      color: var(--text-dark);
-      background: #FFFCFD;
-      outline: none;
-      transition: border 0.2s, box-shadow 0.2s;
-    }
-
-    .portal-input:focus, .portal-form-control:focus {
-      border-color: var(--rose-gold);
-      background: var(--white);
-      box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.15);
-    }
-
-    .pw-toggle-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
-    .pw-toggle-wrap .portal-input {
-      padding-right: 2.8rem;
-    }
-    .pw-toggle-btn {
-      position: absolute;
-      right: 12px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.15rem;
-      color: #7A656E;
-      display: flex;
-      align-items: center;
+    .mbc-cust-actions .action-btn-sm {
+      flex: 1;
+      min-width: 125px;
       justify-content: center;
-      padding: 4px;
-      user-select: none;
-      transition: transform 0.2s, opacity 0.2s;
-    }
-    .pw-toggle-btn:hover {
-      opacity: 0.8;
-      transform: scale(1.1);
+      padding: 0.55rem 0.8rem;
+      font-size: 0.82rem;
     }
 
-    .portal-checkbox {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--rose-gold);
+    .mbc-details-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+      background: #FFF9FA;
+      border: 1px solid rgba(183, 110, 121, 0.15);
+      border-radius: 12px;
+      padding: 0.9rem;
+    }
+
+    .mbc-detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      font-size: 0.85rem;
+    }
+
+    .mbc-detail-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .mbc-detail-val {
+      color: var(--text-dark);
+      line-height: 1.35;
+    }
+
+    .mbc-price {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--champagne-dark);
+    }
+
+    .event-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      background: var(--blush-accent);
+      color: var(--deep-berry);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      width: fit-content;
+    }
+
+    .mbc-notes {
+      background: #FFFBF0;
+      border-left: 3px solid var(--champagne-gold);
+      padding: 0.6rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      color: #78350F;
+      line-height: 1.4;
+    }
+
+    .mbc-status-control {
+      background: #FAFAFA;
+      border: 1px solid #ECECEC;
+      border-radius: 12px;
+      padding: 0.8rem 0.9rem;
+    }
+
+    .mbc-status-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--deep-berry);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .mbc-status-select {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.88rem;
+      border-radius: 8px;
+      background-color: #FFFFFF;
+      border: 1.5px solid var(--border-soft);
+      font-weight: 600;
+      color: var(--deep-berry);
       cursor: pointer;
     }
 
-    .form-grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.2rem;
+    .portal-search-form {
+      display: flex;
+      gap: 0.5rem;
     }
 
-    /* Service & Package Cards Grid */
+    .portal-search-form input {
+      padding: 0.48rem 0.9rem;
+      font-size: 0.85rem;
+      width: 240px;
+    }
+
+    /* Grids for Services & Packages */
     .service-grid, .package-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.4rem;
+      gap: 1.5rem;
     }
 
     .item-card {
       background: var(--white);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-lg);
       border: 1px solid var(--border-soft);
       overflow: hidden;
       box-shadow: var(--card-shadow);
       display: flex;
       flex-direction: column;
-      transition: all 0.25s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .item-card:hover {
-      box-shadow: var(--card-shadow-hover);
       transform: translateY(-3px);
+      box-shadow: var(--card-shadow-hover);
     }
 
     .item-card-img {
       width: 100%;
       height: 180px;
       object-fit: cover;
-      background: #F3EAE7;
+      background: var(--blush-accent);
     }
 
     .item-card-body {
       padding: 1.3rem;
+      flex: 1;
       display: flex;
       flex-direction: column;
-      flex: 1;
     }
 
     .item-card-header {
@@ -710,14 +880,15 @@
     }
 
     .item-card-title {
-      font-size: 1.1rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.35rem;
       font-weight: 700;
       color: var(--deep-berry);
-      line-height: 1.25;
     }
 
     .item-price {
-      font-size: 1.15rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--champagne-dark);
       white-space: nowrap;
@@ -725,14 +896,15 @@
 
     .item-duration {
       font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 0.7rem;
+      color: var(--rose-gold-dark);
+      margin-bottom: 0.8rem;
+      font-weight: 600;
     }
 
     .item-desc {
       font-size: 0.85rem;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.45;
       margin-bottom: 1.2rem;
       flex: 1;
     }
@@ -741,34 +913,30 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 0.9rem;
-      border-top: 1px solid rgba(183, 110, 121, 0.15);
+      padding-top: 1rem;
+      border-top: 1px solid rgba(183, 110, 121, 0.12);
       gap: 0.5rem;
     }
 
     .toggle-active-btn {
-      padding: 0.35rem 0.8rem;
+      padding: 0.4rem 0.8rem;
       border-radius: 50px;
       font-size: 0.78rem;
       font-weight: 600;
+      border: 1px solid transparent;
       cursor: pointer;
-      border: 1px solid;
-      background: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
       transition: all 0.2s;
     }
 
     .toggle-active-btn.is-active {
-      color: #047857;
-      background: #ECFDF5;
+      background: #D1FAE5;
+      color: #065F46;
       border-color: #A7F3D0;
     }
 
     .toggle-active-btn.is-inactive {
-      color: #6B7280;
       background: #F3F4F6;
+      color: #6B7280;
       border-color: #E5E7EB;
     }
 
@@ -776,75 +944,149 @@
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.2rem;
+      gap: 1.3rem;
     }
 
     .gallery-thumb-card {
       background: var(--white);
       border-radius: var(--radius-md);
-      border: 1px solid var(--border-soft);
       overflow: hidden;
+      border: 1px solid var(--border-soft);
       box-shadow: var(--card-shadow);
       position: relative;
+      transition: transform 0.25s ease;
+    }
+
+    .gallery-thumb-card:hover {
+      transform: translateY(-3px);
     }
 
     .gallery-thumb-img {
       width: 100%;
-      height: 200px;
+      height: 220px;
       object-fit: cover;
       display: block;
-    }
-
-    .gallery-thumb-info {
-      padding: 0.8rem 1rem;
-    }
-
-    .gallery-thumb-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--deep-berry);
-      margin-bottom: 0.2rem;
-    }
-
-    .gallery-thumb-cat {
-      font-size: 0.75rem;
-      color: var(--rose-gold);
     }
 
     .gallery-delete-btn {
       position: absolute;
       top: 10px;
       right: 10px;
-      background: rgba(239, 68, 68, 0.9);
-      color: white;
+      background: rgba(220, 38, 38, 0.9);
+      color: var(--white);
       border: none;
-      border-radius: 50%;
       width: 32px;
       height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.2s;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
     }
 
     .gallery-delete-btn:hover {
+      background: #991B1B;
       transform: scale(1.1);
-      background: #DC2626;
     }
 
-    /* Modal Backdrop & Box */
+    .gallery-thumb-info {
+      padding: 0.85rem;
+    }
+
+    .gallery-thumb-title {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--deep-berry);
+      margin-bottom: 0.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .gallery-thumb-cat {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Forms */
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+    }
+
+    .portal-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .portal-form-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--deep-berry);
+    }
+
+    .portal-input {
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-soft);
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: var(--text-dark);
+      background: #FFFFFF;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+    }
+
+    .portal-input:focus {
+      border-color: var(--rose-gold);
+      box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.15);
+    }
+
+    textarea.portal-input {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .pw-toggle-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .pw-toggle-wrap input {
+      padding-right: 2.8rem;
+    }
+
+    .pw-toggle-btn {
+      position: absolute;
+      right: 0.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    /* Modals */
     .portal-modal {
-      display: none;
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(43, 22, 34, 0.55);
+      right: 0;
+      bottom: 0;
+      background: rgba(43, 22, 34, 0.6);
       backdrop-filter: blur(6px);
-      z-index: 1000;
+      z-index: 999;
+      display: none;
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
@@ -865,6 +1107,8 @@
       padding: 2.2rem;
       position: relative;
       animation: modalSlide 0.3s ease;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     @keyframes modalSlide {
@@ -917,10 +1161,10 @@
     }
 
     /* ==========================================================================
-       RESPONSIVE DESIGN FOR PORTAL DASHBOARD (Tablets & Mobile)
+       RESPONSIVE DESIGN (Tablets & Mobile View)
        ========================================================================== */
 
-    /* 1. Tablets & iPads (max-width: 1024px) */
+    /* Tablets (max-width: 1024px) */
     @media (max-width: 1024px) {
       .portal-main {
         padding: 0 1.2rem;
@@ -934,7 +1178,7 @@
       }
     }
 
-    /* 2. Mobile Landscape & Tablets Portrait (max-width: 768px) */
+    /* Mobile Screens (max-width: 768px) */
     @media (max-width: 768px) {
       .nav-container {
         padding: 0.75rem 1rem;
@@ -948,9 +1192,8 @@
         font-size: 1.15rem;
       }
       .brand-title p {
-        font-size: 0.72rem;
+        font-size: 0.7rem;
       }
-
       .btn-pill {
         padding: 0.45rem 0.85rem;
         font-size: 0.78rem;
@@ -973,7 +1216,7 @@
         padding: 0.45rem 0.95rem;
       }
 
-      /* Touch-swipeable Tab Bar */
+      /* Swipeable Tab Bar */
       .portal-tabs {
         display: flex;
         overflow-x: auto;
@@ -1021,19 +1264,42 @@
         font-size: 1.4rem;
       }
 
-      /* Mobile forms */
+      /* Dual Mode Switch: Hide Table, Show Mobile Cards */
+      .desktop-table-view {
+        display: none !important;
+      }
+      .mobile-card-view {
+        display: flex !important;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 0.6rem;
+      }
+
+      /* Search & Filters on mobile */
+      .filter-pills-wrap {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 0.8rem !important;
+      }
+      .filter-pills {
+        width: 100%;
+        gap: 0.4rem;
+      }
+      .portal-search-form {
+        width: 100%;
+      }
+      .portal-search-form input {
+        flex: 1 !important;
+        width: 100% !important;
+      }
+
+      /* Forms & Grids on Mobile */
       .form-grid-2 {
         grid-template-columns: 1fr;
         gap: 0.8rem;
       }
-
       .service-grid, .package-grid {
         grid-template-columns: 1fr;
-      }
-
-      .portal-table th, .portal-table td {
-        padding: 0.8rem 0.9rem;
-        font-size: 0.85rem;
       }
 
       /* Modals on Mobile */
@@ -1043,16 +1309,16 @@
       }
       .modal-box {
         padding: 1.5rem 1.1rem;
-        max-height: 88vh;
+        max-height: 90vh;
         border-radius: 18px;
-        margin-top: 2rem;
+        margin-top: 1.5rem;
       }
       .modal-header h3 {
         font-size: 1.3rem;
       }
     }
 
-    /* 3. Small Mobile Screens (max-width: 480px) */
+    /* Small Mobile Phones (max-width: 480px) */
     @media (max-width: 480px) {
       .portal-main {
         padding: 0 0.8rem;
@@ -1061,7 +1327,7 @@
         font-size: 1.05rem;
       }
       .brand-title p {
-        display: none; /* Keep clean on 360px phones */
+        display: none;
       }
       .welcome-text h1 {
         font-size: 1.35rem;
@@ -1084,17 +1350,13 @@
         font-size: 0.72rem;
       }
 
-      .filter-pills {
-        gap: 0.4rem;
-      }
       .filter-pill {
         padding: 0.35rem 0.75rem;
         font-size: 0.78rem;
       }
-
       .action-btn-sm {
-        padding: 0.3rem 0.55rem;
-        font-size: 0.74rem;
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
       }
     }
   </style>
@@ -1109,19 +1371,19 @@
           <img src="/static/images/parlor_logo.jpg" alt="Nishi Makeup Studio Logo">
         </div>
         <div class="brand-title">
-          <h2>নিশি মেকআপ স্টুডিও</h2>
-          <p>স্বত্বাধিকারী কন্ট্রোল প্যানেল (Owner Portal)</p>
+          <h2>Nishi Makeup Studio</h2>
+          <p>Owner Control Panel</p>
         </div>
       </a>
 
       <div class="nav-actions">
         <a href="{% url 'parlor:home' %}" target="_blank" class="btn-pill btn-site-preview">
           <span>🌐</span>
-          <span>ওয়েবসাইট দেখুন</span>
+          <span>View Website</span>
         </a>
         <a href="{% url 'parlor:portal_logout' %}" class="btn-pill btn-logout">
           <span>🚪</span>
-          <span>লগআউট</span>
+          <span>Logout</span>
         </a>
       </div>
     </div>
@@ -1133,12 +1395,12 @@
     <!-- WELCOME GREETING -->
     <div class="welcome-card">
       <div class="welcome-text">
-        <h1>🌸 স্বাগতম, নিশি আপু!</h1>
-        <p>আপনার বিউটি পার্লারের বুকিং, সার্ভিস ও কাস্টমারদের তথ্য এক ক্লিকেই পরিচালনা করুন।</p>
+        <h1>🌸 Welcome back, Nishi!</h1>
+        <p>Manage your salon appointments, service rates, luxury packages, and clients seamlessly in one place.</p>
       </div>
       <div class="today-badge">
         <span>📅</span>
-        <span>আজকের তারিখ: {{ today|date:"d M, Y" }}</span>
+        <span>Today: {{ today|date:"d M, Y" }}</span>
       </div>
     </div>
 
@@ -1158,30 +1420,30 @@
     <div class="portal-tabs">
       <a href="?tab=overview" class="tab-btn {% if active_tab == 'overview' %}active{% endif %}">
         <span>📊</span>
-        <span>সারসংক্ষেপ (Overview)</span>
+        <span>Overview</span>
       </a>
       <a href="?tab=appointments" class="tab-btn {% if active_tab == 'appointments' %}active{% endif %}">
         <span>📅</span>
-        <span>বুকিং ও কাস্টমার</span>
+        <span>Appointments & Clients</span>
         {% if pending_count > 0 %}
-          <span class="badge-count">{{ pending_count }} নতুন</span>
+          <span class="badge-count">{{ pending_count }} New</span>
         {% endif %}
       </a>
       <a href="?tab=services" class="tab-btn {% if active_tab == 'services' %}active{% endif %}">
         <span>💅</span>
-        <span>সার্ভিস ও রেট কার্ড</span>
+        <span>Services & Rates</span>
       </a>
       <a href="?tab=packages" class="tab-btn {% if active_tab == 'packages' %}active{% endif %}">
         <span>🎁</span>
-        <span>প্যাকেজসমূহ (Packages)</span>
+        <span>Luxury Packages</span>
       </a>
       <a href="?tab=gallery" class="tab-btn {% if active_tab == 'gallery' %}active{% endif %}">
         <span>📸</span>
-        <span>ফটো গ্যালারি</span>
+        <span>Photo Gallery</span>
       </a>
       <a href="?tab=profile" class="tab-btn {% if active_tab == 'profile' %}active{% endif %}">
         <span>⚙️</span>
-        <span>পার্লার তথ্য ও কন্টাক্ট</span>
+        <span>Settings & Profile</span>
       </a>
     </div>
 
@@ -1191,33 +1453,33 @@
       <div class="kpi-grid">
         <div class="kpi-card today">
           <div class="kpi-icon-pill">📌</div>
-          <div class="kpi-label">আজকের শিডিউল</div>
+          <div class="kpi-label">Today's Schedule</div>
           <div class="kpi-value">{{ today_count }}</div>
-          <div class="kpi-sub">আজকের মোট বুকিং সংখ্যা</div>
+          <div class="kpi-sub">Total appointments scheduled today</div>
         </div>
 
         <div class="kpi-card pending">
           <div class="kpi-icon-pill">⏳</div>
           <div class="kpi-label">
             {% if pending_count > 0 %}<span class="pulse-dot"></span>{% endif %}
-            অপেক্ষমাণ রিকুয়েস্ট
+            Pending Requests
           </div>
           <div class="kpi-value">{{ pending_count }}</div>
-          <div class="kpi-sub">নিশ্চিতকরণের অপেক্ষায়</div>
+          <div class="kpi-sub">Awaiting your confirmation</div>
         </div>
 
         <div class="kpi-card confirmed">
           <div class="kpi-icon-pill">✅</div>
-          <div class="kpi-label">নিশ্চিত অ্যাপয়েন্টমেন্ট</div>
+          <div class="kpi-label">Confirmed Bookings</div>
           <div class="kpi-value">{{ confirmed_count }}</div>
-          <div class="kpi-sub">কনফার্মড ও শিডিউলড</div>
+          <div class="kpi-sub">Confirmed & scheduled in calendar</div>
         </div>
 
         <div class="kpi-card revenue">
           <div class="kpi-icon-pill">💰</div>
-          <div class="kpi-label">আনুমানিক আয়</div>
+          <div class="kpi-label">Estimated Revenue</div>
           <div class="kpi-value">৳{{ total_revenue|floatformat:0 }}</div>
-          <div class="kpi-sub">কনফার্মড বুকিং বাবদ মোট ভলিউম</div>
+          <div class="kpi-sub">Total volume from confirmed bookings</div>
         </div>
       </div>
 
@@ -1225,76 +1487,132 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3>✨ সাম্প্রতিক বুকিং রিকুয়েস্টসমূহ</h3>
-            <p>যেসব কাস্টমার ওয়েবসাইট থেকে রিসেন্ট অ্যাপয়েন্টমেন্ট চেয়েছেন</p>
+            <h3>✨ Recent Booking Requests</h3>
+            <p>Recent client requests submitted through your website booking form</p>
           </div>
-          <a href="?tab=appointments" class="btn-gold">সব বুকিং দেখুন →</a>
+          <a href="?tab=appointments" class="btn-gold">View All Bookings →</a>
         </div>
 
-        <div class="table-responsive">
-          <table class="portal-table">
-            <thead>
-              <tr>
-                <th>রেফারেন্স</th>
-                <th>কাস্টমারের নাম ও মোবাইল</th>
-                <th>তারিখ ও সময়</th>
-                <th>সার্ভিস / প্যাকেজ</th>
-                <th>মূল্য</th>
-                <th>বর্তমান অবস্থা</th>
-                <th>অ্যাকশন</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for appt in appointments|slice:":6" %}
+        <!-- Desktop Table View -->
+        <div class="desktop-table-view">
+          <div class="table-responsive">
+            <table class="portal-table">
+              <thead>
                 <tr>
-                  <td><strong style="color: var(--rose-gold-dark); font-family: monospace;">{{ appt.booking_reference }}</strong></td>
-                  <td>
-                    <strong>{{ appt.customer_name }}</strong><br>
-                    <span style="font-size: 0.82rem; color: var(--text-muted);">{{ appt.phone_number }}</span>
-                  </td>
-                  <td>
-                    <strong>{{ appt.appointment_date|date:"d M, Y" }}</strong><br>
-                    <span style="font-size: 0.8rem; color: var(--rose-gold);">{{ appt.preferred_time }}</span>
-                  </td>
-                  <td>
-                    {% if appt.package and appt.service %}
-                      <span style="color: var(--deep-berry); font-weight: 600;">🎁 {{ appt.package.name }}</span><br>
-                      <small style="color: var(--text-muted); font-weight: 500;">💅 {{ appt.service.name }}</small>
-                    {% elif appt.package %}
-                      <span style="color: var(--deep-berry); font-weight: 600;">🎁 {{ appt.package.name }}</span>
-                    {% elif appt.service %}
-                      <span style="color: var(--deep-berry); font-weight: 600;">💅 {{ appt.service.name }}</span>
-                    {% else %}
-                      <span>সাধারণ জিজ্ঞাসা</span>
-                    {% endif %}
-                  </td>
-                  <td><strong>৳{{ appt.estimated_amount|floatformat:0 }}</strong></td>
-                  <td>
-                    <span class="status-badge status-{{ appt.status }}">
-                      {{ appt.get_status_display }}
-                    </span>
-                  </td>
-                  <td>
-                    <div class="customer-actions">
-                      <a href="{{ appt.get_whatsapp_url }}" target="_blank" class="action-btn-sm btn-wa" title="কাস্টমারকে WhatsApp কনফার্মেশন ও ট্র্যাকিং মেসেজ পাঠান">
-                        💬 WhatsApp
-                      </a>
-                      <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call" title="সরাসরি কল দিন">
-                        📞 কল
-                      </a>
-                    </div>
-                  </td>
+                  <th>Reference</th>
+                  <th>Customer & Contact</th>
+                  <th>Date & Time</th>
+                  <th>Service / Package</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              {% empty %}
-                <tr>
-                  <td colspan="7" style="text-align: center; padding: 2rem; color: var(--text-muted);">
-                    এখনো কোনো বুকিং রিকুয়েস্ট জমা পড়েনি।
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {% for appt in appointments|slice:":6" %}
+                  <tr>
+                    <td><strong style="color: var(--rose-gold-dark); font-family: monospace;">{{ appt.booking_reference }}</strong></td>
+                    <td>
+                      <strong>{{ appt.customer_name }}</strong><br>
+                      <span style="font-size: 0.82rem; color: var(--text-muted);">{{ appt.phone_number }}</span>
+                    </td>
+                    <td>
+                      <strong>{{ appt.appointment_date|date:"d M, Y" }}</strong><br>
+                      <span style="font-size: 0.8rem; color: var(--rose-gold);">{{ appt.preferred_time }}</span>
+                    </td>
+                    <td>
+                      {% if appt.package and appt.service %}
+                        <span style="color: var(--deep-berry); font-weight: 600;">🎁 {{ appt.package.name }}</span><br>
+                        <small style="color: var(--text-muted); font-weight: 500;">💅 {{ appt.service.name }}</small>
+                      {% elif appt.package %}
+                        <span style="color: var(--deep-berry); font-weight: 600;">🎁 {{ appt.package.name }}</span>
+                      {% elif appt.service %}
+                        <span style="color: var(--deep-berry); font-weight: 600;">💅 {{ appt.service.name }}</span>
+                      {% else %}
+                        <span>General Inquiry</span>
+                      {% endif %}
+                    </td>
+                    <td><strong>৳{{ appt.estimated_amount|floatformat:0 }}</strong></td>
+                    <td>
+                      <span class="status-badge status-{{ appt.status }}">
+                        {{ appt.get_status_display }}
+                      </span>
+                    </td>
+                    <td>
+                      <div class="customer-actions">
+                        <a href="{{ appt.get_whatsapp_url }}" target="_blank" class="action-btn-sm btn-wa" title="Send WhatsApp confirmation to client">
+                          💬 WhatsApp
+                        </a>
+                        <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call" title="Call Client">
+                          📞 Call
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="7" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
+                      No recent appointment requests yet.
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
+
+        <!-- Mobile Card View (Overview) -->
+        <div class="mobile-card-view">
+          {% for appt in appointments|slice:":6" %}
+            <div class="mobile-booking-card">
+              <div class="mbc-header">
+                <div class="mbc-ref">
+                  <span class="mbc-ref-label">REF:</span>
+                  <strong>{{ appt.booking_reference }}</strong>
+                </div>
+                <span class="status-badge status-{{ appt.status }}">
+                  {{ appt.get_status_display }}
+                </span>
+              </div>
+
+              <div class="mbc-customer">
+                <div class="mbc-cust-name">{{ appt.customer_name }}</div>
+                <div class="mbc-cust-actions">
+                  <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call">
+                    📞 Call {{ appt.phone_number }}
+                  </a>
+                  <a href="{{ appt.get_whatsapp_url }}" target="_blank" class="action-btn-sm btn-wa">
+                    💬 WhatsApp
+                  </a>
+                </div>
+              </div>
+
+              <div class="mbc-details-grid">
+                <div class="mbc-detail-item">
+                  <span class="mbc-detail-label">📅 Date & Time</span>
+                  <span class="mbc-detail-val"><strong>{{ appt.appointment_date|date:"d M, Y" }}</strong> ({{ appt.preferred_time }})</span>
+                </div>
+                <div class="mbc-detail-item">
+                  <span class="mbc-detail-label">💄 Service / Package</span>
+                  <span class="mbc-detail-val">
+                    {% if appt.package %}<strong>🎁 {{ appt.package.name }}</strong><br>{% endif %}
+                    {% if appt.service %}<small>💅 {{ appt.service.name }}</small>{% endif %}
+                    {% if not appt.package and not appt.service %}General Inquiry{% endif %}
+                  </span>
+                </div>
+                <div class="mbc-detail-item">
+                  <span class="mbc-detail-label">💰 Estimated Total</span>
+                  <span class="mbc-detail-val mbc-price">৳{{ appt.estimated_amount|floatformat:0 }}</span>
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <div style="text-align: center; padding: 2rem; color: var(--text-muted); background: #FAF5F6; border-radius: 12px;">
+              No booking requests submitted yet.
+            </div>
+          {% endfor %}
+        </div>
+
       </div>
     </div>
 
@@ -1304,114 +1622,194 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3>📅 বুকিং ও অ্যাপয়েন্টমেন্ট তালিকা</h3>
-            <p>সকল কাস্টমারের বুকিং এক জায়গায় ট্র্যাক ও ম্যানেজ করুন</p>
+            <h3>📅 Booking & Client Appointments</h3>
+            <p>Track, manage, and update status of all customer appointment requests</p>
           </div>
         </div>
 
         <!-- SEARCH & STATUS FILTERS -->
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.2rem;">
+        <div class="filter-pills-wrap" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.3rem;">
           <div class="filter-pills">
-            <a href="?tab=appointments&status=all" class="filter-pill {% if status_filter == 'all' %}active{% endif %}">সকল ({{ total_count }})</a>
-            <a href="?tab=appointments&status=pending" class="filter-pill {% if status_filter == 'pending' %}active{% endif %}">অপেক্ষমাণ ({{ pending_count }})</a>
-            <a href="?tab=appointments&status=confirmed" class="filter-pill {% if status_filter == 'confirmed' %}active{% endif %}">নিশ্চিত ({{ confirmed_count }})</a>
-            <a href="?tab=appointments&status=completed" class="filter-pill {% if status_filter == 'completed' %}active{% endif %}">সম্পন্ন ({{ completed_count }})</a>
-            <a href="?tab=appointments&status=cancelled" class="filter-pill {% if status_filter == 'cancelled' %}active{% endif %}">বাতিল ({{ cancelled_count }})</a>
+            <a href="?tab=appointments&status=all" class="filter-pill {% if status_filter == 'all' %}active{% endif %}">All ({{ total_count }})</a>
+            <a href="?tab=appointments&status=pending" class="filter-pill {% if status_filter == 'pending' %}active{% endif %}">Pending ({{ pending_count }})</a>
+            <a href="?tab=appointments&status=confirmed" class="filter-pill {% if status_filter == 'confirmed' %}active{% endif %}">Confirmed ({{ confirmed_count }})</a>
+            <a href="?tab=appointments&status=completed" class="filter-pill {% if status_filter == 'completed' %}active{% endif %}">Completed ({{ completed_count }})</a>
+            <a href="?tab=appointments&status=cancelled" class="filter-pill {% if status_filter == 'cancelled' %}active{% endif %}">Cancelled ({{ cancelled_count }})</a>
           </div>
 
-          <form method="GET" action="" style="display: flex; gap: 0.5rem;">
+          <form method="GET" action="" class="portal-search-form">
             <input type="hidden" name="tab" value="appointments">
             <input type="hidden" name="status" value="{{ status_filter }}">
-            <input type="text" name="q" value="{{ search_q }}" placeholder="নাম বা মোবাইল নম্বর দিয়ে খুঁজুন..." class="portal-input" style="padding: 0.45rem 0.9rem; font-size: 0.85rem; width: 220px;">
-            <button type="submit" class="btn-gold" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;">খুঁজুন</button>
+            <input type="text" name="q" value="{{ search_q }}" placeholder="Search by name or phone..." class="portal-input">
+            <button type="submit" class="btn-gold" style="padding: 0.48rem 1.1rem; font-size: 0.85rem;">Search</button>
           </form>
         </div>
 
-        <!-- FULL TABLE -->
-        <div class="table-responsive">
-          <table class="portal-table">
-            <thead>
-              <tr>
-                <th>রেফারেন্স</th>
-                <th>কাস্টমারের নাম ও মোবাইল</th>
-                <th>ঠিকানা / ভেন্যু</th>
-                <th>তারিখ ও স্লট</th>
-                <th>ইভেন্ট ও সার্ভিস</th>
-                <th>আনুমানিক বিল</th>
-                <th>বর্তমান অবস্থা</th>
-                <th>স্ট্যাটাস পরিবর্তন</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for appt in appointments %}
+        <!-- DESKTOP TABLE VIEW -->
+        <div class="desktop-table-view">
+          <div class="table-responsive">
+            <table class="portal-table">
+              <thead>
                 <tr>
-                  <td>
-                    <strong style="color: var(--rose-gold-dark); font-family: monospace;">{{ appt.booking_reference }}</strong>
-                  </td>
-                  <td>
-                    <strong>{{ appt.customer_name }}</strong><br>
-                    <div class="customer-actions" style="margin-top: 0.3rem;">
-                      <a href="{{ appt.get_whatsapp_url }}" target="_blank" class="action-btn-sm btn-wa" title="WhatsApp-এ কনফার্মেশন ও রেফারেন্স পাঠান">
-                        💬 {{ appt.phone_number }}
-                      </a>
-                      <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call">
-                        📞 কল
-                      </a>
-                    </div>
-                  </td>
-                  <td>
-                    <span style="font-size: 0.82rem; color: var(--text-dark);">{{ appt.customer_address|default:"স্টুডিও ভিজিট"|truncatewords:6 }}</span>
-                    {% if appt.special_requests %}
-                      <br><small style="color: var(--rose-gold-dark); font-style: italic;">নোট: {{ appt.special_requests|truncatewords:5 }}</small>
-                    {% endif %}
-                  </td>
-                  <td>
-                    <strong>{{ appt.appointment_date|date:"d M, Y" }}</strong><br>
-                    <span style="font-size: 0.8rem; color: var(--rose-gold);">{{ appt.preferred_time }}</span>
-                  </td>
-                  <td>
-                    <span style="font-size: 0.76rem; background: var(--blush-accent); padding: 2px 7px; border-radius: 4px; font-weight: 600;">{{ appt.get_event_type_display }}</span><br>
-                    {% if appt.package and appt.service %}
-                      <strong>🎁 {{ appt.package.name }}</strong><br>
-                      <small style="color: var(--text-muted);">💅 {{ appt.service.name }}</small>
-                    {% elif appt.package %}
-                      <strong>🎁 {{ appt.package.name }}</strong>
-                    {% elif appt.service %}
-                      <strong>💅 {{ appt.service.name }}</strong>
-                    {% else %}
-                      <span>জেনারেল রিকুয়েস্ট</span>
-                    {% endif %}
-                  </td>
-                  <td>
-                    <strong style="color: var(--champagne-dark); font-size: 1rem;">৳{{ appt.estimated_amount|floatformat:0 }}</strong>
-                  </td>
-                  <td>
-                    <span class="status-badge status-{{ appt.status }}">
-                      {{ appt.get_status_display }}
-                    </span>
-                  </td>
-                  <td>
-                    <form method="POST" action="{% url 'parlor:portal_appointment_status' appt.pk %}">
-                      {% csrf_token %}
-                      <select name="status" onchange="this.form.submit()" class="portal-input" style="padding: 0.35rem 0.6rem; font-size: 0.8rem; border-radius: 8px;">
-                        <option value="pending" {% if appt.status == 'pending' %}selected{% endif %}>⏳ অপেক্ষমাণ (Pending)</option>
-                        <option value="confirmed" {% if appt.status == 'confirmed' %}selected{% endif %}>✅ নিশ্চিত (Confirmed)</option>
-                        <option value="completed" {% if appt.status == 'completed' %}selected{% endif %}>🎉 সম্পন্ন (Completed)</option>
-                        <option value="cancelled" {% if appt.status == 'cancelled' %}selected{% endif %}>❌ বাতিল (Cancelled)</option>
-                      </select>
-                    </form>
-                  </td>
+                  <th>Reference</th>
+                  <th>Customer & Contact</th>
+                  <th>Venue / Address</th>
+                  <th>Date & Slot</th>
+                  <th>Event & Service</th>
+                  <th>Estimated Bill</th>
+                  <th>Status</th>
+                  <th>Update Status</th>
                 </tr>
-              {% empty %}
-                <tr>
-                  <td colspan="8" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
-                    কোনো বুকিং ডেটা পাওয়া যায়নি।
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {% for appt in appointments %}
+                  <tr>
+                    <td>
+                      <strong style="color: var(--rose-gold-dark); font-family: monospace;">{{ appt.booking_reference }}</strong>
+                    </td>
+                    <td>
+                      <strong>{{ appt.customer_name }}</strong><br>
+                      <div class="customer-actions" style="margin-top: 0.3rem;">
+                        <a href="{{ appt.get_whatsapp_url }}" target="_blank" class="action-btn-sm btn-wa" title="Send WhatsApp confirmation">
+                          💬 {{ appt.phone_number }}
+                        </a>
+                        <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call" title="Call Customer">
+                          📞 Call
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <span style="font-size: 0.82rem; color: var(--text-dark);">{{ appt.customer_address|default:"Studio Visit"|truncatewords:6 }}</span>
+                      {% if appt.special_requests %}
+                        <br><small style="color: var(--rose-gold-dark); font-style: italic;">Note: {{ appt.special_requests|truncatewords:5 }}</small>
+                      {% endif %}
+                    </td>
+                    <td>
+                      <strong>{{ appt.appointment_date|date:"d M, Y" }}</strong><br>
+                      <span style="font-size: 0.8rem; color: var(--rose-gold);">{{ appt.preferred_time }}</span>
+                    </td>
+                    <td>
+                      <span style="font-size: 0.76rem; background: var(--blush-accent); padding: 2px 7px; border-radius: 4px; font-weight: 600;">{{ appt.get_event_type_display }}</span><br>
+                      {% if appt.package and appt.service %}
+                        <strong>🎁 {{ appt.package.name }}</strong><br>
+                        <small style="color: var(--text-muted);">💅 {{ appt.service.name }}</small>
+                      {% elif appt.package %}
+                        <strong>🎁 {{ appt.package.name }}</strong>
+                      {% elif appt.service %}
+                        <strong>💅 {{ appt.service.name }}</strong>
+                      {% else %}
+                        <span>General Inquiry</span>
+                      {% endif %}
+                    </td>
+                    <td>
+                      <strong style="color: var(--champagne-dark); font-size: 1rem;">৳{{ appt.estimated_amount|floatformat:0 }}</strong>
+                    </td>
+                    <td>
+                      <span class="status-badge status-{{ appt.status }}">
+                        {{ appt.get_status_display }}
+                      </span>
+                    </td>
+                    <td>
+                      <form method="POST" action="{% url 'parlor:portal_appointment_status' appt.pk %}">
+                        {% csrf_token %}
+                        <select name="status" onchange="this.form.submit()" class="portal-input" style="padding: 0.35rem 0.6rem; font-size: 0.8rem; border-radius: 8px;">
+                          <option value="pending" {% if appt.status == 'pending' %}selected{% endif %}>⏳ Pending</option>
+                          <option value="confirmed" {% if appt.status == 'confirmed' %}selected{% endif %}>✅ Confirmed</option>
+                          <option value="completed" {% if appt.status == 'completed' %}selected{% endif %}>🎉 Completed</option>
+                          <option value="cancelled" {% if appt.status == 'cancelled' %}selected{% endif %}>❌ Cancelled</option>
+                        </select>
+                      </form>
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="8" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
+                      No appointment bookings found matching criteria.
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
+
+        <!-- MOBILE INTERACTIVE CARDS VIEW -->
+        <div class="mobile-card-view">
+          {% for appt in appointments %}
+            <div class="mobile-booking-card">
+              <div class="mbc-header">
+                <div class="mbc-ref">
+                  <span class="mbc-ref-label">REF:</span>
+                  <strong>{{ appt.booking_reference }}</strong>
+                </div>
+                <span class="status-badge status-{{ appt.status }}">
+                  {{ appt.get_status_display }}
+                </span>
+              </div>
+
+              <div class="mbc-customer">
+                <div class="mbc-cust-name">{{ appt.customer_name }}</div>
+                <div class="mbc-cust-actions">
+                  <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call" title="Call Customer">
+                    📞 {{ appt.phone_number }}
+                  </a>
+                  <a href="{{ appt.get_whatsapp_url }}" target="_blank" class="action-btn-sm btn-wa" title="WhatsApp Message">
+                    💬 WhatsApp
+                  </a>
+                </div>
+              </div>
+
+              <div class="mbc-details-grid">
+                <div class="mbc-detail-item">
+                  <span class="mbc-detail-label">📅 Date & Slot</span>
+                  <span class="mbc-detail-val"><strong>{{ appt.appointment_date|date:"d M, Y" }}</strong> &bull; {{ appt.preferred_time }}</span>
+                </div>
+                <div class="mbc-detail-item">
+                  <span class="mbc-detail-label">💄 Event & Service</span>
+                  <span class="mbc-detail-val">
+                    <span class="event-badge">{{ appt.get_event_type_display }}</span><br>
+                    {% if appt.package %}<strong>🎁 {{ appt.package.name }}</strong><br>{% endif %}
+                    {% if appt.service %}<small>💅 {{ appt.service.name }}</small>{% endif %}
+                    {% if not appt.package and not appt.service %}<span>General Inquiry</span>{% endif %}
+                  </span>
+                </div>
+                <div class="mbc-detail-item">
+                  <span class="mbc-detail-label">📍 Venue / Address</span>
+                  <span class="mbc-detail-val">{{ appt.customer_address|default:"Studio Visit" }}</span>
+                </div>
+                <div class="mbc-detail-item">
+                  <span class="mbc-detail-label">💰 Estimated Total</span>
+                  <span class="mbc-detail-val mbc-price">৳{{ appt.estimated_amount|floatformat:0 }}</span>
+                </div>
+              </div>
+
+              {% if appt.special_requests %}
+                <div class="mbc-notes">
+                  <strong>📝 Client Notes:</strong> {{ appt.special_requests }}
+                </div>
+              {% endif %}
+
+              <div class="mbc-status-control">
+                <form method="POST" action="{% url 'parlor:portal_appointment_status' appt.pk %}">
+                  {% csrf_token %}
+                  <label class="mbc-status-label">Update Booking Status:</label>
+                  <select name="status" onchange="this.form.submit()" class="portal-input mbc-status-select">
+                    <option value="pending" {% if appt.status == 'pending' %}selected{% endif %}>⏳ Pending</option>
+                    <option value="confirmed" {% if appt.status == 'confirmed' %}selected{% endif %}>✅ Confirmed</option>
+                    <option value="completed" {% if appt.status == 'completed' %}selected{% endif %}>🎉 Completed</option>
+                    <option value="cancelled" {% if appt.status == 'cancelled' %}selected{% endif %}>❌ Cancelled</option>
+                  </select>
+                </form>
+              </div>
+            </div>
+          {% empty %}
+            <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); background: #FAF5F6; border-radius: 14px;">
+              <div style="font-size: 2.5rem; margin-bottom: 0.6rem;">📅</div>
+              <p>No booking appointments found matching your filters.</p>
+            </div>
+          {% endfor %}
+        </div>
+
       </div>
     </div>
 
@@ -1421,11 +1819,11 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3>💅 পার্লার সার্ভিস ও রেট কার্ড</h3>
-            <p>যেকোনো সার্ভিসের মূল্য ও সময় পরিবর্তন করুন অথবা ওয়েবসাইট থেকে সাময়িক চালু/বন্ধ করুন</p>
+            <h3>💅 Salon Services & Rate Card</h3>
+            <p>Update service pricing, duration, or toggle live visibility on your website</p>
           </div>
           <button class="btn-gold" onclick="openAddServiceModal()">
-            <span>➕ নতুন সার্ভিস যোগ করুন</span>
+            <span>➕ Add New Service</span>
           </button>
         </div>
 
@@ -1441,29 +1839,29 @@
               <div class="item-card-body">
                 <div class="item-card-header">
                   <div>
-                    <span style="font-size: 0.75rem; color: var(--rose-gold); text-transform: uppercase; font-weight: 600;">{{ srv.category.name }}</span>
+                    <span style="font-size: 0.75rem; color: var(--rose-gold); text-transform: uppercase; font-weight: 700;">{{ srv.category.name }}</span>
                     <h4 class="item-card-title">{{ srv.name }}</h4>
                   </div>
                   <div class="item-price">৳{{ srv.starting_price|floatformat:0 }}</div>
                 </div>
 
-                <div class="item-duration">⏱️ সময়: {{ srv.duration }}</div>
+                <div class="item-duration">⏱️ Duration: {{ srv.duration }}</div>
                 <p class="item-desc">{{ srv.short_description|truncatewords:15 }}</p>
 
                 <div class="item-card-footer">
                   <form method="POST" action="{% url 'parlor:portal_service_toggle' srv.pk %}">
                     {% csrf_token %}
-                    <button type="submit" class="toggle-active-btn {% if srv.is_active %}is-active{% else %}is-inactive{% endif %}" title="ওয়েবসাইটে দেখানো বা লুকানোর সুইচ">
+                    <button type="submit" class="toggle-active-btn {% if srv.is_active %}is-active{% else %}is-inactive{% endif %}" title="Toggle live website visibility">
                       {% if srv.is_active %}
-                        <span>🟢 চালু আছে (Active)</span>
+                        <span>🟢 Active (Live)</span>
                       {% else %}
-                        <span>⚪ লুকানো (Hidden)</span>
+                        <span>⚪ Hidden (Draft)</span>
                       {% endif %}
                     </button>
                   </form>
 
                   <button type="button" class="action-btn-sm" style="background: var(--champagne-light); color: var(--champagne-dark); border-color: rgba(212, 175, 55, 0.4);" onclick="openEditServiceModal('{{ srv.pk }}', '{{ srv.name|escapejs }}', '{{ srv.starting_price|floatformat:0 }}', '{{ srv.duration|escapejs }}', '{{ srv.image|escapejs }}', '{{ srv.short_description|escapejs }}', '{{ srv.category.pk }}')">
-                    ✏️ ইডিট করুন
+                    ✏️ Edit Service
                   </button>
                 </div>
               </div>
@@ -1479,11 +1877,11 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3>🎁 পার্টি ও ব্রাইডাল প্যাকেজসমূহ</h3>
-            <p>আপনার স্পেশাল প্যাকেজের প্রাইস, অফার ও ফিচারগুলো পরিচালনা করুন</p>
+            <h3>🎁 Party & Luxury Packages</h3>
+            <p>Manage bridal & special occasion packages, tiered pricing, and perk highlights</p>
           </div>
           <button class="btn-gold" onclick="openAddPackageModal()">
-            <span>➕ নতুন প্যাকেজ তৈরি করুন</span>
+            <span>➕ Create New Package</span>
           </button>
         </div>
 
@@ -1500,7 +1898,7 @@
                 <div class="item-card-header">
                   <div>
                     {% if pkg.badge_text %}
-                      <span style="display: inline-block; background: var(--blush-accent); color: var(--deep-berry); font-size: 0.72rem; padding: 2px 8px; border-radius: 50px; font-weight: 600; margin-bottom: 0.3rem;">
+                      <span style="display: inline-block; background: var(--blush-accent); color: var(--deep-berry); font-size: 0.72rem; padding: 2px 8px; border-radius: 50px; font-weight: 700; margin-bottom: 0.3rem;">
                         {{ pkg.badge_text }}
                       </span>
                     {% endif %}
@@ -1509,11 +1907,11 @@
                   <div class="item-price">৳{{ pkg.price|floatformat:0 }}</div>
                 </div>
 
-                <div class="item-duration">⏱️ আনুমানিক সময়: {{ pkg.duration }}</div>
+                <div class="item-duration">⏱️ Est. Duration: {{ pkg.duration }}</div>
                 <p class="item-desc">{{ pkg.short_description }}</p>
 
-                <div style="margin-bottom: 1rem; font-size: 0.82rem; background: var(--blush-bg); padding: 0.7rem; border-radius: 10px;">
-                  <strong style="color: var(--deep-berry); display: block; margin-bottom: 0.2rem;">প্যাকেজের অন্তর্ভুক্ত:</strong>
+                <div style="margin-bottom: 1rem; font-size: 0.82rem; background: var(--blush-bg); padding: 0.75rem; border-radius: 10px;">
+                  <strong style="color: var(--deep-berry); display: block; margin-bottom: 0.3rem;">Included in this Package:</strong>
                   <ul style="padding-left: 1.2rem; color: var(--text-dark);">
                     {% for feat in pkg.feature_list|slice:":3" %}
                       <li>{{ feat }}</li>
@@ -1523,11 +1921,11 @@
 
                 <div class="item-card-footer">
                   <span class="status-badge {% if pkg.is_active %}status-confirmed{% else %}status-cancelled{% endif %}">
-                    {% if pkg.is_active %}সক্রিয় (Active){% else %}নিষ্ক্রিয়{% endif %}
+                    {% if pkg.is_active %}Active (Live){% else %}Inactive{% endif %}
                   </span>
 
                   <button type="button" class="action-btn-sm" style="background: var(--champagne-light); color: var(--champagne-dark); border-color: rgba(212, 175, 55, 0.4);" onclick="openEditPackageModal('{{ pkg.pk }}', '{{ pkg.name|escapejs }}', '{{ pkg.price|floatformat:0 }}', '{{ pkg.duration|escapejs }}', '{{ pkg.badge_text|escapejs }}', '{{ pkg.image|escapejs }}', '{{ pkg.short_description|escapejs }}', '{{ pkg.included_features|escapejs }}')">
-                    ✏️ রেট বা ফিচার ইডিট
+                    ✏️ Edit Rates & Features
                   </button>
                 </div>
               </div>
@@ -1543,20 +1941,20 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3>📸 ফটো গ্যালারি ও পোর্টফোলিও</h3>
-            <p>আপনার কাজের সুন্দর ছবিগুলো এখানে আপলোড বা ডিলিট করুন</p>
+            <h3>📸 Portfolio & Photo Gallery</h3>
+            <p>Upload new makeover transformations or manage existing photos in your portfolio</p>
           </div>
           <button class="btn-gold" onclick="openAddGalleryModal()">
-            <span>➕ নতুন ছবি যোগ করুন</span>
+            <span>➕ Upload New Photo</span>
           </button>
         </div>
 
         <div class="gallery-grid">
           {% for item in gallery_items %}
             <div class="gallery-thumb-card">
-              <form method="POST" action="{% url 'parlor:portal_gallery_delete' item.pk %}" onsubmit="return confirm('আপনি কি নিশ্চিত এই ছবিটি মুছে ফেলতে চান?');">
+              <form method="POST" action="{% url 'parlor:portal_gallery_delete' item.pk %}" onsubmit="return confirm('Are you sure you want to delete this photo from the gallery?');">
                 {% csrf_token %}
-                <button type="submit" class="gallery-delete-btn" title="মুছে ফেলুন">✕</button>
+                <button type="submit" class="gallery-delete-btn" title="Delete Photo">✕</button>
               </form>
               <img src="{{ item.image }}" alt="{{ item.title }}" class="gallery-thumb-img" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';">
               <div class="gallery-thumb-info">
@@ -1566,7 +1964,7 @@
             </div>
           {% empty %}
             <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-muted);">
-              গ্যালারিতে এখনো কোনো ছবি যোগ করা হয়নি।
+              No photos uploaded to your portfolio gallery yet.
             </div>
           {% endfor %}
         </div>
@@ -1579,8 +1977,8 @@
       <div class="panel-card">
         <div class="panel-header">
           <div>
-            <h3>⚙️ পার্লার তথ্য ও কন্টাক্ট নম্বর সেটিংস</h3>
-            <p>এখানে মোবাইল বা ঠিকানা পরিবর্তন করলে সরাসরি মূল ওয়েবসাইটেও পরিবর্তন হয়ে যাবে</p>
+            <h3>⚙️ Salon Profile & Contact Information</h3>
+            <p>Updates made here automatically reflect across the public customer-facing website</p>
           </div>
         </div>
 
@@ -1588,56 +1986,56 @@
           {% csrf_token %}
           <div class="form-grid-2">
             <div class="portal-form-group">
-              <label class="portal-form-label">পার্লারের নাম (Studio Name)</label>
+              <label class="portal-form-label">Studio Name</label>
               {{ profile_form.name }}
             </div>
 
             <div class="portal-form-group">
-              <label class="portal-form-label">ট্যাগলাইন (Tagline)</label>
+              <label class="portal-form-label">Tagline</label>
               {{ profile_form.tagline }}
             </div>
 
             <div class="portal-form-group">
-              <label class="portal-form-label">কল করার ফোন নম্বর (Phone Display)</label>
+              <label class="portal-form-label">Phone Display (for Calls)</label>
               {{ profile_form.phone }}
-              <small style="color: var(--text-muted);">উদা: +880 1904-423317</small>
+              <small style="color: var(--text-muted);">e.g. +880 1904-423317</small>
             </div>
 
             <div class="portal-form-group">
-              <label class="portal-form-label">হোয়াটসঅ্যাপ নম্বর (WhatsApp Number)</label>
+              <label class="portal-form-label">WhatsApp Number</label>
               {{ profile_form.whatsapp_number }}
-              <small style="color: var(--text-muted);">স্পেস ছাড়া উদা: 8801904423317</small>
+              <small style="color: var(--text-muted);">Digits only without spaces, e.g. 8801904423317</small>
             </div>
 
             <div class="portal-form-group">
-              <label class="portal-form-label">ফেসবুক পেজ লিংক (Facebook Page URL)</label>
+              <label class="portal-form-label">Facebook Page URL</label>
               {{ profile_form.facebook_url }}
             </div>
 
             <div class="portal-form-group">
-              <label class="portal-form-label">খোলার ও বন্ধের সময় (Business Hours)</label>
+              <label class="portal-form-label">Business Hours</label>
               {{ profile_form.business_hours }}
             </div>
 
             <div class="portal-form-group">
-              <label class="portal-form-label">ইমেইল ঠিকানা (Email Address)</label>
+              <label class="portal-form-label">Email Address</label>
               {{ profile_form.email }}
             </div>
 
             <div class="portal-form-group" style="grid-column: 1 / -1;">
-              <label class="portal-form-label">পার্লারের ঠিকানা (Address)</label>
+              <label class="portal-form-label">Studio Address</label>
               {{ profile_form.address }}
             </div>
 
             <div class="portal-form-group" style="grid-column: 1 / -1;">
-              <label class="portal-form-label">আমাদের সম্পর্কে বিবরণ (About Story)</label>
+              <label class="portal-form-label">About Salon Story</label>
               {{ profile_form.about_story }}
             </div>
           </div>
 
           <div style="margin-top: 1.5rem; text-align: right;">
             <button type="submit" class="btn-gold" style="padding: 0.8rem 2rem; font-size: 1rem;">
-              <span>💾 সেটিংস সংরক্ষণ করুন (Save Settings)</span>
+              <span>💾 Save Profile Settings</span>
             </button>
           </div>
         </form>
@@ -1647,8 +2045,8 @@
       <div class="panel-card" style="margin-top: 2rem;">
         <div class="panel-header">
           <div>
-            <h3>🔐 ড্যাশবোর্ড লগইন ইউজারনেম ও পাসওয়ার্ড পরিবর্তন</h3>
-            <p>আপনার ড্যাশবোর্ডে প্রবেশের ইউজারনেম অথবা নতুন পাসওয়ার্ড এখান থেকেই সরাসরি পরিবর্তন করতে পারবেন</p>
+            <h3>🔐 Dashboard Login & Password Settings</h3>
+            <p>Update your admin username, password reset email, or account password directly</p>
           </div>
         </div>
 
@@ -1656,47 +2054,47 @@
           {% csrf_token %}
           <div class="form-grid-2">
             <div class="portal-form-group">
-              <label class="portal-form-label">ইউজারনেম (Username)</label>
+              <label class="portal-form-label">Username</label>
               <input type="text" name="username" value="{{ request.user.username }}" class="portal-input" required>
-              <small style="color: var(--text-muted);">বর্তমান ইউজারনেম: <strong>{{ request.user.username }}</strong></small>
+              <small style="color: var(--text-muted);">Current username: <strong>{{ request.user.username }}</strong></small>
             </div>
 
             <div class="portal-form-group">
-              <label class="portal-form-label">রিকভারি ইমেইল (Recovery Gmail / Email)</label>
+              <label class="portal-form-label">Recovery Email (Gmail / Email)</label>
               <input type="email" name="email" value="{{ request.user.email }}" class="portal-input" placeholder="e.g. owner@gmail.com" required>
-              <small style="color: var(--text-muted);">পাসওয়ার্ড ভুলে গেলে এই জিমেইলে রিসেট লিংক যাবে</small>
+              <small style="color: var(--text-muted);">Password reset instructions will be delivered here</small>
             </div>
 
             <div class="portal-form-group">
-              <label class="portal-form-label">বর্তমান পাসওয়ার্ড (Current Password) *</label>
+              <label class="portal-form-label">Current Password *</label>
               <div class="pw-toggle-wrap">
-                <input type="password" id="cur_pw" name="current_password" class="portal-input" placeholder="আপনার বর্তমান পাসওয়ার্ড লিখুন" required autocomplete="current-password">
-                <button type="button" class="pw-toggle-btn" onclick="togglePw('cur_pw', this)" title="পাসওয়ার্ড দেখুন">👁️</button>
+                <input type="password" id="cur_pw" name="current_password" class="portal-input" placeholder="Enter current password" required autocomplete="current-password">
+                <button type="button" class="pw-toggle-btn" onclick="togglePw('cur_pw', this)" title="Show password">👁️</button>
               </div>
-              <small style="color: var(--rose-gold-dark);">ভেরিফিকেশনের জন্য বর্তমান পাসওয়ার্ড দেওয়া আবশ্যক</small>
+              <small style="color: var(--rose-gold-dark);">Required for security verification</small>
             </div>
 
             <div class="portal-form-group">
-              <label class="portal-form-label">নতুন পাসওয়ার্ড (New Password)</label>
+              <label class="portal-form-label">New Password</label>
               <div class="pw-toggle-wrap">
-                <input type="password" id="new_pw" name="new_password" class="portal-input" placeholder="পরিবর্তন না করতে চাইলে খালি রাখুন" autocomplete="new-password">
-                <button type="button" class="pw-toggle-btn" onclick="togglePw('new_pw', this)" title="পাসওয়ার্ড দেখুন">👁️</button>
+                <input type="password" id="new_pw" name="new_password" class="portal-input" placeholder="Leave empty to keep unchanged" autocomplete="new-password">
+                <button type="button" class="pw-toggle-btn" onclick="togglePw('new_pw', this)" title="Show password">👁️</button>
               </div>
-              <small style="color: var(--text-muted);">কমপক্ষে ৬ অক্ষরের একটি নতুন পাসওয়ার্ড দিন</small>
+              <small style="color: var(--text-muted);">Minimum 6 characters recommended</small>
             </div>
 
             <div class="portal-form-group">
-              <label class="portal-form-label">নতুন পাসওয়ার্ড নিশ্চিত করুন (Confirm Password)</label>
+              <label class="portal-form-label">Confirm New Password</label>
               <div class="pw-toggle-wrap">
-                <input type="password" id="conf_pw" name="confirm_password" class="portal-input" placeholder="নতুন পাসওয়ার্ডটি আবার লিখুন" autocomplete="new-password">
-                <button type="button" class="pw-toggle-btn" onclick="togglePw('conf_pw', this)" title="পাসওয়ার্ড দেখুন">👁️</button>
+                <input type="password" id="conf_pw" name="confirm_password" class="portal-input" placeholder="Re-enter new password" autocomplete="new-password">
+                <button type="button" class="pw-toggle-btn" onclick="togglePw('conf_pw', this)" title="Show password">👁️</button>
               </div>
             </div>
           </div>
 
           <div style="margin-top: 1.5rem; text-align: right;">
             <button type="submit" class="btn-gold" style="padding: 0.8rem 2rem; font-size: 1rem;">
-              <span>🔑 ইউজারনেম / পাসওয়ার্ড আপডেট করুন</span>
+              <span>🔑 Update Credentials</span>
             </button>
           </div>
         </form>
@@ -1712,7 +2110,7 @@
   <div class="portal-modal" id="serviceModal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 id="serviceModalTitle">💅 সার্ভিস তথ্য সম্পাদন</h3>
+        <h3 id="serviceModalTitle">💅 Service Details</h3>
         <button type="button" class="modal-close-btn" onclick="closeModal('serviceModal')">✕</button>
       </div>
 
@@ -1721,7 +2119,7 @@
         <input type="hidden" name="service_id" id="service_id_input">
 
         <div class="portal-form-group">
-          <label class="portal-form-label">ক্যাটাগরি নির্বাচন করুন</label>
+          <label class="portal-form-label">Select Category</label>
           <select name="category" id="service_category_select" class="portal-input" required>
             {% for cat in categories %}
               <option value="{{ cat.pk }}">{{ cat.name }}</option>
@@ -1730,18 +2128,18 @@
         </div>
 
         <div class="portal-form-group">
-          <label class="portal-form-label">সার্ভিসের নাম</label>
+          <label class="portal-form-label">Service Name</label>
           <input type="text" name="name" id="service_name_input" class="portal-input" placeholder="e.g. Gold Facial" required>
         </div>
 
         <div class="form-grid-2">
           <div class="portal-form-group">
-            <label class="portal-form-label">মূল্য (টাকা)</label>
+            <label class="portal-form-label">Starting Price (BDT)</label>
             <input type="number" name="starting_price" id="service_price_input" class="portal-input" placeholder="e.g. 2500" required>
           </div>
 
           <div class="portal-form-group">
-            <label class="portal-form-label">সময় (Duration)</label>
+            <label class="portal-form-label">Duration</label>
             <input type="text" name="duration" id="service_duration_input" class="portal-input" placeholder="e.g. 60 Mins" required>
           </div>
         </div>
@@ -1749,48 +2147,48 @@
         <!-- Image Options: File upload OR URL -->
         <div style="background: #FFFDFE; border: 1.5px solid var(--border-soft); border-radius: 14px; padding: 1.1rem; margin-bottom: 1.2rem;">
           <label style="font-size: 0.9rem; font-weight: 700; color: var(--deep-berry); display: block; margin-bottom: 0.7rem;">
-            📸 সার্ভিসের ছবি পরিবর্তন (Choose Image):
+            📸 Choose Service Image:
           </label>
           
           <div class="portal-form-group" style="margin-bottom: 0.8rem;">
-            <label class="portal-form-label">অপশন ১: আপনার ফোন বা কম্পিউটার থেকে ছবি আপলোড করুন</label>
+            <label class="portal-form-label">Option 1: Upload image file from device (Phone / PC)</label>
             <input type="file" name="image_file" id="service_file_input" accept="image/*" class="portal-input" onchange="previewFile(this, 'service_preview_img', 'service_preview_status')">
-            <small style="color: var(--text-muted); display: block; margin-top: 3px;">📂 গ্যালারি বা ফোল্ডার থেকে সরাসরি ছবি ফাইল বেছে নিন (.jpg, .png, .webp)</small>
+            <small style="color: var(--text-muted); display: block; margin-top: 3px;">📂 Select an image from your device storage (.jpg, .png, .webp)</small>
           </div>
 
           <div class="portal-form-group" style="margin-bottom: 0.5rem;">
-            <label class="portal-form-label">অপশন ২: অথবা সরাসরি ছবির অনলাইন লিঙ্ক দিন (Image URL)</label>
+            <label class="portal-form-label">Option 2: Or enter direct online image link (Image URL)</label>
             <input type="text" name="image" id="service_image_input" class="portal-input" placeholder="https://..." oninput="previewUrl(this.value, 'service_preview_img', 'service_preview_status')">
-            <small style="color: var(--text-muted); display: block; margin-top: 3px;">💡 সরাসরি ছবির লিংক পেস্ট করলে নিচে প্রিভিউ দেখাবে।</small>
+            <small style="color: var(--text-muted); display: block; margin-top: 3px;">💡 Pasting an image URL will show an immediate preview below.</small>
           </div>
 
           <!-- Live Preview Box -->
           <div id="service_preview_box" style="margin-top: 0.8rem; padding: 0.8rem; background: #FFF5F7; border-radius: 12px; border: 1.5px dashed var(--rose-gold); text-align: center;">
-            <div style="font-size: 0.8rem; font-weight: 700; color: var(--deep-berry); margin-bottom: 0.4rem;">📷 ছবির লাইভ প্রিভিউ:</div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--deep-berry); margin-bottom: 0.4rem;">📷 Live Image Preview:</div>
             <img id="service_preview_img" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80" alt="Preview" style="max-height: 150px; max-width: 100%; border-radius: 8px; object-fit: cover; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" onerror="handlePreviewError(this, 'service_preview_status')">
             <div id="service_preview_status" style="font-size: 0.78rem; font-weight: 600; margin-top: 0.4rem;"></div>
           </div>
         </div>
 
         <div class="portal-form-group">
-          <label class="portal-form-label">সংক্ষিপ্ত বিবরণ</label>
-          <textarea name="short_description" id="service_desc_input" rows="2" class="portal-input" placeholder="সার্ভিস সম্পর্কে দু-এক কথা..."></textarea>
+          <label class="portal-form-label">Short Description</label>
+          <textarea name="short_description" id="service_desc_input" rows="2" class="portal-input" placeholder="A brief description of this service..."></textarea>
         </div>
 
         <div class="portal-form-group" style="display: flex; gap: 1.5rem; margin-top: 1rem;">
           <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
             <input type="checkbox" name="is_active" id="service_active_check" class="portal-checkbox" checked>
-            <span>সক্রিয় রাখুন (Active)</span>
+            <span>Active (Show on website)</span>
           </label>
           <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
             <input type="checkbox" name="is_featured" id="service_featured_check" class="portal-checkbox" checked>
-            <span>হোমপেজে ফিচার করুন</span>
+            <span>Feature on Homepage</span>
           </label>
         </div>
 
         <div style="text-align: right; margin-top: 1.5rem;">
           <button type="submit" class="btn-gold" style="width: 100%; justify-content: center;">
-            <span>সংরক্ষণ করুন (Save Service)</span>
+            <span>Save Service</span>
           </button>
         </div>
       </form>
@@ -1802,7 +2200,7 @@
   <div class="portal-modal" id="packageModal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 id="packageModalTitle">🎁 প্যাকেজ রেট ও ফিচার সম্পাদন</h3>
+        <h3 id="packageModalTitle">🎁 Package Details & Rates</h3>
         <button type="button" class="modal-close-btn" onclick="closeModal('packageModal')">✕</button>
       </div>
 
@@ -1811,76 +2209,76 @@
         <input type="hidden" name="package_id" id="package_id_input">
 
         <div class="portal-form-group">
-          <label class="portal-form-label">প্যাকেজের নাম</label>
+          <label class="portal-form-label">Package Name</label>
           <input type="text" name="name" id="pkg_name_input" class="portal-input" placeholder="e.g. Wedding Bridal Package" required>
         </div>
 
         <div class="form-grid-2">
           <div class="portal-form-group">
-            <label class="portal-form-label">প্যাকেজ রেট (টাকা)</label>
+            <label class="portal-form-label">Package Rate (BDT)</label>
             <input type="number" name="price" id="pkg_price_input" class="portal-input" placeholder="e.g. 8000" required>
           </div>
 
           <div class="portal-form-group">
-            <label class="portal-form-label">সময় (Duration)</label>
+            <label class="portal-form-label">Duration</label>
             <input type="text" name="duration" id="pkg_duration_input" class="portal-input" placeholder="e.g. 3-4 Hours">
           </div>
         </div>
 
         <div class="portal-form-group">
-          <label class="portal-form-label">ব্যাজ লেখা (Badge Text)</label>
+          <label class="portal-form-label">Badge Text (Optional)</label>
           <input type="text" name="badge_text" id="pkg_badge_input" class="portal-input" placeholder="e.g. Most Popular">
         </div>
 
         <!-- Image Options: File upload OR URL -->
         <div style="background: #FFFDFE; border: 1.5px solid var(--border-soft); border-radius: 14px; padding: 1.1rem; margin-bottom: 1.2rem;">
           <label style="font-size: 0.9rem; font-weight: 700; color: var(--deep-berry); display: block; margin-bottom: 0.7rem;">
-            📸 প্যাকেজের কভার ছবি পরিবর্তন:
+            📸 Package Cover Image:
           </label>
           
           <div class="portal-form-group" style="margin-bottom: 0.8rem;">
-            <label class="portal-form-label">অপশন ১: আপনার ফোন বা কম্পিউটার থেকে ছবি আপলোড করুন</label>
+            <label class="portal-form-label">Option 1: Upload image file from device (Phone / PC)</label>
             <input type="file" name="image_file" id="pkg_file_input" accept="image/*" class="portal-input" onchange="previewFile(this, 'pkg_preview_img', 'pkg_preview_status')">
-            <small style="color: var(--text-muted); display: block; margin-top: 3px;">📂 গ্যালারি থেকে সরাসরি ছবি ফাইল বেছে নিন</small>
+            <small style="color: var(--text-muted); display: block; margin-top: 3px;">📂 Select an image from your device storage</small>
           </div>
 
           <div class="portal-form-group" style="margin-bottom: 0.5rem;">
-            <label class="portal-form-label">অপশন ২: অথবা সরাসরি ছবির অনলাইন লিঙ্ক দিন (Image URL)</label>
+            <label class="portal-form-label">Option 2: Or enter direct online image link (Image URL)</label>
             <input type="text" name="image" id="pkg_image_input" class="portal-input" placeholder="https://..." oninput="previewUrl(this.value, 'pkg_preview_img', 'pkg_preview_status')">
           </div>
 
           <!-- Live Preview Box -->
           <div id="pkg_preview_box" style="margin-top: 0.8rem; padding: 0.8rem; background: #FFF5F7; border-radius: 12px; border: 1.5px dashed var(--rose-gold); text-align: center;">
-            <div style="font-size: 0.8rem; font-weight: 700; color: var(--deep-berry); margin-bottom: 0.4rem;">📷 ছবির লাইভ প্রিভিউ:</div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--deep-berry); margin-bottom: 0.4rem;">📷 Live Image Preview:</div>
             <img id="pkg_preview_img" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80" alt="Preview" style="max-height: 150px; max-width: 100%; border-radius: 8px; object-fit: cover; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" onerror="handlePreviewError(this, 'pkg_preview_status')">
             <div id="pkg_preview_status" style="font-size: 0.78rem; font-weight: 600; margin-top: 0.4rem;"></div>
           </div>
         </div>
 
         <div class="portal-form-group">
-          <label class="portal-form-label">এক লাইনে বিবরণ</label>
-          <input type="text" name="short_description" id="pkg_desc_input" class="portal-input" placeholder="প্যাকেজের সুবিধা...">
+          <label class="portal-form-label">One-line Summary</label>
+          <input type="text" name="short_description" id="pkg_desc_input" class="portal-input" placeholder="Brief summary of this package...">
         </div>
 
         <div class="portal-form-group">
-          <label class="portal-form-label">প্যাকেজের অন্তর্ভুক্ত সেবাসমূহ (প্রতি লাইনে ১টি)</label>
+          <label class="portal-form-label">Included Features (One feature per line)</label>
           <textarea name="included_features" id="pkg_features_input" rows="4" class="portal-input" placeholder="Bridal Makeup&#10;Bridal Hairstyle&#10;Saree Draping"></textarea>
         </div>
 
         <div class="portal-form-group" style="display: flex; gap: 1.5rem;">
           <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
             <input type="checkbox" name="is_active" id="pkg_active_check" class="portal-checkbox" checked>
-            <span>সক্রিয় রাখুন (Active)</span>
+            <span>Active (Show on website)</span>
           </label>
           <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
             <input type="checkbox" name="is_popular" id="pkg_popular_check" class="portal-checkbox">
-            <span>পপুলার হাইলাইট</span>
+            <span>Highlight as Popular</span>
           </label>
         </div>
 
         <div style="text-align: right; margin-top: 1.5rem;">
           <button type="submit" class="btn-gold" style="width: 100%; justify-content: center;">
-            <span>প্যাকেজ সংরক্ষণ করুন (Save Package)</span>
+            <span>Save Package</span>
           </button>
         </div>
       </form>
@@ -1892,62 +2290,62 @@
   <div class="portal-modal" id="galleryModal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3>📸 নতুন ফটো যোগ করুন</h3>
+        <h3>📸 Upload New Photo</h3>
         <button type="button" class="modal-close-btn" onclick="closeModal('galleryModal')">✕</button>
       </div>
 
       <form method="POST" action="{% url 'parlor:portal_gallery_save' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="portal-form-group">
-          <label class="portal-form-label">ছবির শিরোনাম (Title)</label>
+          <label class="portal-form-label">Photo Title</label>
           <input type="text" name="title" class="portal-input" placeholder="e.g. Royal Bengali Bridal Look" required>
         </div>
 
         <div class="portal-form-group">
-          <label class="portal-form-label">ক্যাটাগরি</label>
+          <label class="portal-form-label">Category</label>
           <select name="category" class="portal-input" required>
-            <option value="bridal">ব্রাইডাল মেকআপ (Bridal)</option>
-            <option value="reception">রিসিপশন (Reception)</option>
-            <option value="engagement">এনগেজমেন্ট (Engagement)</option>
-            <option value="party">পার্টি লুক (Party)</option>
-            <option value="haldi">গায়ে হলুদ ও মেহেদি (Haldi)</option>
-            <option value="natural">এইচডি ন্যাচারাল গ্লাস স্কিন</option>
-            <option value="hair">হেয়ার স্টাইলিং ও শাড়ি ড্র্যাপিং</option>
+            <option value="bridal">Bridal Transformations</option>
+            <option value="reception">Reception & Bou-Bhat</option>
+            <option value="engagement">Engagement & Ring Ceremony</option>
+            <option value="party">Party & Glamour Looks</option>
+            <option value="haldi">Haldi & Mehendi Vibes</option>
+            <option value="natural">Natural & Dewy HD Glass Skin</option>
+            <option value="hair">Hairstyling & Saree Draping</option>
           </select>
         </div>
 
         <!-- Image Options: File upload OR URL -->
         <div style="background: #FFFDFE; border: 1.5px solid var(--border-soft); border-radius: 14px; padding: 1.1rem; margin-bottom: 1.2rem;">
           <label style="font-size: 0.9rem; font-weight: 700; color: var(--deep-berry); display: block; margin-bottom: 0.7rem;">
-            📸 ছবি নির্বাচন করুন:
+            📸 Select Photo:
           </label>
           
           <div class="portal-form-group" style="margin-bottom: 0.8rem;">
-            <label class="portal-form-label">অপশন ১: আপনার ফোন বা কম্পিউটার থেকে ছবি আপলোড করুন</label>
+            <label class="portal-form-label">Option 1: Upload image file from device (Phone / PC)</label>
             <input type="file" name="image_file" accept="image/*" class="portal-input" onchange="previewFile(this, 'gallery_preview_img', 'gallery_preview_status')">
-            <small style="color: var(--text-muted); display: block; margin-top: 3px;">📂 ডিভাইসের মেমোরি থেকে ছবি ফাইল আপলোড করুন</small>
+            <small style="color: var(--text-muted); display: block; margin-top: 3px;">📂 Select an image from your device storage</small>
           </div>
 
           <div class="portal-form-group" style="margin-bottom: 0.5rem;">
-            <label class="portal-form-label">অপশন ২: অথবা সরাসরি ছবির লিঙ্ক দিন (Image URL)</label>
+            <label class="portal-form-label">Option 2: Or enter direct online image link (Image URL)</label>
             <input type="text" name="image" class="portal-input" placeholder="https://..." oninput="previewUrl(this.value, 'gallery_preview_img', 'gallery_preview_status')">
           </div>
 
           <!-- Live Preview Box -->
           <div id="gallery_preview_box" style="margin-top: 0.8rem; padding: 0.8rem; background: #FFF5F7; border-radius: 12px; border: 1.5px dashed var(--rose-gold); text-align: center;">
-            <div style="font-size: 0.8rem; font-weight: 700; color: var(--deep-berry); margin-bottom: 0.4rem;">📷 ছবির লাইভ প্রিভিউ:</div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--deep-berry); margin-bottom: 0.4rem;">📷 Live Image Preview:</div>
             <img id="gallery_preview_img" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80" alt="Preview" style="max-height: 150px; max-width: 100%; border-radius: 8px; object-fit: cover; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" onerror="handlePreviewError(this, 'gallery_preview_status')">
             <div id="gallery_preview_status" style="font-size: 0.78rem; font-weight: 600; margin-top: 0.4rem;"></div>
           </div>
         </div>
 
         <div class="portal-form-group">
-          <label class="portal-form-label">ক্যাপশন (ঐচ্ছিক)</label>
-          <input type="text" name="caption" class="portal-input" placeholder="ছবি সম্পর্কে ছোট মন্তব্য">
+          <label class="portal-form-label">Caption (Optional)</label>
+          <input type="text" name="caption" class="portal-input" placeholder="Short description or notes...">
         </div>
 
         <div class="portal-form-group">
-          <label class="portal-form-label">আর্টিস্ট নাম</label>
+          <label class="portal-form-label">Artist Credit</label>
           <input type="text" name="artist_tag" class="portal-input" value="Nishi Makeup Artist">
         </div>
 
@@ -1955,7 +2353,7 @@
 
         <div style="text-align: right; margin-top: 1.5rem;">
           <button type="submit" class="btn-gold" style="width: 100%; justify-content: center;">
-            <span>গ্যালারিতে যুক্ত করুন (Upload Photo)</span>
+            <span>Upload to Gallery</span>
           </button>
         </div>
       </form>
@@ -1965,7 +2363,7 @@
 
   <!-- FOOTER -->
   <footer class="portal-footer">
-    <p>নিশি মেকআপ আর্টিস্ট অ্যান্ড বিউটি পার্লার • <span>স্বত্বাধিকারী সিকিউর কন্ট্রোল প্যানেল</span></p>
+    <p>Nishi Makeup Artist & Beauty Parlour &bull; <span>Secure Owner Control Panel</span></p>
   </footer>
 
 
@@ -1977,11 +2375,11 @@
       if (input.type === 'password') {
         input.type = 'text';
         btn.innerText = '🙈';
-        btn.title = 'পাসওয়ার্ড লুকান';
+        btn.title = 'Hide password';
       } else {
         input.type = 'password';
         btn.innerText = '👁️';
-        btn.title = 'পাসওয়ার্ড দেখুন';
+        btn.title = 'Show password';
       }
     }
 
@@ -2000,7 +2398,7 @@
           img.src = e.target.result;
           if (status) {
             status.style.color = '#059669';
-            status.innerText = '✅ ফাইল নির্বাচিত হয়েছে: ' + file.name;
+            status.innerText = '✅ File selected: ' + file.name;
           }
         };
         reader.readAsDataURL(file);
@@ -2024,12 +2422,12 @@
         img.src = url;
         if (status) {
           status.style.color = '#B45309';
-          status.innerText = '🔄 লিংক থেকে ছবি লোড হচ্ছে...';
+          status.innerText = '🔄 Loading image from URL...';
         }
         img.onload = function() {
           if (status) {
             status.style.color = '#059669';
-            status.innerText = '✅ ছবি লিঙ্ক থেকে সফলভাবে প্রদর্শিত হচ্ছে!';
+            status.innerText = '✅ Image loaded successfully from URL!';
           }
         };
       } else {
@@ -2042,13 +2440,13 @@
       const status = document.getElementById(statusId);
       if (status) {
         status.style.color = '#DC2626';
-        status.innerText = '⚠️ এই লিংকের ছবিটি লোড হচ্ছে না! (নিশ্চিত করুন এটি সরাসরি .jpg/.png লিংক অথবা ডিভাইস থেকে ফাইল আপলোড করুন)';
+        status.innerText = '⚠️ Image URL failed to load. Please verify the URL or upload a file directly from your device.';
       }
     }
 
     // Service Modals
     function openAddServiceModal() {
-      document.getElementById('serviceModalTitle').innerText = '➕ নতুন সার্ভিস যোগ করুন';
+      document.getElementById('serviceModalTitle').innerText = '➕ Add New Service';
       document.getElementById('service_id_input').value = '';
       document.getElementById('service_name_input').value = '';
       document.getElementById('service_price_input').value = '';
@@ -2063,7 +2461,7 @@
     }
 
     function openEditServiceModal(id, name, price, duration, image, desc, catId) {
-      document.getElementById('serviceModalTitle').innerText = '✏️ সার্ভিস তথ্য সম্পাদন: ' + name;
+      document.getElementById('serviceModalTitle').innerText = '✏️ Edit Service: ' + name;
       document.getElementById('service_id_input').value = id;
       document.getElementById('service_name_input').value = name;
       document.getElementById('service_price_input').value = price;
@@ -2077,13 +2475,13 @@
       const previewImg = document.getElementById('service_preview_img');
       previewImg.src = image || 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';
       document.getElementById('service_preview_status').style.color = '#4A154B';
-      document.getElementById('service_preview_status').innerText = 'বর্তমান সক্রিয় ছবি';
+      document.getElementById('service_preview_status').innerText = 'Current active image';
       document.getElementById('serviceModal').classList.add('active');
     }
 
     // Package Modals
     function openAddPackageModal() {
-      document.getElementById('packageModalTitle').innerText = '➕ নতুন প্যাকেজ তৈরি করুন';
+      document.getElementById('packageModalTitle').innerText = '➕ Create New Package';
       document.getElementById('package_id_input').value = '';
       document.getElementById('pkg_name_input').value = '';
       document.getElementById('pkg_price_input').value = '';
@@ -2099,7 +2497,7 @@
     }
 
     function openEditPackageModal(id, name, price, duration, badge, image, desc, features) {
-      document.getElementById('packageModalTitle').innerText = '✏️ প্যাকেজ সম্পাদন: ' + name;
+      document.getElementById('packageModalTitle').innerText = '✏️ Edit Package: ' + name;
       document.getElementById('package_id_input').value = id;
       document.getElementById('pkg_name_input').value = name;
       document.getElementById('pkg_price_input').value = price;
@@ -2112,7 +2510,7 @@
       const previewImg = document.getElementById('pkg_preview_img');
       previewImg.src = image || 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&auto=format&fit=crop&q=80';
       document.getElementById('pkg_preview_status').style.color = '#4A154B';
-      document.getElementById('pkg_preview_status').innerText = 'বর্তমান সক্রিয় ছবি';
+      document.getElementById('pkg_preview_status').innerText = 'Current active image';
       document.getElementById('packageModal').classList.add('active');
     }
 

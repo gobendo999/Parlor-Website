@@ -326,7 +326,7 @@ def staff_required_portal(view_func):
         if not request.user.is_authenticated:
             return redirect('parlor:portal_login')
         if not request.user.is_staff:
-            messages.error(request, "আপনার এই পোর্টালে প্রবেশের অনুমতি নেই।")
+            messages.error(request, "Access denied. You do not have permission to view the owner portal.")
             return redirect('parlor:portal_login')
         return view_func(request, *args, **kwargs)
     return wrapper
@@ -345,11 +345,11 @@ def portal_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None and user.is_staff:
                 login(request, user)
-                name_display = user.first_name if user.first_name else "নিশি আপু"
-                messages.success(request, f"🌸 স্বাগতম, {name_display}! আপনার বিউটি পার্লার কন্ট্রোল প্যানেলে স্বাগতম।")
+                name_display = user.first_name if user.first_name else "Nishi"
+                messages.success(request, f"🌸 Welcome back, {name_display}! Successfully logged in to your salon portal.")
                 return redirect('parlor:portal_dashboard')
             else:
-                messages.error(request, "ভুল ইউজারনেম অথবা পাসওয়ার্ড। অনুগ্রহ করে সঠিক তথ্য দিন।")
+                messages.error(request, "Invalid username or password. Please verify your credentials.")
     else:
         form = PortalLoginForm()
 
@@ -363,7 +363,7 @@ def portal_login(request):
 def portal_logout(request):
     """Logout action redirecting to portal login."""
     logout(request)
-    messages.info(request, "🌸 আপনি সফলভাবে লগআউট হয়েছেন। ভালো থাকবেন!")
+    messages.info(request, "🌸 You have been successfully logged out. Have a wonderful day!")
     return redirect('parlor:portal_login')
 
 
@@ -460,13 +460,7 @@ def portal_appointment_status(request, pk):
         if admin_notes:
             appointment.admin_notes = admin_notes
         appointment.save()
-        status_bn = {
-            'pending': 'অপেক্ষমাণ (Pending)',
-            'confirmed': 'নিশ্চিত (Confirmed)',
-            'completed': 'সম্পন্ন (Completed)',
-            'cancelled': 'বাতিল (Cancelled)',
-        }.get(new_status, new_status)
-        messages.success(request, f"বুকিং #{appointment.booking_reference} স্ট্যাটাস '{status_bn}' হিসেবে সংরক্ষিত হয়েছে।")
+        messages.success(request, f"Booking #{appointment.booking_reference} status updated to '{appointment.get_status_display()}'.")
     return redirect('/nishi-portal/?tab=appointments')
 
 
@@ -509,10 +503,10 @@ def portal_service_save(request):
         service = get_object_or_404(Service, pk=service_id)
         existing_img = service.image
         form = PortalServiceForm(request.POST, request.FILES, instance=service)
-        action_msg = "আপডেট"
+        action_msg = "updated"
     else:
         form = PortalServiceForm(request.POST, request.FILES)
-        action_msg = "যোগ"
+        action_msg = "added"
 
     if form.is_valid():
         service = form.save(commit=False)
@@ -523,9 +517,9 @@ def portal_service_save(request):
             base_slug = slugify(service.name) or "service"
             service.slug = f"{base_slug}-{uuid.uuid4().hex[:6]}"
         service.save()
-        messages.success(request, f"সার্ভিস '{service.name}' সফলভাবে {action_msg} করা হয়েছে! 💖")
+        messages.success(request, f"Service '{service.name}' has been successfully {action_msg}! 💖")
     else:
-        messages.error(request, "সার্ভিস তথ্যে সমস্যা রয়েছে। অনুগ্রহ করে সঠিক ইনপুট দিন।")
+        messages.error(request, "There was an error in the service form. Please verify your inputs.")
     
     return redirect('/nishi-portal/?tab=services')
 
@@ -537,8 +531,8 @@ def portal_service_toggle(request, pk):
     service = get_object_or_404(Service, pk=pk)
     service.is_active = not service.is_active
     service.save()
-    state = "সক্রিয় (Active)" if service.is_active else "লুকানো/নিষ্ক্রিয় (Inactive)"
-    messages.success(request, f"'{service.name}' এখন {state} করা হয়েছে।")
+    state = "Active (Live on Website)" if service.is_active else "Inactive (Hidden from Website)"
+    messages.success(request, f"'{service.name}' is now set to {state}.")
     return redirect('/nishi-portal/?tab=services')
 
 
@@ -552,10 +546,10 @@ def portal_package_save(request):
         package = get_object_or_404(Package, pk=package_id)
         existing_img = package.image
         form = PortalPackageForm(request.POST, request.FILES, instance=package)
-        action_msg = "আপডেট"
+        action_msg = "updated"
     else:
         form = PortalPackageForm(request.POST, request.FILES)
-        action_msg = "তৈরি"
+        action_msg = "created"
 
     if form.is_valid():
         pkg = form.save(commit=False)
@@ -566,9 +560,9 @@ def portal_package_save(request):
             base_slug = slugify(pkg.name) or "package"
             pkg.slug = f"{base_slug}-{uuid.uuid4().hex[:6]}"
         pkg.save()
-        messages.success(request, f"প্যাকেজ '{pkg.name}' সফলভাবে {action_msg} করা হয়েছে! ✨")
+        messages.success(request, f"Package '{pkg.name}' has been successfully {action_msg}! ✨")
     else:
-        messages.error(request, "প্যাকেজ ফর্মে ভুল রয়েছে। অনুগ্রহ করে চেক করুন।")
+        messages.error(request, "There was an error in the package form. Please check your inputs.")
     
     return redirect('/nishi-portal/?tab=packages')
 
@@ -584,9 +578,9 @@ def portal_gallery_save(request):
         if resolved_img:
             item.image = resolved_img
         item.save()
-        messages.success(request, f"নতুন ছবি '{item.title}' সফলভাবে গ্যালারিতে যোগ হয়েছে! 📸")
+        messages.success(request, f"New photo '{item.title}' has been uploaded to the gallery successfully! 📸")
     else:
-        messages.error(request, "ছবির লিঙ্ক বা তথ্যে সমস্যা রয়েছে।")
+        messages.error(request, "Error uploading photo. Please verify image file or URL.")
     return redirect('/nishi-portal/?tab=gallery')
 
 
@@ -597,7 +591,7 @@ def portal_gallery_delete(request, pk):
     item = get_object_or_404(GalleryItem, pk=pk)
     title = item.title
     item.delete()
-    messages.success(request, f"ছবি '{title}' সফলভাবে মুছে ফেলা হয়েছে।")
+    messages.success(request, f"Photo '{title}' has been deleted successfully.")
     return redirect('/nishi-portal/?tab=gallery')
 
 
@@ -614,14 +608,14 @@ def portal_profile_save(request):
         if profile.phone:
             profile.phone_clean = re.sub(r'[\s\-\(\)]', '', profile.phone)
         profile.save()
-        messages.success(request, "🌸 পার্লারের ফোন নম্বর, ঠিকানা এবং সময়সূচি সফলভাবে হালনাগাদ করা হয়েছে!")
+        messages.success(request, "🌸 Salon profile, phone numbers, address, and business hours updated successfully!")
     else:
         # Show specific field errors so user knows exactly what to fix
         error_msgs = []
         for field, errors in form.errors.items():
             field_name = form.fields.get(field).label if form.fields.get(field) else field
             error_msgs.append(f"{field_name}: {errors[0]}")
-        messages.error(request, f"তথ্য সংরক্ষণে সমস্যা: {' | '.join(error_msgs)}")
+        messages.error(request, f"Profile save error: {' | '.join(error_msgs)}")
     return redirect('/nishi-portal/?tab=profile')
 
 
@@ -637,18 +631,18 @@ def portal_password_change(request):
     confirm_password = request.POST.get('confirm_password', '').strip()
 
     if not current_password:
-        messages.error(request, "❌ অনুগ্রহ করে বর্তমান পাসওয়ার্ড দিন।")
+        messages.error(request, "❌ Please enter your current password.")
         return redirect('/nishi-portal/?tab=profile')
 
     if not user.check_password(current_password):
-        messages.error(request, "❌ আপনার বর্তমান পাসওয়ার্ডটি সঠিক নয়! দয়া করে সঠিক পাসওয়ার্ড দিন।")
+        messages.error(request, "❌ Your current password is incorrect! Please try again.")
         return redirect('/nishi-portal/?tab=profile')
 
     username_changed = False
     if new_username and new_username != user.username:
         from django.contrib.auth.models import User
         if User.objects.filter(username=new_username).exclude(pk=user.pk).exists():
-            messages.error(request, f"❌ '{new_username}' ইউজারনেমটি ইতিমধ্যে ব্যবহৃত হচ্ছে। অন্য ইউজারনেম দিন।")
+            messages.error(request, f"❌ Username '{new_username}' is already taken. Please choose another.")
             return redirect('/nishi-portal/?tab=profile')
         user.username = new_username
         username_changed = True
@@ -661,10 +655,10 @@ def portal_password_change(request):
     password_changed = False
     if new_password:
         if len(new_password) < 6:
-            messages.error(request, "❌ নতুন পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে।")
+            messages.error(request, "❌ New password must be at least 6 characters long.")
             return redirect('/nishi-portal/?tab=profile')
         if new_password != confirm_password:
-            messages.error(request, "❌ নতুন পাসওয়ার্ড ও কনফার্ম পাসওয়ার্ড দুটি মেলেনি!")
+            messages.error(request, "❌ New password and confirmation password do not match!")
             return redirect('/nishi-portal/?tab=profile')
         user.set_password(new_password)
         password_changed = True
@@ -675,16 +669,16 @@ def portal_password_change(request):
 
     msg_parts = []
     if username_changed:
-        msg_parts.append(f"ইউজারনেম '{user.username}'")
+        msg_parts.append(f"username to '{user.username}'")
     if email_changed:
-        msg_parts.append(f"রিকভারি ইমেইল '{user.email}'")
+        msg_parts.append(f"recovery email to '{user.email}'")
     if password_changed:
-        msg_parts.append("নতুন পাসওয়ার্ড")
+        msg_parts.append("password")
     
     if msg_parts:
-        messages.success(request, f"🌸 সফলভাবে আপনার {' এবং '.join(msg_parts)} আপডেট করা হয়েছে! পরবর্তী লগইনের সময় এটি ব্যবহার করুন।")
+        messages.success(request, f"🌸 Successfully updated your {', '.join(msg_parts)}! Please use them for future logins.")
     else:
-        messages.info(request, "কোনো পরিবর্তন করা হয়নি।")
+        messages.info(request, "No changes were submitted.")
 
     return redirect('/nishi-portal/?tab=profile')
 

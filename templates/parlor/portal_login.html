@@ -1,10 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>নিশি আপু'স কন্ট্রোল প্যানেল | Nishi Makeup Studio Portal</title>
+  <title>Admin Login | Nishi Makeup Studio Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Hind+Siliguri:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -325,10 +325,10 @@
       <img src="/static/images/parlor_logo.jpg" alt="Nishi Makeup Studio Logo">
     </div>
 
-    <h1>নিশি মেকআপ স্টুডিও</h1>
-    <p class="subtitle">পার্লার ও ব্রাইডাল বুকিং কন্ট্রোল প্যানেল</p>
+    <h1>Nishi Makeup Studio</h1>
+    <p class="subtitle">Salon & Bridal CMS Control Panel</p>
 
-    <div class="tag-badge">🌸 সিকিউর ওনার্স পোর্টাল</div>
+    <div class="tag-badge">🌸 Secure Owner Portal</div>
 
     {% if messages %}
       {% for message in messages %}
@@ -342,35 +342,35 @@
       {% csrf_token %}
       
       <div class="form-group">
-        <label class="form-label">ইউজারনেম (Username)</label>
+        <label class="form-label">Username</label>
         {{ form.username }}
       </div>
 
       <div class="form-group">
-        <label class="form-label">পাসওয়ার্ড (Password)</label>
+        <label class="form-label">Password</label>
         <div class="pw-wrap">
           {{ form.password }}
-          <button type="button" class="pw-toggle" onclick="togglePasswordVisibility()" title="পাসওয়ার্ড দেখুন">👁️</button>
+          <button type="button" class="pw-toggle" onclick="togglePasswordVisibility()" title="Show/Hide Password">👁️</button>
         </div>
         <div style="display: flex; justify-content: flex-end; margin-top: 0.5rem;">
           <a href="{% url 'parlor:password_reset' %}" style="color: var(--rose-gold-dark); font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--deep-berry)'" onmouseout="this.style.color='var(--rose-gold-dark)'">
-            🔑 পাসওয়ার্ড ভুলে গেছেন? (Forgot Password)
+            🔑 Forgot Password?
           </a>
         </div>
       </div>
 
       <button type="submit" class="btn-login">
-        <span>লগইন করুন</span>
+        <span>Sign In to Portal</span>
         <span>✨</span>
       </button>
     </form>
 
     <div class="help-hint">
-      💡 <strong>লগইন সংক্রান্ত তথ্য:</strong> আপনার অ্যাডমিন ইউজারনেম ও পাসওয়ার্ড দিয়ে সরাসরি লগইন করুন। যেকোনো সমস্যা হলে সাপোর্ট টিমকে জানান।
+      💡 <strong>Login Notice:</strong> Sign in with your owner credentials to manage appointments, rates, and services.
     </div>
 
     <div class="footer-links">
-      <a href="{% url 'parlor:home' %}">← মূল ওয়েবসাইট দেখুন</a>
+      <a href="{% url 'parlor:home' %}">← Back to Public Website</a>
     </div>
   </div>
 

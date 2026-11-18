@@ -151,7 +151,7 @@ class PortalLoginForm(forms.Form):
         max_length=150,
         widget=forms.TextInput(attrs={
             'class': 'portal-input',
-            'placeholder': 'ইউজারনেম লিখুন (e.g. admin)',
+            'placeholder': 'Enter username (e.g. admin)',
             'autocomplete': 'username',
             'required': True,
         })
@@ -159,7 +159,7 @@ class PortalLoginForm(forms.Form):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={
             'class': 'portal-input',
-            'placeholder': 'পাসওয়ার্ড লিখুন',
+            'placeholder': 'Enter password',
             'autocomplete': 'current-password',
             'required': True,
         })
@@ -169,7 +169,7 @@ class PortalLoginForm(forms.Form):
 class PortalServiceForm(forms.ModelForm):
     image = forms.CharField(
         required=False,
-        widget=forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'অথবা ছবির অনলাইন লিঙ্ক (Image URL)'})
+        widget=forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Or online image URL (https://...)'})
     )
     image_file = forms.FileField(
         required=False,
@@ -177,7 +177,7 @@ class PortalServiceForm(forms.ModelForm):
     )
     short_description = forms.CharField(
         required=False,
-        widget=forms.Textarea(attrs={'class': 'portal-input', 'rows': 2, 'placeholder': 'সংক্ষিপ্ত বিবরণ (ঐচ্ছিক)'})
+        widget=forms.Textarea(attrs={'class': 'portal-input', 'rows': 2, 'placeholder': 'Brief description (optional)'})
     )
 
     class Meta:
@@ -188,10 +188,10 @@ class PortalServiceForm(forms.ModelForm):
         ]
         widgets = {
             'category': forms.Select(attrs={'class': 'portal-input'}),
-            'name': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'সার্ভিসের নাম'}),
-            'starting_price': forms.NumberInput(attrs={'class': 'portal-input', 'placeholder': 'মূল্য (টাকা)'}),
-            'duration': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'সময় (e.g. 45 Mins)'}),
-            'short_description': forms.Textarea(attrs={'class': 'portal-input', 'rows': 2, 'placeholder': 'সংক্ষিপ্ত বিবরণ'}),
+            'name': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Service name (e.g. 24K Gold Facial)'}),
+            'starting_price': forms.NumberInput(attrs={'class': 'portal-input', 'placeholder': 'Starting price in BDT (৳)'}),
+            'duration': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Duration (e.g. 60 Mins)'}),
+            'short_description': forms.Textarea(attrs={'class': 'portal-input', 'rows': 2, 'placeholder': 'Brief summary of the service'}),
             'is_featured': forms.CheckboxInput(attrs={'class': 'portal-checkbox'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'portal-checkbox'}),
         }
@@ -200,7 +200,7 @@ class PortalServiceForm(forms.ModelForm):
 class PortalPackageForm(forms.ModelForm):
     image = forms.CharField(
         required=False,
-        widget=forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'অথবা ছবির অনলাইন লিঙ্ক (Image URL)'})
+        widget=forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Or online image URL (https://...)'})
     )
     image_file = forms.FileField(
         required=False,
@@ -215,14 +215,14 @@ class PortalPackageForm(forms.ModelForm):
             'short_description', 'included_features', 'bonus_perks'
         ]
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'প্যাকেজের নাম'}),
-            'price': forms.NumberInput(attrs={'class': 'portal-input', 'placeholder': 'বর্তমান মূল্য (টাকা)'}),
-            'original_price': forms.NumberInput(attrs={'class': 'portal-input', 'placeholder': 'আগের মূল্য (ঐচ্ছিক)'}),
-            'duration': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'সময় (e.g. 3-4 Hours)'}),
-            'badge_text': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'ব্যাজ (e.g. Most Popular)'}),
-            'short_description': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'এক লাইনে বিবরণ'}),
-            'included_features': forms.Textarea(attrs={'class': 'portal-input', 'rows': 4, 'placeholder': 'প্রতি লাইনে একটি করে সুবিধা লিখুন'}),
-            'bonus_perks': forms.Textarea(attrs={'class': 'portal-input', 'rows': 2, 'placeholder': 'বোনাস সুবিধা (ঐচ্ছিক)'}),
+            'name': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Package name (e.g. Royal Bridal Package)'}),
+            'price': forms.NumberInput(attrs={'class': 'portal-input', 'placeholder': 'Package price in BDT (৳)'}),
+            'original_price': forms.NumberInput(attrs={'class': 'portal-input', 'placeholder': 'Original / Regular price (optional)'}),
+            'duration': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Duration (e.g. 3-4 Hours)'}),
+            'badge_text': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Badge text (e.g. Most Popular)'}),
+            'short_description': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'One-line engaging summary'}),
+            'included_features': forms.Textarea(attrs={'class': 'portal-input', 'rows': 4, 'placeholder': 'Included features (one per line)'}),
+            'bonus_perks': forms.Textarea(attrs={'class': 'portal-input', 'rows': 2, 'placeholder': 'Bonus perks / complimentary items (optional)'}),
             'is_popular': forms.CheckboxInput(attrs={'class': 'portal-checkbox'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'portal-checkbox'}),
         }
@@ -231,7 +231,7 @@ class PortalPackageForm(forms.ModelForm):
 class PortalGalleryForm(forms.ModelForm):
     image = forms.CharField(
         required=False,
-        widget=forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'অথবা ছবির অনলাইন লিঙ্ক (Image URL)'})
+        widget=forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Or online image URL (https://...)'})
     )
     image_file = forms.FileField(
         required=False,
@@ -242,10 +242,10 @@ class PortalGalleryForm(forms.ModelForm):
         model = GalleryItem
         fields = ['title', 'category', 'image', 'caption', 'artist_tag', 'is_featured']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'ছবির শিরোনাম'}),
+            'title': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Photo title (e.g. Royal Bridal HD Makeup)'}),
             'category': forms.Select(attrs={'class': 'portal-input'}),
-            'caption': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'ক্যাপশন'}),
-            'artist_tag': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'আর্টিস্ট নাম'}),
+            'caption': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Short caption (optional)'}),
+            'artist_tag': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Artist name (e.g. Nishi Makeup Artist)'}),
             'is_featured': forms.CheckboxInput(attrs={'class': 'portal-checkbox'}),
         }
 
@@ -268,13 +268,13 @@ class PortalProfileForm(forms.ModelForm):
             'business_hours', 'email', 'about_story'
         ]
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'portal-input'}),
-            'tagline': forms.TextInput(attrs={'class': 'portal-input'}),
+            'name': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Studio name'}),
+            'tagline': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Studio tagline'}),
             'phone': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': '+880 1904-423317'}),
             'whatsapp_number': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': '8801904423317'}),
-            'address': forms.TextInput(attrs={'class': 'portal-input'}),
-            'business_hours': forms.TextInput(attrs={'class': 'portal-input'}),
-            'about_story': forms.Textarea(attrs={'class': 'portal-input', 'rows': 3}),
+            'address': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'Studio & venue service address'}),
+            'business_hours': forms.TextInput(attrs={'class': 'portal-input', 'placeholder': 'e.g. Every day: 10:00 AM - 08:30 PM'}),
+            'about_story': forms.Textarea(attrs={'class': 'portal-input', 'rows': 3, 'placeholder': 'About your salon history, vision, and passion...'}),
         }
 
     def clean_facebook_url(self):
