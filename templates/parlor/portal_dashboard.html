@@ -137,8 +137,13 @@
       letter-spacing: 0.3px;
       line-height: 1.15;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    }
+
+    .brand-short {
+      display: none;
+    }
+    .brand-full {
+      display: inline;
     }
 
     .brand-title p {
@@ -312,23 +317,75 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Tabs Bar Wrapper */
-    .portal-tabs-wrapper {
+    /* ==========================================================================
+       SLIDING NAVIGATION TABS (Interactive with Next/Prev Arrows & Hint)
+       ========================================================================== */
+    .tabs-nav-container {
       width: 100%;
       max-width: 100%;
-      min-width: 0;
-      overflow: hidden;
       margin-bottom: 1.8rem;
+      box-sizing: border-box;
+    }
+
+    .tabs-slider-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      width: 100%;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .tab-slide-arrow {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1.5px solid var(--border-soft);
+      color: var(--deep-berry);
+      font-size: 1.45rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(183, 110, 121, 0.18);
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      line-height: 1;
+      padding: 0;
+    }
+
+    .tab-slide-arrow:hover {
+      background: var(--blush-accent);
+      color: var(--rose-gold-dark);
+      border-color: var(--rose-gold);
+      transform: scale(1.08);
+      box-shadow: 0 6px 18px rgba(183, 110, 121, 0.28);
+    }
+
+    .tab-slide-arrow:active {
+      transform: scale(0.92);
+    }
+
+    .portal-tabs-track {
+      flex: 1;
+      overflow: hidden;
+      min-width: 0;
+      position: relative;
     }
 
     .portal-tabs {
       display: flex;
       gap: 0.55rem;
       overflow-x: auto;
-      padding-bottom: 0.4rem;
+      padding: 0.35rem 0.2rem;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       -ms-overflow-style: none;
+      scroll-behavior: smooth;
       width: 100%;
     }
 
@@ -352,6 +409,7 @@
       white-space: nowrap;
       flex-shrink: 0;
       cursor: pointer;
+      box-shadow: 0 2px 8px rgba(183, 110, 121, 0.05);
     }
 
     .tab-btn:hover {
@@ -380,6 +438,32 @@
     .tab-btn.active .badge-count {
       background: var(--white);
       color: var(--deep-berry);
+    }
+
+    /* Swipe hint banner on mobile */
+    .tabs-slide-hint {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      color: var(--deep-berry);
+      background: linear-gradient(135deg, #FFF0F3, #FDF4E7);
+      border: 1px dashed rgba(183, 110, 121, 0.4);
+      border-radius: 50px;
+      padding: 0.4rem 0.85rem;
+      margin-top: 0.6rem;
+      text-align: center;
+    }
+
+    .hint-arrow-icon {
+      font-size: 0.85rem;
+      animation: bounceX 1.4s infinite;
+    }
+
+    @keyframes bounceX {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(4px); }
     }
 
     /* Tab Panes */
@@ -737,7 +821,7 @@
     }
 
     /* ==========================================================================
-       MOBILE CARD VIEW FOR APPOINTMENTS (Dual Mode)
+       MOBILE CARD VIEW FOR APPOINTMENTS (Dual Mode with 50/50 Grid Action Buttons)
        ========================================================================== */
     .mobile-card-view {
       display: none;
@@ -793,28 +877,42 @@
     .mbc-customer {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.35rem;
       width: 100%;
     }
 
     .mbc-cust-name {
-      font-size: 1.12rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--deep-berry);
       word-break: break-word;
     }
 
+    .mbc-cust-phone {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    /* Fixed 50/50 Grid for Action Buttons - NEVER OVERFLOWS */
     .mbc-cust-actions {
-      display: flex;
-      gap: 0.5rem;
-      width: 100%;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.5rem !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
 
     .mbc-cust-actions .action-btn-sm {
-      flex: 1;
-      justify-content: center;
-      padding: 0.55rem 0.6rem;
-      font-size: 0.82rem;
+      width: 100% !important;
+      justify-content: center !important;
+      text-align: center !important;
+      padding: 0.55rem 0.5rem !important;
+      font-size: 0.82rem !important;
+      border-radius: 50px !important;
+      box-sizing: border-box !important;
+      min-width: 0 !important;
     }
 
     .mbc-details-grid {
@@ -1330,13 +1428,21 @@
         align-self: flex-start;
       }
 
-      /* Navigation Tabs */
-      .portal-tabs-wrapper {
+      /* Navigation Tabs on mobile */
+      .tabs-nav-container {
         margin-bottom: 1.3rem;
       }
       .tab-btn {
         padding: 0.6rem 1.05rem;
         font-size: 0.85rem;
+      }
+      .tab-slide-arrow {
+        width: 34px;
+        height: 34px;
+        font-size: 1.35rem;
+      }
+      .tabs-slide-hint {
+        display: flex;
       }
 
       /* KPI Grid */
@@ -1458,8 +1564,14 @@
         width: 34px;
         height: 34px;
       }
+      .brand-short {
+        display: inline !important;
+      }
+      .brand-full {
+        display: none !important;
+      }
       .brand-title h2 {
-        font-size: 0.95rem;
+        font-size: 1rem;
       }
       .btn-pill {
         padding: 0.38rem 0.52rem;
@@ -1500,7 +1612,10 @@
           <img src="/static/images/parlor_logo.jpg" alt="Nishi Makeup Studio Logo">
         </div>
         <div class="brand-title">
-          <h2>Nishi Makeup Studio</h2>
+          <h2>
+            <span class="brand-full">Nishi Makeup Studio</span>
+            <span class="brand-short">Nishi Studio</span>
+          </h2>
           <p>Owner Control Panel</p>
         </div>
       </a>
@@ -1545,36 +1660,54 @@
       </div>
     {% endif %}
 
-    <!-- NAVIGATION TABS -->
-    <div class="portal-tabs-wrapper">
-      <div class="portal-tabs">
-        <a href="?tab=overview" class="tab-btn {% if active_tab == 'overview' %}active{% endif %}">
-          <span>📊</span>
-          <span>Overview</span>
-        </a>
-        <a href="?tab=appointments" class="tab-btn {% if active_tab == 'appointments' %}active{% endif %}">
-          <span>📅</span>
-          <span>Appointments & Clients</span>
-          {% if pending_count > 0 %}
-            <span class="badge-count">{{ pending_count }} New</span>
-          {% endif %}
-        </a>
-        <a href="?tab=services" class="tab-btn {% if active_tab == 'services' %}active{% endif %}">
-          <span>💅</span>
-          <span>Services & Rates</span>
-        </a>
-        <a href="?tab=packages" class="tab-btn {% if active_tab == 'packages' %}active{% endif %}">
-          <span>🎁</span>
-          <span>Luxury Packages</span>
-        </a>
-        <a href="?tab=gallery" class="tab-btn {% if active_tab == 'gallery' %}active{% endif %}">
-          <span>📸</span>
-          <span>Photo Gallery</span>
-        </a>
-        <a href="?tab=profile" class="tab-btn {% if active_tab == 'profile' %}active{% endif %}">
-          <span>⚙️</span>
-          <span>Settings & Profile</span>
-        </a>
+    <!-- NAVIGATION TABS WITH INTERACTIVE SLIDER -->
+    <div class="tabs-nav-container">
+      <div class="tabs-slider-bar">
+        <button type="button" class="tab-slide-arrow tab-arrow-prev" id="tabPrevBtn" onclick="slideTabs(-1)" title="Slide left">
+          <span>‹</span>
+        </button>
+
+        <div class="portal-tabs-track" id="portalTabsTrack">
+          <div class="portal-tabs" id="portalTabsNav">
+            <a href="?tab=overview" class="tab-btn {% if active_tab == 'overview' %}active{% endif %}" id="tabBtn_overview">
+              <span>📊</span>
+              <span>Overview</span>
+            </a>
+            <a href="?tab=appointments" class="tab-btn {% if active_tab == 'appointments' %}active{% endif %}" id="tabBtn_appointments">
+              <span>📅</span>
+              <span>Appointments & Clients</span>
+              {% if pending_count > 0 %}
+                <span class="badge-count">{{ pending_count }} New</span>
+              {% endif %}
+            </a>
+            <a href="?tab=services" class="tab-btn {% if active_tab == 'services' %}active{% endif %}" id="tabBtn_services">
+              <span>💅</span>
+              <span>Services & Rates</span>
+            </a>
+            <a href="?tab=packages" class="tab-btn {% if active_tab == 'packages' %}active{% endif %}" id="tabBtn_packages">
+              <span>🎁</span>
+              <span>Luxury Packages</span>
+            </a>
+            <a href="?tab=gallery" class="tab-btn {% if active_tab == 'gallery' %}active{% endif %}" id="tabBtn_gallery">
+              <span>📸</span>
+              <span>Photo Gallery</span>
+            </a>
+            <a href="?tab=profile" class="tab-btn {% if active_tab == 'profile' %}active{% endif %}" id="tabBtn_profile">
+              <span>⚙️</span>
+              <span>Settings & Profile</span>
+            </a>
+          </div>
+        </div>
+
+        <button type="button" class="tab-slide-arrow tab-arrow-next" id="tabNextBtn" onclick="slideTabs(1)" title="Slide right">
+          <span>›</span>
+        </button>
+      </div>
+
+      <!-- Slide Hint Banner for Mobile -->
+      <div class="tabs-slide-hint">
+        <span class="hint-arrow-icon">👉</span>
+        <span>Swipe tabs or tap <strong>›</strong> to access Services, Packages, Gallery & Settings</span>
       </div>
     </div>
 
@@ -1708,11 +1841,13 @@
 
               <div class="mbc-customer">
                 <div class="mbc-cust-name">{{ appt.customer_name }}</div>
+                <div class="mbc-cust-phone">📱 {{ appt.phone_number }}</div>
+                <!-- 50/50 Symmetrical Grid Buttons -->
                 <div class="mbc-cust-actions">
-                  <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call">
-                    📞 Call {{ appt.phone_number }}
+                  <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call" title="Call Client">
+                    📞 Call
                   </a>
-                  <a href="{{ appt.get_whatsapp_url }}" target="_blank" class="action-btn-sm btn-wa">
+                  <a href="{{ appt.get_whatsapp_url }}" target="_blank" class="action-btn-sm btn-wa" title="Send WhatsApp Message">
                     💬 WhatsApp
                   </a>
                 </div>
@@ -1880,6 +2015,8 @@
 
               <div class="mbc-customer">
                 <div class="mbc-cust-name">{{ appt.customer_name }}</div>
+                <div class="mbc-cust-phone">📱 {{ appt.phone_number }}</div>
+                <!-- 50/50 Symmetrical Grid Buttons -->
                 <div class="mbc-cust-actions">
                   <a href="tel:{{ appt.phone_number }}" class="action-btn-sm btn-call" title="Call Customer">
                     📞 Call
@@ -2498,8 +2635,44 @@
   </footer>
 
 
-  <!-- INTERACTIVE JAVASCRIPT WITH LIVE IMAGE PREVIEW -->
+  <!-- INTERACTIVE JAVASCRIPT WITH LIVE IMAGE PREVIEW & TAB SLIDER -->
   <script>
+    // Tab Sliding Controls
+    function slideTabs(direction) {
+      const nav = document.getElementById('portalTabsNav');
+      if (!nav) return;
+      const scrollAmount = 220;
+      nav.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+      setTimeout(updateTabArrows, 300);
+    }
+
+    function updateTabArrows() {
+      const nav = document.getElementById('portalTabsNav');
+      const prevBtn = document.getElementById('tabPrevBtn');
+      const nextBtn = document.getElementById('tabNextBtn');
+      if (!nav || !prevBtn || !nextBtn) return;
+      
+      if (nav.scrollLeft <= 5) {
+        prevBtn.style.opacity = '0.35';
+        prevBtn.style.pointerEvents = 'none';
+      } else {
+        prevBtn.style.opacity = '1';
+        prevBtn.style.pointerEvents = 'auto';
+      }
+
+      if (nav.scrollLeft + nav.clientWidth >= nav.scrollWidth - 5) {
+        nextBtn.style.opacity = '0.35';
+        nextBtn.style.pointerEvents = 'none';
+      } else {
+        nextBtn.style.opacity = '1';
+        nextBtn.style.pointerEvents = 'auto';
+      }
+    }
+
+    // Password Toggle
     function togglePw(inputId, btn) {
       const input = document.getElementById(inputId);
       if (!input) return;
@@ -2658,6 +2831,23 @@
           modal.classList.remove('active');
         }
       });
+    });
+
+    // Initialize tabs on DOM load
+    document.addEventListener('DOMContentLoaded', function() {
+      const nav = document.getElementById('portalTabsNav');
+      if (nav) {
+        nav.addEventListener('scroll', updateTabArrows);
+        const activeTab = nav.querySelector('.tab-btn.active');
+        if (activeTab) {
+          setTimeout(function() {
+            activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            updateTabArrows();
+          }, 150);
+        } else {
+          updateTabArrows();
+        }
+      }
     });
   </script>
 </body>
